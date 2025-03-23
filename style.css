@@ -1,0 +1,52 @@
+*{
+    background-color: #1B1B1B;
+}
+.nav img{
+    height: 20px;
+}
+.sidebar img{
+    height: 20px;
+}
+.sidebar .icon{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding: 20px;
+}
+.sidebar p{
+    font-family: "Roboto", sans-serif;
+    color: white;
+    padding-left: 10px;
+    font-size: 15px;
+}
+.sidebar p{
+    font-family: "Roboto", sans-serif;
+    color: white;
+    padding-left: 10px;
+    font-size: 15px;
+}.logo h3{
+    font-family: "Roboto Condensed", sans-serif;
+    color: white;
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.search{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: 350px;
+    border: 1px solid white;
+    border-radius: 25px;
+    padding: 10px 0px 5px 30px;
+}
+.search input{
+    color: white;
+    height: 40px;
+    /* width: 350px; */
+    border: none;
+    border-radius: 25px;
+    padding: 0 5px 0 0;
+}
