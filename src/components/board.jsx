@@ -1,6 +1,6 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FolderIcon from '@mui/icons-material/Folder';
-
+import { Box } from '@mui/material';
 import React from "react";
 const Board = () => {
     return ( 
@@ -19,9 +19,65 @@ const Board = () => {
                     </button>
                 </div>
                 <div className="actionBox">
-                    <div className="groupContainer">
-                        
-                    </div>
+                    <Box className="groupContainer">
+                        <FolderIcon style={{
+                            fontSize: 60,
+                            color: "#282a2c",
+                            marginLeft: 130
+                        }}/>
+                        <h3>
+                            Create a group
+                        </h3>
+                        <p>Create your first Group to start collaborations 
+                            with your study group members
+                        </p>
+                        <button>
+                        <AddRoundedIcon style={{
+                            paddingRight: 5
+                        }}/>
+                        Create
+                        </button>
+                    </Box>
+
+                    <Box className="groupContainer">
+                        <FolderIcon style={{
+                            fontSize: 60,
+                            color: "#282a2c",
+                            marginLeft: 130
+                        }}/>
+                        <h3>
+                            Create a group
+                        </h3>
+                        <p>Create your first Group to start collaborations 
+                            with your study group members
+                        </p>
+                        <button>
+                        <AddRoundedIcon style={{
+                            paddingRight: 5
+                        }}/>
+                        Create
+                        </button>
+                    </Box>
+
+                    <Box className="groupContainer">
+                        <FolderIcon style={{
+                            fontSize: 60,
+                            color: "#282a2c",
+                            marginLeft: 130
+                        }}/>
+                        <h3>
+                            Create a group
+                        </h3>
+                        <p>Create your first Group to start collaborations 
+                            with your study group members
+                        </p>
+                        <button>
+                        <AddRoundedIcon style={{
+                            paddingRight: 5
+                        }}/>
+                        Create
+                        </button>
+                    </Box>
                 </div>
             </div>
 
