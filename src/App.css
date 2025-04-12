@@ -135,6 +135,24 @@ input::placeholder {
     gap: 20px;
     padding: 0 20px 0 0;
 }
+.bodyContainer{
+    background-color: #131314;
+    width: 70%;
+    border-radius: 20px;
+    padding: 30px;
+}
+.bodyContainer2{
+    background-color: #131314;
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px;
+}
+.activityContainer{
+    background-color: #131314;
+    width: 30%;
+    border-radius: 20px;
+    padding: 30px;
+}
 
 /*welcome-text styling*/
 .welcomeText{
