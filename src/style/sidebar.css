@@ -1,0 +1,119 @@
+/* Sidebar.css */
+.sidebar {
+    width: 20%;
+    height: 100vh;
+    background-color: #1B1B1B;
+    color: #E3E3E3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    overflow-x: hidden;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* Header */
+  .sidebar-header {
+    width: 100%;
+    padding: 15px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .sidebar-separator{
+    padding-top: 30px;
+  }
+  
+  /* Navigation */
+  .sidebar-nav {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Menu items */
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #E3E3E3;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 500;
+  }
+  
+  .sidebar-item:hover {
+    background-color: rgba(66, 94, 234, 0.1);
+  }
+  
+  .sidebar-item.active {
+    background-color: rgba(66, 94, 234, 0.1);
+    color: #6B84FF;
+  }
+  
+  .sidebar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
+  
+  /* Dropdown toggle */
+  .sidebar-dropdown-toggle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .sidebar-item-content {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Dropdown menu */
+  .sidebar-dropdown {
+    margin-left: 30px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+  
+  .sidebar-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin: 2px 8px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #E3E3E3;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .sidebar-dropdown-item:hover {
+    background-color: rgba(66, 94, 234, 0.1);
+  }
+  
+  .sidebar-dropdown-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+  
+  /* Footer */
+  .sidebar-footer {
+    padding: 0 20px;
+  }
+
+  .backBtn{
+    cursor: pointer;
+  }
