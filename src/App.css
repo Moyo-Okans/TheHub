@@ -10,6 +10,12 @@ body {
     background-color: #1B1B1B;
 }
 
+h3{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+p,button{
+font-family: 'Roboto', sans-serif;
+}
 
 /*navbar styling*/
 .navbar {
@@ -92,6 +98,7 @@ input::placeholder {
     height: 500px;
     background-color: #000000;
     border-radius: 10px;
+    margin-right: 1px;
 }
 
 .activityBoard {
@@ -99,6 +106,7 @@ input::placeholder {
     height: 500px;
     background-color: #000000;
     border-radius: 10px;
+    margin-left: 40px;
 }
 
 .board {
@@ -123,6 +131,40 @@ input::placeholder {
     width: 100%;
     min-height: 80vh;
     display: flex;
+    flex-direction: row;
+    /* justify-content: space-between;
+    width: 100%; */
+}
+
+/*welcome-text styling*/
+.welcomeText{
+    display: flex;
+    flex-direction: column;
+}
+.welcomeText h3{
+    color: white;
+    font-size: 30px;
+}
+.welcomeText p{
+    color: gray;
+    margin-top: -25px;
+}
+.welcomeHeader button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    color: white;
+    background-color: #1539ed;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.welcomeHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     gap: 20px;
     padding: 0 20px 0 0;
