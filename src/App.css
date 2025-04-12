@@ -4,6 +4,12 @@ body{
     background-color: #1b1b1b;
 }
 
+h3{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+p,button{
+font-family: 'Roboto', sans-serif;
+}
 
 /*navbar styling*/
 .navbar{
@@ -47,7 +53,7 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -450px;
+    margin-left: -480px;
 }
  input::placeholder{
     font-family: 'Roboto', sans-serif;
@@ -110,28 +116,62 @@ body{
 
 /*Dashboard styling*/
 .displayBoard{
-    width: 850px;
+    width: 820px;
     height: 500px;
     background-color: #000000;
     border-radius: 10px;
+    margin-right: 1px;
 }
 .activityBoard{
     width: 300px;
     height: 500px;
     background-color: #000000;
     border-radius: 10px;
+    margin-left: 40px;
 }
 .board{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 1500px;
-    padding: 10px 50px;
+    margin: 0px 50px;
 }
 .dashboard{
     display: flex;
     flex-direction: row;
+    /* justify-content: space-between;
+    width: 100%; */
+}
+
+/*welcome-text styling*/
+.welcomeText{
+    display: flex;
+    flex-direction: column;
+}
+.welcomeText h3{
+    color: white;
+    font-size: 30px;
+}
+.welcomeText p{
+    color: gray;
+    margin-top: -25px;
+}
+.welcomeHeader button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    width: 100%;
+    padding: 10px 30px;
+    color: white;
+    background-color: #1539ed;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.welcomeHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 30px;
 }
