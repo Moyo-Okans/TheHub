@@ -13,12 +13,12 @@ const Navbar = () => {
                 <h3>The Hub</h3>
             </div>
             <div className="searchbar">
-                <SearchOutlinedIcon style={{ fontSize: 20, color: 'white', paddingLeft: 10}}/>
+                <SearchOutlinedIcon style={{ fontSize: 20, color: '#cac7c5', paddingLeft: 10}}/>
                 <input type="search" name="" id="" placeholder='Search for your files and groups'/>
             </div>
             <div className="profile">
-                <PublicIcon style={{ fontSize: 30, color: 'white'}}/>
-                <HelpOutlineOutlinedIcon style={{ fontSize: 30, color: 'white'}}/>
+                <PublicIcon style={{ fontSize: 30, color: '#cac7c5' }}/>
+                <HelpOutlineOutlinedIcon style={{ fontSize: 30, color: '#cac7c5'}}/>
                 <img src={profileImg} alt="" />
             </div>
         </div>

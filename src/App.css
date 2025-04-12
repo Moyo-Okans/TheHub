@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body{
-    background-color: black;
+    background-color: #1b1b1b;
 }
 
 
@@ -40,14 +40,14 @@ body{
 }
 .searchbar{
     width: 450px;
-    height: 55px;
+    height: 50px;
     border-radius: 30px;
     background-color: #282a2c;
     border: none;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -550px;
+    margin-left: -450px;
 }
  input::placeholder{
     font-family: 'Roboto', sans-serif;
@@ -67,4 +67,71 @@ body{
     width: 60px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+/*sidebar styling*/
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+    height: 200px;
+}
+.sidebar p{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 10px;
+}
+.sideIcons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 115px;
+}
+.lowerIcons{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.sideIcons.selected{
+    background-color: #425eea24;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 25px;
+}
+.sideIcons.selected p{
+    color: #6b84ff;
+}
+.selectedIcon{
+    color: #6b84ff;
+}
+
+/*Dashboard styling*/
+.displayBoard{
+    width: 850px;
+    height: 500px;
+    background-color: #000000;
+    border-radius: 10px;
+}
+.activityBoard{
+    width: 300px;
+    height: 500px;
+    background-color: #000000;
+    border-radius: 10px;
+}
+.board{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 1500px;
+    padding: 10px 50px;
+}
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
