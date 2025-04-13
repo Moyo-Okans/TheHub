@@ -2,10 +2,12 @@ import React from "react";
 import emptyState from "../assets/empty_state.png"
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
+import '../style/groups.css'
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { MoreVert } from "@mui/icons-material";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Divider } from "@mui/material";
@@ -21,6 +23,65 @@ function Dashboard() {
           <div className="main-content">
             <div className="bodyContainer">
               <SignedIn />
+              <div className="groupRow">
+                  <div className="groupFolder">
+                    {/* <h1>Groups</h1> */}
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <FolderIcon
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                  </div>
+                  <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <FolderIcon
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                  </div>
+                  <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <FolderIcon
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                  </div>
+                  <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <FolderIcon
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                  </div>
+                </div>
               {/* <div className="welcomeHeader">
                 <div className="welcomeText">
                   <h3>Welcome, Moyosore Okanlawon</h3>

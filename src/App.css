@@ -252,3 +252,6 @@ input::placeholder {
 }
 
 /*Groups page styling*/
+.groupFolder{
+    margin-top: 20px;
+}

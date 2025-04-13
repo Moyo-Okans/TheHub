@@ -146,6 +146,7 @@ function Files() {
                   <p className="owner">Me</p>
                   <p className="date">March 12,2025</p>
                 </div>
+
               </div>
             </div>
             <div className="activityContainer">
