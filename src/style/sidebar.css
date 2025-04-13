@@ -9,7 +9,7 @@
   align-items: flex-end;
   justify-content: space-between;
   overflow-x: hidden;
-  padding: 20px;
+  padding: 20px 10px;
   gap: 20px;
   transition: all 0.3s ease;
   position: relative;
@@ -65,9 +65,12 @@
 }
 
 .logo {
+  width: fit-content;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  padding: 0 15px;
 }
 
 .logo img {

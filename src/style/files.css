@@ -72,3 +72,10 @@
 .date{
     margin-left: 40px;
 }
+
+@media (max-width: 480px) {
+    .filesHeader button{
+        padding: 5px 13px 5px 8px;
+        font-size: 12px;
+    }
+}

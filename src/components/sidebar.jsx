@@ -22,7 +22,11 @@ import "../style/sidebar.css";
 export default function Sidebar() {
   const [isHubOpen, setIsHubOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("/dashboard");
-  const [minimized, setMinimized] = useState(false);
+  // Get minimized state from localStorage or default to false
+  const [minimized, setMinimized] = useState(() => {
+    const savedState = localStorage.getItem("sidebarMinimized");
+    return savedState ? JSON.parse(savedState) : false;
+  });
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
@@ -39,6 +43,12 @@ export default function Sidebar() {
       setIsHubOpen(true);
     }
   }, [location]);
+
+  // Save minimized state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("sidebarMinimized", JSON.stringify(minimized));
+  }, [minimized]);
+
 
   // Detect mobile screen size
   useEffect(() => {

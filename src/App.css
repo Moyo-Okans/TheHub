@@ -117,9 +117,8 @@ input::placeholder {
     border-radius: 20px;
     padding: 30px;
     scroll-behavior: smooth;
-    height: 520px; /* or any fixed height */
+    min-height: 80vh; /* or any fixed height */
     overflow-y: auto; /* scrolls vertically */
-    /* border: 1px solid #ccc; */
 }
 .bodyContainer::-webkit-scrollbar{
     display: none;
@@ -173,7 +172,9 @@ input::placeholder {
     align-items: center;
     justify-content: space-between;
 }
+.maingroupContainer{
 
+}
 .groupContainer{
     width: 30%;
     height: auto;
@@ -227,5 +228,98 @@ input::placeholder {
 .boxes{
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 15px;
+}
+
+
+.activityContainer img{
+    height: 250px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+.emptyFiles{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.emptyFiles p{
+    width: 40%;
+    text-align: center;
+    font-size: 13px;
+}
+.emptyFiles h2{
+    font-size: 20px;
+}
+
+
+
+@media (max-width: 480px) {
+    .navbar{
+        padding: 15px 10px;
+        justify-content: flex-end;
+        gap: 10px;
+        height: auto;
+    }
+    .searchbar{
+        width: 200px;
+        height: 40px;
+    }
+    .searchbar input {
+        width: 100%;
+    }
+    .profile{
+        width: fit-content;
+        gap: 10px;
+    }
+    .profileIcons{
+        font-size: 25px !important;
+    }
+    .profile img{
+        width: 30px;
+        height: 30px;
+    }
+    .main-content{
+        width: 100%;
+        flex-direction: column;
+        padding: 0;
+    }
+    .bodyContainer{
+        width: 100%;
+        padding: 20px;
+        height: 100%;
+        min-height: 90vh;
+    }
+    .bodyContainer2{
+        width: 100%;
+        padding: 20px;
+        height: 100%;
+    }
+    .welcomeHeader{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .welcomeText h3{
+        font-size: 25px;
+    }
+    .welcomeText p{
+        font-size: 12px;
+    }
+    .welcomeHeader button{
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .boxes{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .groupContainer{
+     width: 100%;   
+    }
+    .activityContainer{
+        display: none;
+    }
 }
