@@ -1,4 +1,5 @@
 import React from "react";
+import emptyState from "../assets/empty_state.png"
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
@@ -7,6 +8,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import { Divider } from "@mui/material";
 
 function Dashboard() {
   return (
@@ -106,10 +108,34 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
+              <div className="emptyFiles">
+              <FolderIcon
+                        style={{
+                          fontSize: 60,
+                          color: "#282a2c",
+                        }}
+                      />
+              <h2>No files found</h2>
+              <p>Your files and groups will be shown here
+                ,you can create a group or upload a file now above
+              </p>
+            </div>
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
+              <div style={{
+                height: 1,
+                backgroundColor: "gray",
+                marginTop: 20
+              }}/>
+              <img src={emptyState} className="emptyStateImg"/>
+              <p style={{
+                textAlign: "center",
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: 15
+              }}>Select an item to see its activities</p>
             </div>
+           
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ function Groups() {
           <div className="main-content">
             <div className="bodyContainer">
               <h1>Groups</h1>
+              
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
