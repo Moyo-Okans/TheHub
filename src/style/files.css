@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Inter', 'Roboto', 'Roboto Condensed', sans-serif; 
+}
+.filesHeader{
+    display: flex;
+    justify-content: space-between;
+}
+.filesHeader button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    color: #FFFFFF;
+    background-color: #425EEA;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    gap: 10px;
+    font-weight: 500;
+}
+.tags{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    gap: 10px;
+}
+.tags button{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: white;
+    border: solid 1px #3c3f41;
+    padding: 5px 15px;
+    border-radius: 13px;
+    margin: 10px 0px;
+    font-weight: 600;
+}
+.fileHeader{
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    padding: 8px 16px;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+.fileName{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.location{ 
+    white-space: nowrap;         /* Prevent text from wrapping */
+    overflow: hidden;            /* Hide overflow */
+    text-overflow: ellipsis;     /* Show "..." when text overflows */
+    width: 150px;  
+}
+.fileLines{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    padding: 10px 16px;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+/* .owner{
+    margin-right: 20px;
+} */
+.date{
+    margin-left: 40px;
+}

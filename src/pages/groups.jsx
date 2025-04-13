@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
+import '../style/groups.css'
 import emptyState from '../assets/empty_state.png'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { StarBorderOutlined } from "@mui/icons-material";

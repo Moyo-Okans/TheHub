@@ -9,6 +9,7 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Divider } from "@mui/material";
+import SignedIn from "../components/signedin";
 
 function Dashboard() {
   return (
@@ -19,7 +20,8 @@ function Dashboard() {
           <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
-              <div className="welcomeHeader">
+              <SignedIn />
+              {/* <div className="welcomeHeader">
                 <div className="welcomeText">
                   <h3>Welcome, Moyosore Okanlawon</h3>
                   <p>Open your files or folders here!</p>
@@ -119,7 +121,7 @@ function Dashboard() {
               <p>Your files and groups will be shown here
                 ,you can create a group or upload a file now above
               </p>
-            </div>
+            </div> */}
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
