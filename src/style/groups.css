@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
-    font-family: 'Inter', 'Roboto', 'Roboto Condensed', sans-serif; 
+    font-family: 'Inter', 'Roboto', 'Roboto Condensed', sans-serif;
 }
-.groupHeader, .filesHeader{
+
+.groupHeader,
+.filesHeader {
     display: flex;
     justify-content: space-between;
 }
-.groupHeader button, .filesHeader button{
+
+.groupHeader button,
+.filesHeader button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,12 +27,14 @@
     gap: 10px;
     font-weight: 500;
 }
-.tags{
+
+.tags {
     display: flex;
     flex-direction: row;
     gap: 10px;
 }
-.tags button{
+
+.tags button {
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -39,7 +46,7 @@
     font-weight: 600;
 }
 
-.groupFolder{
+.groupFolder {
     border: solid 1px rgb(75, 75, 75);
     padding: 10px;
     width: 25%;
@@ -49,43 +56,52 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    
+
 }
-.groupFolderHeader{
+
+.groupFolderHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
-.groupFolderHeader p{ 
-     white-space: nowrap;         /* Prevent text from wrapping */
-    overflow: hidden;            /* Hide overflow */
-    text-overflow: ellipsis;     /* Show "..." when text overflows */
-    width: 125px; 
+
+.groupFolderHeader p {
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflow */
+    text-overflow: ellipsis;
+    /* Show "..." when text overflows */
+    width: 125px;
 
 }
-.groupRow{
+
+.groupRow {
     display: flex;
     flex-direction: row;
     gap: 10px;
 }
 
 @media (max-width: 480px) {
-    .groupRow{
+    .groupRow {
         flex-wrap: wrap;
         justify-content: space-between;
         gap: 5px;
         padding: 20px 0;
     }
-    .groupFolder{
+
+    .groupFolder {
         width: 49%;
         margin: 0;
     }
-    .groupHeader button{
+
+    .groupHeader button {
         padding: 5px 13px 5px 8px;
         font-size: 12px;
     }
-    .filesHeader button{
+
+    .filesHeader button {
         padding: 5px 13px 5px 8px;
         font-size: 12px;
     }
