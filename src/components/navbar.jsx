@@ -12,8 +12,8 @@ const Navbar = () => {
                 <input type="search" name="" id="" placeholder='Search for your files and groups'/>
             </div>
             <div className="profile">
-                <PublicIcon style={{ fontSize: 30, color: '#cac7c5' }}/>
-                <HelpOutlineOutlinedIcon style={{ fontSize: 30, color: '#cac7c5'}}/>
+                <PublicIcon className="profileIcons" style={{ fontSize: 30, color: '#cac7c5' }}/>
+                <HelpOutlineOutlinedIcon className="profileIcons" style={{ fontSize: 30, color: '#cac7c5'}}/>
                 <img src={profileImg} alt="" />
             </div>
         </div>

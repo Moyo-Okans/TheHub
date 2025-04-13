@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     font-family: 'Inter', 'Roboto', 'Roboto Condensed', sans-serif; 
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
     background-color: #1B1B1B;
@@ -138,6 +138,7 @@ input::placeholder {
 .welcomeText h3{
     color: white;
     font-size: 30px;
+    font-family: 'Roboto Condensed';
 }
 .welcomeText p{
     color: gray;
@@ -215,4 +216,69 @@ input::placeholder {
     display: flex;
     align-items: center;
     gap: 30px;
+}
+
+@media (max-width: 480px) {
+    .navbar{
+        padding: 15px 10px;
+        justify-content: flex-end;
+        gap: 10px;
+        height: auto;
+    }
+    .searchbar{
+        width: 200px;
+        height: 40px;
+    }
+    .searchbar input {
+        width: 100%;
+    }
+    .profile{
+        width: fit-content;
+        gap: 10px;
+    }
+    .profileIcons{
+        font-size: 25px !important;
+    }
+    .profile img{
+        width: 30px;
+        height: 30px;
+    }
+    .main-content{
+        width: 100%;
+        flex-direction: column;
+        padding: 0;
+    }
+    .bodyContainer{
+        width: 100%;
+        padding: 20px;
+    }
+    .bodyContainer2{
+        width: 100%;
+        padding: 20px;
+    }
+    .welcomeHeader{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .welcomeText h3{
+        font-size: 25px;
+    }
+    .welcomeText p{
+        font-size: 12px;
+    }
+    .welcomeHeader button{
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .boxes{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .groupContainer{
+     width: 100%;   
+    }
+    .activityContainer{
+        display: none;
+    }
 }
