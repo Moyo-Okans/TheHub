@@ -25,7 +25,7 @@ function Files() {
                 </button>
               </div>
               <div className="files">
-              <div className="tags">
+                <div className="tags">
                   <button>
                     <ScheduleRounded
                     style={{

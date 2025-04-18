@@ -255,3 +255,55 @@ input::placeholder {
 .groupFolder{
     margin-top: 20px;
 }
+
+.header{
+    font-size: 23px;
+    margin-bottom: -28px;
+    margin-top: 35px;
+}
+
+.header2{
+    font-size: 23px;
+    margin-bottom: -15px;
+    margin-top: 35px;
+}
+/* .tags{
+    display: flex;
+    flex-direction: row;
+    margin-top:0px;
+    gap: 5px;
+} */
+.tags button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    color: white;
+    border: solid 1px #3c3f41;
+    padding: 5px 15px;
+    border-radius: 13px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+.fileTags{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    gap: 15px;
+}
+.fileTags button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(47, 47, 47);
+    color: white;
+    border: solid 1px #3c3f41;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin: 10px 0px;
+    font-weight: 600;
+}
+.pTag{
+    font-weight: 400;
+    font-size: 15px;
+}
