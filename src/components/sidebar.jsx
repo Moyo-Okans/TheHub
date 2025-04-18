@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 
-import logo from "../assets/Frame 13.png";
+import logo from "../assets/logo.png";
 
 // Material Icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
