@@ -279,87 +279,59 @@ input::placeholder {
     font-size: 20px;
 }
 
+/*Groups page styling*/
+.groupFolder{
+    margin-top: 20px;
+}
 
+.header{
+    font-size: 23px;
+    margin-bottom: -10px;
+    margin-top: 35px;
+}
 
-@media (max-width: 480px) {
-    .navbar {
-        padding: 15px 10px;
-        justify-content: flex-end;
-        gap: 10px;
-        height: auto;
-    }
-
-    .searchbar {
-        width: 200px;
-        height: 40px;
-    }
-
-    .searchbar input {
-        width: 100%;
-    }
-
-    .profile {
-        width: fit-content;
-        gap: 10px;
-    }
-
-    .profileIcons {
-        font-size: 25px !important;
-    }
-
-    .profile img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .main-content {
-        width: 100%;
-        flex-direction: column;
-        padding: 0;
-    }
-
-    .bodyContainer {
-        width: 100%;
-        padding: 20px;
-        height: 100%;
-        min-height: 90vh;
-    }
-
-    .bodyContainer2 {
-        width: 100%;
-        padding: 20px;
-        height: 100%;
-    }
-
-    .welcomeHeader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .welcomeText h3 {
-        font-size: 25px;
-    }
-
-    .welcomeText p {
-        font-size: 12px;
-    }
-
-    .welcomeHeader button {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
-
-    .boxes {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .groupContainer {
-        width: 100%;
-    }
-
-    .activityContainer {
-        display: none;
-    }
+.header2{
+    font-size: 23px;
+    margin-bottom: -10px;
+    margin-top: 35px;
+}
+/* .tags{
+    display: flex;
+    flex-direction: row;
+    margin-top:0px;
+    gap: 5px;
+} */
+.tags button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    color: white;
+    border: solid 1px #3c3f41;
+    padding: 5px 15px;
+    border-radius: 13px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+.fileTags{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    gap: 13px;
+}
+.fileTags button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(47, 47, 47);
+    color: white;
+    border: solid 1px #3c3f41;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin: 7px 0px;
+    font-weight: 600;
+}
+.pTag{
+    font-weight: 400;
+    font-size: 15px;
 }
