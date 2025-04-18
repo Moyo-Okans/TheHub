@@ -1,25 +1,20 @@
 import React from "react";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import PublicIcon from "@mui/icons-material/Public";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import profileImg from "../assets/profileImage.jpg";
 import { Link } from "react-router-dom";
+import logo from "../assets/Frame 13.png";
 
-const Navbar = () => {
+const NavbarCommunity = () => {
   return (
     <div className="navbar">
-      <div className="searchbar">
-        <SearchOutlinedIcon sx={{ fontSize: "24px", color: "#C4C7C5" }} />
-        <input
-          type="search"
-          name=""
-          id=""
-          placeholder="Search for your files and groups"
-        />
-      </div>
+       <div className="logo">
+                  <img src={logo} alt="" />
+                   <h3>The Hub</h3>
+                </div>
       <div className="profile">
-        <Link to="/community">
-          <PublicIcon
+        <Link to="/dashboard">
+          <HomeOutlinedIcon
             className="profileIcons"
             style={{ fontSize: 30, color: "#cac7c5" }}
           />
@@ -37,4 +32,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarCommunity;

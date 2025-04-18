@@ -17,6 +17,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/groups" element={<Groups />} />
       <Route path="/collaborators" element={<Collaborators />} />
       <Route path="/files" element={<Files />} />
