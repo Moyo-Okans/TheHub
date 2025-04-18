@@ -1,20 +1,10 @@
 import React from "react";
-import emptyState from "../assets/empty_state.png"
+import emptyState from "../assets/empty_state.png";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
-// import '../style/groups.css';
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FolderIcon from "@mui/icons-material/Folder";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import { MoreVert } from "@mui/icons-material";
-import PublicIcon from "@mui/icons-material/Public";
-import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
-import { StarBorderOutlined } from "@mui/icons-material";
-import { ScheduleRounded } from "@mui/icons-material";
-import { Divider } from "@mui/material";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import "../style/groups.css";
 import SignedIn from "../components/signedin";
+import NewUser from "../components/newUser";
 
 function Dashboard() {
   return (
@@ -26,11 +16,9 @@ function Dashboard() {
           <div className="main-content">
             <div className="bodyContainer">
               <SignedIn />
-              <h3 className="header">Groups</h3>
               <div className="groupRow">
-                
                   <div className="groupFolder">
-                    {/* < */}
+                    {/* <h1>Groups</h1> */}
                     <div className="groupFolderHeader">
                       <p>CSC Final Exam Group</p>
                       <MoreVert/>
@@ -86,217 +74,7 @@ function Dashboard() {
                       color: "gray"
                       }}/>
                   </div>
-              </div>
-              <div className="files">
-                <h3 className="header2">Files</h3>
-                <div className="tags">
-                  <button>
-                    <ScheduleRounded
-                    style={{
-                      fontSize: 20,
-                      color: 'white',
-                      marginRight: 7
-                    }}
-
-                    />
-                    Recent
-                  </button>
-                  <button>
-                  <StarBorderOutlined
-                    style={{
-                      fontSize: 23,
-                      color: 'white',
-                      marginRight: 7
-                    }}
-                    />
-                    Starred
-                  </button>
                 </div>
-                <div className="fileTags">
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                </div>
-                <div className="fileTags">
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                  <button>
-                    <InsertDriveFileIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'blue',
-                      
-                    }}
-                    />
-                    <p className="pTag">CSC104</p>
-                    <MoreVertIcon
-                    style={{
-                      fontSize: 25,
-                      color: 'white',
-                      
-                    }}
-                    />
-                    
-                  </button>
-                </div>
-              </div>
               {/* <div className="welcomeHeader">
                 <div className="welcomeText">
                   <h3>Welcome, Moyosore Okanlawon</h3>
@@ -401,19 +179,24 @@ function Dashboard() {
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
-              <div style={{
-                height: 1,
-                backgroundColor: "gray",
-                marginTop: 20
-              }}/>
-              <img src={emptyState} className="emptyStateImg"/>
-              <p style={{
-                textAlign: "center",
-                fontFamily: "'Roboto', sans-serif",
-                fontSize: 15
-              }}>Select an item to see its activities</p>
+              <div
+                style={{
+                  height: 1,
+                  backgroundColor: "gray",
+                  marginTop: 20,
+                }}
+              />
+              <img src={emptyState} className="emptyStateImg" />
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "'Roboto', sans-serif",
+                  fontSize: 15,
+                }}
+              >
+                Select an item to see its activities
+              </p>
             </div>
-           
           </div>
         </div>
       </div>
