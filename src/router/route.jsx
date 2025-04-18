@@ -10,6 +10,8 @@ import Settings from "../pages/settings";
 import Support from "../pages/support";
 import Trash from "../pages/trash";
 import NotFound from "../pages/NotFound";
+import Community from "../pages/community";
+import GroupDetails from "../pages/GroupDetails";
 
 function AppRoutes() {
   return (
@@ -23,6 +25,9 @@ function AppRoutes() {
       <Route path="/settings" element={<Settings />} />
       <Route path="/support" element={<Support />} />
       <Route path="/trash" element={<Trash />} />
+      <Route path="/community" element={<Community />} />
+      <Route path="/:id" element={<GroupDetails />} />
+      
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
