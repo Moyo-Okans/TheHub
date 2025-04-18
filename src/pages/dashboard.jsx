@@ -3,6 +3,13 @@ import emptyState from "../assets/empty_state.png";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import "../style/groups.css";
+import { MoreVert } from "@mui/icons-material";
+import { AddRounded } from "@mui/icons-material";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import { Folder } from "@mui/icons-material";
+import { StarBorderOutlined } from "@mui/icons-material";
+import { ScheduleRounded } from "@mui/icons-material";
+import { InsertDriveFile } from "@mui/icons-material";
 import SignedIn from "../components/signedin";
 import NewUser from "../components/newUser";
 
@@ -15,66 +22,299 @@ function Dashboard() {
           <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
-              <SignedIn />
-              <div className="groupRow">
-                  <div className="groupFolder">
-                    {/* <h1>Groups</h1> */}
-                    <div className="groupFolderHeader">
-                      <p>CSC Final Exam Group</p>
-                      <MoreVert/>
-          
-                    </div>
-                    <FolderIcon
-                    style={{
-                      fontSize: 125,
-                      margin: 0,
-                      padding: 0,
-                      color: "gray"
-                      }}/>
-                  </div>
-                  <div className="groupFolder">
-                    <div className="groupFolderHeader">
-                      <p>CSC Final Exam Group</p>
-                      <MoreVert/>
-          
-                    </div>
-                    <FolderIcon
-                    style={{
-                      fontSize: 125,
-                      margin: 0,
-                      padding: 0,
-                      color: "gray"
-                      }}/>
-                  </div>
-                  <div className="groupFolder">
-                    <div className="groupFolderHeader">
-                      <p>CSC Final Exam Group</p>
-                      <MoreVert/>
-          
-                    </div>
-                    <FolderIcon
-                    style={{
-                      fontSize: 125,
-                      margin: 0,
-                      padding: 0,
-                      color: "gray"
-                      }}/>
-                  </div>
-                  <div className="groupFolder">
-                    <div className="groupFolderHeader">
-                      <p>CSC Final Exam Group</p>
-                      <MoreVert/>
-          
-                    </div>
-                    <FolderIcon
-                    style={{
-                      fontSize: 125,
-                      margin: 0,
-                      padding: 0,
-                      color: "gray"
-                      }}/>
-                  </div>
+            <div className="welcomeHeader">
+                <div className="welcomeText">
+                  <h3>Welcome, Moyosore Okanlawon</h3>
+                  <p>Open your files or folders here!</p>
                 </div>
+                <button>
+                  <AddRounded />
+                  Create
+                  <KeyboardArrowDown
+                    sx={{
+                      fontSize: "16px",
+                    }}
+                  />
+                </button>
+              </div>
+              <h3 className="header">Groups</h3>
+              <div className="groupRow">
+                <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <Folder
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                </div>
+                <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <Folder
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                </div>
+                <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <Folder
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                </div>
+                <div className="groupFolder">
+                    <div className="groupFolderHeader">
+                      <p>CSC Final Exam Group</p>
+                      <MoreVert/>
+          
+                    </div>
+                    <Folder
+                    style={{
+                      fontSize: 125,
+                      margin: 0,
+                      padding: 0,
+                      color: "gray"
+                      }}/>
+                </div>
+              </div>
+              <h3 className="header2">Files</h3>
+                <div className="tags">
+                  <button>
+                    <ScheduleRounded
+                      style={{
+                        fontSize: 20,
+                        color: "white",
+                        marginRight: 7,
+                      }}
+                    />
+                    Recent
+                  </button>
+                  <button>
+                    <StarBorderOutlined
+                      style={{
+                        fontSize: 23,
+                        color: "white",
+                        marginRight: 7,
+                      }}
+                    />
+                    Starred
+                  </button>
+                </div>
+                <div className="fileTags">
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                </div>
+                <div className="fileTags">
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                  <button>
+                    <InsertDriveFile
+                      style={{
+                        fontSize: 25,
+                        color: "blue",
+                        marginRight: 3,
+                      }}
+                    />
+                    <p className="pTag">CSC104</p>
+                    <MoreVert
+                      style={{
+                        fontSize: 25,
+                        color: "white",
+                        marginRight: 3,
+                      }}
+                    />
+                  </button>
+                </div>
+              {/* <div className="tags">
+                  <button>
+                    <ScheduleRounded
+                    style={{
+                      fontSize: 20,
+                      color: 'white',
+                      marginRight: 7
+                    }}
+                    />
+                    Recent
+                  </button>
+                  <button>
+                  <StarBorderOutlined
+                    style={{
+                      fontSize: 23,
+                      color: 'white',
+                      marginRight: 7
+                    }}
+                    />
+                    Starred
+                  </button>
+                </div> */}
               {/* <div className="welcomeHeader">
                 <div className="welcomeText">
                   <h3>Welcome, Moyosore Okanlawon</h3>
