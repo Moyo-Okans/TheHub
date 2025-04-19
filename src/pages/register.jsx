@@ -36,7 +36,6 @@ const Register = () => {
           <div></div>
         </div>
 
-        <input type="text" placeholder='Full name' />
         <input type="email" placeholder='Email Address' />
 
         <div className="password" style={{ position: 'relative' }}>
@@ -73,7 +72,6 @@ const Register = () => {
          &copy; {new Date().getFullYear()} TheHub.
         </div>
         <div className="first">
-         
           <p>Community guidelines. Terms of service</p>
         </div>
         <div className="first">
