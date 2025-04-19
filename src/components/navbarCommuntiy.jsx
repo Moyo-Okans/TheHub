@@ -3,7 +3,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import profileImg from "../assets/profileImage.jpg";
 import { Link } from "react-router-dom";
-import logo from "../assets/Frame 13.png";
+import logo from "../assets/logo.png";
 
 const NavbarCommunity = () => {
   return (

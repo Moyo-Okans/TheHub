@@ -14,11 +14,12 @@
     background-color: black;
     height: 95vh;
     border-radius: 20px;
+    padding: 10px;
     margin: 15px 20px 10px 20px;
 }
 .logo{
-    height: 65px;
-    margin-top: 30px;
+    height: 60px;
+    margin-top: 40px;
 }
 h3{
     color: white;
@@ -29,7 +30,7 @@ h3{
     gap: 7px;
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .signupOptions button{
     background-color: transparent;
@@ -51,7 +52,7 @@ h3{
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
     justify-content: center;
 }
 .divider div{
@@ -95,7 +96,10 @@ h3{
 }
 .signIn{
     color: white;
-    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+
+    /* margin-top: 5px; */
 }
  a{
     margin-left: 10px;
