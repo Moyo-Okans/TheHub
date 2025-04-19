@@ -11,8 +11,10 @@ import Support from "../pages/support";
 import Trash from "../pages/trash";
 import NotFound from "../pages/NotFound";
 import Register from '../pages/register';
+import LogIn from '../pages/login';
 import Community from "../pages/community";
 import GroupDetails from "../pages/GroupDetails";
+
 
 function AppRoutes() {
   return (
@@ -31,6 +33,7 @@ function AppRoutes() {
       
       <Route path="*" element={<NotFound />} />
       <Route path="/register" element={<Register/>} />
+      <Route path="/login" element={<LogIn/>} />
     </Routes>
   );
 }

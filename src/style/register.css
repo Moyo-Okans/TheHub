@@ -8,32 +8,32 @@
 .registerBox{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
+    /* align-items: center; */
+    justify-content: center;
     width: 97vw;
     background-color: black;
-    height: 93vh;
+    height: 95vh;
     border-radius: 20px;
-    margin: 20px;
-    padding: 30px;
+    margin: 15px 20px 10px 20px;
 }
 .logo{
-    height: 70px;
+    height: 65px;
+    margin-top: 30px;
 }
 h3{
     color: white;
     font-size: 25px;
-    margin-top: 10px;
+    /* margin-top: 5px; */
 }
 .signupOptions{
-    gap: 15px;
+    gap: 7px;
     display: flex;
     flex-direction: row;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .signupOptions button{
     background-color: transparent;
-    border: solid 1px rgb(80, 80, 80);
+    border: solid 1px rgb(52, 52, 52);
     color: white;
     padding: 10px 20px;
     border-radius: 7px;
@@ -45,4 +45,81 @@ h3{
 }
 .signupOptions img{
     height: 20px;
+}
+.divider{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center;
+}
+.divider div{
+    width: 120px;
+    background-color: rgb(59, 59, 59);
+    height: 1px;
+}
+.divider p{
+    color: rgb(136, 136, 136);
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.form input{
+    background-color: rgb(36, 36, 36);
+    border: none;
+    height: 45px;
+    width: 280px;
+    border-radius: 7px;
+    padding: 5px 15px;
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+.form input::placeholder{
+    color: gray;
+}
+.signUpBtn{
+    background-color: #425EEA;
+    border: none;
+    height: 45px;
+    width: 280px;
+    border-radius: 7px;
+    color: white;
+    margin-top: 5px;
+    font-size: 15px;
+}
+.signIn{
+    color: white;
+    margin-top: 5px;
+}
+ a{
+    margin-left: 10px;
+    color: #425EEA;
+}
+.first{
+    color: white;
+}
+.footerLogo{
+    height: 40px;
+}
+.logo-text{
+    display: flex;
+    align-items: center;
+}
+.logo-text h3{
+    font-size: 20px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding:  10px 30px 30px 30px;
+    margin-top: 30px;
 }
