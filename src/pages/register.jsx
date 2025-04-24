@@ -63,9 +63,6 @@ const Register = () => {
           Have an account? <Link to="/login">Sign In</Link>
         </p>
         <button className='signUpBtn'>Sign In</button>
-        <p className='signIn'>
-          Have an account? <Link to="/login">Sign In</Link>
-        </p>
       </div>
 
       <div className="footer">
