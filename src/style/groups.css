@@ -48,8 +48,8 @@
 
 .groupFolder {
     border: solid 1px rgb(75, 75, 75);
-    padding: 10px;
-    width: 25%;
+    padding: 7px 0px 7px 7px;
+    width: 23%;
     height: auto;
     border-radius: 5px;
     display: flex;

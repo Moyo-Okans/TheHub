@@ -59,7 +59,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -73,7 +73,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -87,7 +87,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -101,7 +101,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -117,7 +117,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -131,7 +131,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -145,7 +145,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -159,7 +159,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"
@@ -175,7 +175,7 @@ function Groups() {
                     </div>
                     <FolderIcon
                     style={{
-                      fontSize: 125,
+                      fontSize: 120,
                       margin: 0,
                       padding: 0,
                       color: "gray"

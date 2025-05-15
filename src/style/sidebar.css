@@ -43,9 +43,9 @@
 .sidebar.mobile {
   position: fixed;
   top: 0;
-  left: -100%; /* Hide off-screen by default */
+ left: -100%; /*Hide off-screen by default */
   width: 75%;
-  max-width: 300px;
+  max-width: 250px;
   height: 100vh;
   overflow-y: auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
@@ -58,10 +58,10 @@
 /* Header */
 .sidebar-header {
   width: 100%;
-  padding: 15px 0px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .logo {
