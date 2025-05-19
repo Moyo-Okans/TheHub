@@ -1,27 +1,21 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const userRoutes = require("./routes/userRoutes");
+import express from "express";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
+import connectDB from "./config/db.js";
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
-const PORT = 3000;
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
 // Routes
 app.use('/api/users', userRoutes);
-app.get('/api/hello', (req, res) => {
-    res.json({ message: 'Hello from backend!' });
-});
-app.get("/", (req, res) => {
-  res.send("Welcome to The Hub Backend!");
-});
-const mongoURI =
-  "mongodb+srv://olukayodelolade:05TheHub2020@moyoshub.md6ilwj.mongodb.net/?retryWrites=true&w=majority&appName=Moyoshub";
-mongoose
-  .connect(mongoURI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+
+
+// Connect to MongoDB
+connectDB();
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

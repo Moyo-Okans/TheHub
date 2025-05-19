@@ -1,8 +1,9 @@
 // Import User model
-const User = require('../models/User'); // Import the User model
-const jwt = require('jsonwebtoken'); // Import JWT for token creation
+import User from "../models/User.js";
+
+import jwt from "jsonwebtoken";
 // User signup
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
     const { fullname, email, password } = req.body;
     try {
         // Check if the user already exists
@@ -25,7 +26,7 @@ exports.signup = async (req, res) => {
     }
 };
 // User login
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         // Find the user by email
