@@ -7,7 +7,7 @@ const fileSchema = new mongoose.Schema({
   },
   fileType: {
     type: String,
-    enum: ['pdf', 'image'],
+    //enum: ['pdf', 'image'],
     required: true,
   },
   fileUrl: {
@@ -25,6 +25,14 @@ const fileSchema = new mongoose.Schema({
     required: true,
   },
   tags: [String],
+  isTrashed: {
+    type: Boolean,
+    default: false
+  },
+  trashedAt: {
+    type: Date,
+    default: null
+  }
 }, { timestamps: true });
 
 export default mongoose.model("File", fileSchema);

@@ -20,6 +20,13 @@ const groupSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  collaborators: [
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    role: { type: String, enum: ['viewer', 'editor', 'admin'], default: 'viewer' }
+  }
+],
+
 }, { timestamps: true });
 
 export default mongoose.model("Group", groupSchema);

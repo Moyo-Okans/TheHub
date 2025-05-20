@@ -1,14 +1,16 @@
 import express from 'express';
-import { createGroup, joinGroup } from '../controllers/groupController.js';
-import { uploadFile, listGroupFiles } from '../controllers/fileController.js';
-import upload from '../middleware/upload.js';
-import authMiddleware from '../middleware/auth.js';
+import { createGroup, joinGroup, getGroupMembers, getMyGroups, inviteCollaboratorToGroup, removeCollaboratorFromGroup, getAllCollaborators} from '../controllers/groupController.js';
+import protect from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', authMiddleware, createGroup);
-router.post('/:groupId/join', authMiddleware, joinGroup);
-router.post('/:groupId/upload', authMiddleware, upload.single('file'), uploadFile);
-router.get('/:groupId/files', authMiddleware, listGroupFiles);
+router.post('/', protect, createGroup);
+router.post('/:groupId/join', protect, joinGroup);
+router.get('/my-groups', protect, getMyGroups)
+router.get('/:id/members', protect, getGroupMembers);
+router.post('/:groupId/invite', protect, inviteCollaboratorToGroup);
+router.delete('/:groupId/collaborators/:userId', protect, removeCollaboratorFromGroup);
+router.get('/collaborators', protect, getAllCollaborators);
+
 
 export default router;

@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    starredGroups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
+starredFiles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+
 });
 // Password hash before saving the user
 userSchema.pre('save', async function (next) {

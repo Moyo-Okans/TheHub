@@ -11,8 +11,11 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'thehub_uploads',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
-    resource_type: 'auto',
+    allowed_formats: [
+      'jpg', 'png', 'jpeg', 'pdf',
+      'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'
+    ],
+    resource_type: 'raw',
   },
 });
 
