@@ -43,7 +43,7 @@ const Login = () => {
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
-            style={{ width: '280px', paddingRight: '40px' }}
+            style={{ width: '250px', paddingRight: '40px' }}
           />
           <span
             onClick={togglePasswordVisibility}

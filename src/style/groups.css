@@ -83,6 +83,61 @@
     gap: 10px;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #007bff; /* Match your app's color scheme */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+  min-width: 120px;
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu li button {
+  width: 100%;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-menu li button:hover {
+  background-color: #f1f1f1;
+}
+
 @media (max-width: 480px) {
     .groupRow {
         flex-wrap: wrap;
