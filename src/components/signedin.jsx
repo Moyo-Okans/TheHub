@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -8,6 +8,31 @@ import { StarBorderOutlined } from "@mui/icons-material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 function SignedIn() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Toggle dropdown visibility
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleFileChange = () => {
+    console.log();
+  }
+
   return (
     <>
       <div className="welcomeHeader">
@@ -15,15 +40,39 @@ function SignedIn() {
           <h3>Welcome, Moyosore Okanlawon</h3>
           <p>Open your files or folders here!</p>
         </div>
-        <button>
-          <AddRoundedIcon />
-          Create
-          <KeyboardArrowDownIcon
-            sx={{
-              fontSize: "16px",
-            }}
-          />
-        </button>
+        <div className="dropdown" ref={dropdownRef}>
+          <button onClick={toggleDropdown} className="create-button">
+            <AddRoundedIcon />
+            Create
+            <KeyboardArrowDownIcon sx={{ fontSize: "16px" }} />
+          </button>
+          {isDropdownOpen && (
+            <ul className="dropdown-menu">
+              <li>
+                <button onClick={() => console.log("Create Group")}>
+                  Create Group
+                </button>
+              </li>
+              <li>
+                <label htmlFor="input-file">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="input-file"
+                    multiple
+                    hidden
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <div className="uploadButton">
+                    <h4>Select Media</h4>
+                  </div>
+                </label>
+
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
       <div className="actionBox">
         <h3>Groups</h3>
