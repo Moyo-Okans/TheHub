@@ -14,12 +14,15 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
+  const handleLogin = () => {
+    
+  }
+
   return (
     <div className='registerBox'>
       <div className="form">
         <img src={logo} alt="" className="logo" />
         <h3 className='signUp'>Sign In</h3>
-
         <div className="signupOptions">
           <button>
             <img src={GoogleIcon} alt="" />
@@ -39,11 +42,11 @@ const Login = () => {
 
         <input type="email" placeholder='Email Address' />
 
-        <div className="password" style={{ position: 'relative' }}>
+        <div className="password" style={{ width: '50%', position: 'relative' }}>
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
-            style={{ width: '250px', paddingRight: '40px' }}
+            style={{ width: '100%', paddingRight: '40px' }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -59,10 +62,13 @@ const Login = () => {
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </span>
         </div>
-
-        <button className='signUpBtn'>Sign In</button>
         <p className='signIn'>
-          Forgot your password? <Link to="/register">Click here</Link>
+        <Link to="/register">Forgot Password?</Link>
+        </p>
+        <button onClick={handleLogin} className='signUpBtn'><Link style={{color: '#fff'}} to="/dashboard">Sign In</Link></button>
+
+        <p className='signIn'>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
 
