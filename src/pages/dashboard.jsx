@@ -16,7 +16,7 @@ function Dashboard() {
           <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
-              <SignedIn />
+              <NewUser />
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>

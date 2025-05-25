@@ -43,7 +43,7 @@ function Files() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${yourAuthToken}`, // Replace with your actual token
+            // Authorization: `Bearer ${yourAuthToken}`, // Replace with your actual token
           },
         }
       );
