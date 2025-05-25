@@ -57,7 +57,7 @@ function NewUser() {
               margin="normal"
               value={title}
               sx={{
-                input: { color: 'white', backgroundColor: 'transparent' },
+                input: { color: 'white', backgroundColor: 'transparent', width: '300px' },
                 label: { color: 'white' },
                 '.MuiOutlinedInput-root': {
                   '& fieldset': { borderColor: 'white' },
