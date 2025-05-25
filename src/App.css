@@ -274,6 +274,7 @@ input::placeholder {
     width: 40%;
     text-align: center;
     font-size: 13px;
+    color: #282a2c;
 }
 
 .emptyFiles h2 {

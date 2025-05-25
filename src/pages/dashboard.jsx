@@ -7,7 +7,6 @@ import SignedIn from "../components/signedin";
 import NewUser from "../components/newUser";
 
 function Dashboard() {
-<<<<<<< HEAD
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const dropdownRef = useRef(null);
 
@@ -65,18 +64,6 @@ function Dashboard() {
                   </ul>
                 )}
               </div>
-=======
-
-  return (
-    <>
-      <div className="dashboard">
-        <Sidebar />
-        <div className="dashboard-content">
-          <Navbar />
-          <div className="main-content">
-            <div className="bodyContainer">
-              <SignedIn />
->>>>>>> e22db55bbdb364ff088eac31d221b1d11d3ae4d2
             </div>
             <h3 className="header">Groups</h3>
             <div className="groupRow">
