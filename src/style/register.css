@@ -9,12 +9,13 @@
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     width: 95vw;
     background-color: black;
     height: 95vh;
     border-radius: 20px;
-    padding: 40px 20px 20px 20px;
+    padding: 40px 20px 0px 20px;
     margin-top: 15px;
     margin-right: 20px;
     margin-left:30px;
@@ -30,7 +31,7 @@ h3{
     /* margin-top: 5px; */
 }
 .signupOptions{
-    gap: 7px;
+    gap: 10px;
     display: flex;
     flex-direction: row;
     margin-top: 10px;
@@ -45,7 +46,9 @@ h3{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: 10px;
+    width: 100%;
 }
 .signupOptions img{
     height: 17px;
@@ -71,13 +74,15 @@ h3{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 7px;
+    gap: 10px;
+    width: 40%;
+    height: 100%;
 }
 .form input{
     background-color: rgb(36, 36, 36);
     border: none;
     height: 45px;
-    width: 250px;
+    width: 50%;
     border-radius: 7px;
     padding: 5px 15px;
     outline: none;
@@ -91,7 +96,7 @@ h3{
     background-color: #425EEA;
     border: none;
     height: 45px;
-    width: 250px;
+    width: 50%;
     border-radius: 7px;
     color: white;
     margin-top: 5px;
@@ -101,11 +106,19 @@ h3{
     color: white;
     display: flex;
     flex-direction: row;
+    width: 50%;
+    gap: 10px;
+    /* margin-top: 5px; */
+}
+.signUpText{
+    color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 
     /* margin-top: 5px; */
 }
  a{
-    margin-left: 10px;
     color: #425EEA;
 }
 .first{
@@ -127,6 +140,7 @@ h3{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding:  10px 30px 70px 30px;
+    padding: 30px 20px;
     margin-top: 30px;
+    width: 100%;
 }

@@ -137,6 +137,20 @@
 .dropdown-menu li button:hover {
   background-color: #f1f1f1;
 }
+.uploadButton {
+  width: 100%;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.uploadButton:hover {
+  background-color: #f1f1f1;
+}
 
 @media (max-width: 480px) {
     .groupRow {

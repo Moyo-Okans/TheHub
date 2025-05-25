@@ -21,7 +21,7 @@ import SignedIn from "../components/signedin"
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<LogIn />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/groups" element={<Groups />} />
       <Route path="/collaborators" element={<Collaborators />} />

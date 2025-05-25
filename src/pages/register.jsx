@@ -18,7 +18,7 @@ const Register = () => {
       
       <div className="form">
         <img src={logo} alt="" className="logo" />
-        <h3 className='signUp'>Sign In</h3>
+        <h3 className='signUp'>Create Account</h3>
 
         <div className="signupOptions">
           <button>
@@ -39,11 +39,11 @@ const Register = () => {
         <input type="text" placeholder='Full Name'/>
         <input type="email" placeholder='Email Address' />
 
-        <div className="password" style={{ position: 'relative' }}>
+        <div className="password" style={{ width: '50%', position: 'relative' }}>
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
-            style={{ width: '250px', paddingRight: '40px' }}
+            style={{ width: '100%', paddingRight: '40px' }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -59,10 +59,10 @@ const Register = () => {
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </span>
         </div>
+        <button className='signUpBtn'>Sign In</button>
         <p className='signIn'>
           Have an account? <Link to="/login">Sign In</Link>
         </p>
-        <button className='signUpBtn'>Sign In</button>
       </div>
 
       <div className="footer">
