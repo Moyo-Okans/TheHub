@@ -13,7 +13,9 @@ import NotFound from "../pages/NotFound";
 import Register from '../pages/register';
 import LogIn from '../pages/login';
 import Community from "../pages/community";
-import GroupDetails from "../pages/GroupDetails";
+import GroupDetails from "../pages/GroupDetails"; 
+import NewUser from "../components/newUser"
+import SignedIn from "../components/signedin"
 
 
 function AppRoutes() {
@@ -31,10 +33,11 @@ function AppRoutes() {
       <Route path="/trash" element={<Trash />} />
       <Route path="/community" element={<Community />} />
       <Route path="/:id" element={<GroupDetails />} />
-      
+      <Route path="/newUser" element={<NewUser/>}/>
       <Route path="*" element={<NotFound />} />
       <Route path="/register" element={<Register/>} />
       <Route path="/login" element={<LogIn/>} />
+      <Route path="/signedIn" element={<SignedIn/>}/>
     </Routes>
   );
 }

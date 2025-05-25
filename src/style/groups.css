@@ -47,7 +47,7 @@
 }
 
 .groupFolder {
-    border: solid 1px rgb(75, 75, 75);
+    border: solid 1px #4b4b4b;
     padding: 7px 0px 7px 7px;
     width: 23%;
     height: auto;
