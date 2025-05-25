@@ -232,7 +232,24 @@ input::placeholder {
     border: none;
     color: white;
     cursor: pointer;
-
+}
+.uploadbtn {
+    width: fit-content;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #282A2C;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 3px 11px 3px 7px;
+    text-decoration: none;
+    font-size: 13.3px;
+}
+.uploadbtn p{
+    font-size: 13.3px;
 }
 
 .fullWidth {
@@ -274,7 +291,7 @@ input::placeholder {
     width: 40%;
     text-align: center;
     font-size: 13px;
-    color: #282a2c;
+    color: #E3E3E3;
 }
 
 .emptyFiles h2 {

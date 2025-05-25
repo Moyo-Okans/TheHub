@@ -5,6 +5,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import { Link } from "react-router-dom";
 
 function NewUser() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -110,14 +111,25 @@ function NewUser() {
               Select and Upload your first note/material PDF, DOCX, DOC etc.
             </p>
             <div className="fullWidth">
-              <button>
-                <AddRoundedIcon
+              <label htmlFor="input-file">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="input-file"
+                    multiple
+                    hidden
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <div className="uploadbtn">
+                    <AddRoundedIcon
                   style={{
                     paddingRight: 5,
                   }}
                 />
-                Upload
-              </button>
+                    <p>Upload</p>
+                  </div>
+                </label>
             </div>
           </div>
           <div className="groupContainer">
@@ -133,14 +145,14 @@ function NewUser() {
               Community
             </p>
             <div className="fullWidth">
-              <button>
+              <Link className="uploadbtn" to='/community'>
                 <SubdirectoryArrowRightIcon
                   style={{
                     paddingRight: 5,
                   }}
                 />
                 Visit
-              </button>
+              </Link>
             </div>
           </div>
         </div>
