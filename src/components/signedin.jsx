@@ -17,27 +17,31 @@ import {
 
 
 function SignedIn() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
-  
-    // Toggle dropdown visibility
-    const toggleDropdown = () => {
-      setIsDropdownOpen(!isDropdownOpen);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Toggle dropdown visibility
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
     };
-  
-    // Close dropdown when clicking outside
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setIsDropdownOpen(false);
-        }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
-  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleFileChange = () => {
+    console.log();
+  }
+
   return (
     <>
 
@@ -46,7 +50,7 @@ function SignedIn() {
         <div className="dashboard-content">
           <Navbar />
           <div className="main-content">
-            
+
             <div className="bodyContainer">
               <div className="welcomeHeader">
                 <div className="welcomeText">
@@ -67,9 +71,22 @@ function SignedIn() {
                         </button>
                       </li>
                       <li>
-                        <button onClick={() => console.log("Upload File")}>
-                          Upload File
-                        </button>
+
+                        <label htmlFor="input-file">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            id="input-file"
+                            multiple
+                            hidden
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                          />
+                          <div className="uploadButton">
+                            <h4>Select Media</h4>
+                          </div>
+                        </label>
+
                       </li>
                     </ul>
                   )}
@@ -182,7 +199,7 @@ function SignedIn() {
             </div>
           </div>
         </div>
-            </div>
+      </div>
     </>
   );
 }

@@ -32,12 +32,16 @@ function NewUser() {
     };
   }, []);
 
+  const handleFileChange = () => {
+    console.log();
+  }
+
   return (
     <>
       <div className="dashboard">
-        <Sidebar/>
+        <Sidebar />
         <div className="dashboard-content">
-          <Navbar/>
+          <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
               <div className="welcomeHeader">
@@ -59,9 +63,20 @@ function NewUser() {
                         </button>
                       </li>
                       <li>
-                        <button onClick={() => console.log("Upload File")}>
-                          Upload File
-                        </button>
+                        <label htmlFor="input-file">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            id="input-file"
+                            multiple
+                            hidden
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                          />
+                          <div className="uploadButton">
+                            <h4>Upload File</h4>
+                          </div>
+                        </label>
                       </li>
                     </ul>
                   )}
@@ -127,7 +142,7 @@ function NewUser() {
                     />
                     <h3>Go to Community</h3>
                     <p>
-                      Need inspiration or simply looking for materials? 
+                      Need inspiration or simply looking for materials?
                       Visit The hub community
                     </p>
                     <div className="fullWidth">
@@ -145,12 +160,12 @@ function NewUser() {
                 </div>
               </div>
               <div className="emptyFiles">
-                    <FolderIcon
-                      style={{
-                        fontSize: 70,
-                        color: "ffffff",
-                      }}
-                    />
+                <FolderIcon
+                  style={{
+                    fontSize: 70,
+                    color: "ffffff",
+                  }}
+                />
                 <h2>No files found</h2>
                 <p>
                   Your files and groups will be shown here, you can create a group or
@@ -168,8 +183,8 @@ function NewUser() {
             </div>
           </div>
         </div>
-      </div>  
-      
+      </div>
+
     </>
   );
 }
