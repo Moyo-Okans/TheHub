@@ -418,4 +418,7 @@ input::placeholder {
     .activityContainer{
         display: none;
     }
+    .emptyFiles p{
+        width: 70%;
+    }
 }
