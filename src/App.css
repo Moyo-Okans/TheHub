@@ -385,6 +385,17 @@ input::placeholder {
   border-radius: 5px;
   padding: 10px 10px;
 }
+.newGroupContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    gap: 5px
+}
+.newGroupImage{
+    width: 35%;
+}
 
 @media (max-width: 480px) {
     .navbar{
