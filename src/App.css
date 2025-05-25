@@ -354,6 +354,37 @@ input::placeholder {
     font-weight: 400;
     font-size: 12px;
 }
+.modalContent{
+    background-color: #282A2C;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+.modalInputContainer{
+    display: inherit;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+}
+.modalButtonsContainer{
+    display: inherit;
+    gap: 5px;
+}
+.modalButtonsContainer > :nth-child(1) {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+.modalButtonsContainer > :nth-child(2) {
+  background-color: #425EEA;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
 
 @media (max-width: 480px) {
     .navbar{

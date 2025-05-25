@@ -6,10 +6,13 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Link } from "react-router-dom";
+import { Dialog, TextField } from "@mui/material";
 
 function NewUser() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [title, setTitle] = useState("");
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
@@ -29,12 +32,56 @@ function NewUser() {
     };
   }, []);
 
-   const handleFileChange = () => {
+  const handleFileChange = () => {
     console.log();
+  }
+  const handleCreate = () => {
+    console.log(title);
+    setOpenPopup(false);
+    setTitle('');
   }
 
   return (
     <>
+      {/* Upload File Popup */}
+      <Dialog
+        open={openPopup}
+        onClose={() => setOpenPopup(false)}
+      >
+        <div className="modalContent">
+          <h2>Create Group</h2>
+          <div className="modalInputContainer">
+            <TextField
+              label="Unnamed Group"
+              fullWidth
+              margin="normal"
+              value={title}
+              sx={{
+                input: { color: 'white', backgroundColor: 'transparent' },
+                label: { color: 'white' },
+                '.MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white' },
+                  '&:hover fieldset': { borderColor: 'white' },
+                  '&.Mui-focused fieldset': { borderColor: 'white' },
+                },
+              }}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <div className="modalButtonsContainer">
+              <button
+                onClick={() => setOpenPopup(false)}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCreate}
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </Dialog>
       <div className="welcomeHeader">
         <div className="welcomeText">
           <h3>Welcome, Moyosore Okanlawon</h3>
@@ -49,7 +96,7 @@ function NewUser() {
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               <li>
-                <button onClick={() => console.log("Create Group")}>
+                <button onClick={() => setOpenPopup(true)}>
                   Create Group
                 </button>
               </li>
@@ -89,7 +136,7 @@ function NewUser() {
               group members
             </p>
             <div className="fullWidth">
-              <button>
+              <button onClick={() => setOpenPopup(true)}>
                 <AddRoundedIcon
                   style={{
                     paddingRight: 5,
@@ -112,24 +159,24 @@ function NewUser() {
             </p>
             <div className="fullWidth">
               <label htmlFor="input-file">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="input-file"
-                    multiple
-                    hidden
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
-                  <div className="uploadbtn">
-                    <AddRoundedIcon
-                  style={{
-                    paddingRight: 5,
-                  }}
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="input-file"
+                  multiple
+                  hidden
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
                 />
-                    <p>Upload</p>
-                  </div>
-                </label>
+                <div className="uploadbtn">
+                  <AddRoundedIcon
+                    style={{
+                      paddingRight: 5,
+                    }}
+                  />
+                  <p>Upload</p>
+                </div>
+              </label>
             </div>
           </div>
           <div className="groupContainer">
