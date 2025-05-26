@@ -7,11 +7,11 @@ import logo from "../assets/logo.png";
 
 const NavbarCommunity = () => {
   return (
-    <div className="navbar">
-       <div className="logo">
-                  <img src={logo} alt="" />
-                   <h3>The Hub</h3>
-                </div>
+    <div className="navbarCommunity">
+      <div className="navbarCommunitylogo">
+        <img src={logo} alt="" />
+        <h3>The Hub</h3>
+      </div>
       <div className="profile">
         <Link to="/dashboard">
           <HomeOutlinedIcon

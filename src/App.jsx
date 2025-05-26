@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import AppRoutes from './router/route';
 
+
 function App() {
   const [message, setMessage] = useState('');
 

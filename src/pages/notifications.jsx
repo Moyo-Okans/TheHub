@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { Delete } from "@mui/icons-material";
 import { InsertDriveFile } from "@mui/icons-material";
 import '../style/notifications.css';
+import NoNotification from "../components/noNotification";
 
 
 function Notifications() {
@@ -29,41 +30,7 @@ function Notifications() {
                 <button >Uploaded</button>
                 <button >Deleted</button>
               </div>
-              <div className="fileGroup">
-                <div className="notificationFiles">
-                  <div className="fileName">
-                    <InsertDriveFile style={{
-                      color: '#425EEA'
-                    }}/>
-                    <p>Lolade Olukayode <span>uploaded </span>CSP 402.pdf <span>to</span> CSP Final Exam</p>
-                  </div>
-                  <div className="date">
-                    <p>Mar 12, 2025</p>
-                  </div>
-                </div>
-                <div className="notificationFiles">
-                  <div className="fileName">
-                    <InsertDriveFile style={{
-                      color: '#425EEA'
-                    }}/>
-                    <p>Moyosore Okanlawon <span>deleted </span>CSP 302.pdf <span>to</span> CSP Final Exam</p>
-                  </div>
-                  <div className="date">
-                    <p>Mar 12, 2025</p>
-                  </div>
-                </div>
-                <div className="notificationFiles">
-                  <div className="fileName">
-                    <InsertDriveFile style={{
-                      color: '#425EEA'
-                    }}/>
-                    <p>Victoria Chukwudike <span>uploaded </span>CSP 414.pdf <span>to</span> CSP Final Exam</p>
-                  </div>
-                  <div className="date">
-                    <p>Mar 12, 2025</p>
-                  </div>
-                </div>
-              </div>
+              <NoNotification />
             </div>
           </div>
         </div>
