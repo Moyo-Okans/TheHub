@@ -232,7 +232,24 @@ input::placeholder {
     border: none;
     color: white;
     cursor: pointer;
-
+}
+.uploadbtn {
+    width: fit-content;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #282A2C;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 3px 11px 3px 7px;
+    text-decoration: none;
+    font-size: 13.3px;
+}
+.uploadbtn p{
+    font-size: 13.3px;
 }
 
 .fullWidth {
@@ -274,7 +291,7 @@ input::placeholder {
     width: 40%;
     text-align: center;
     font-size: 13px;
-    color: #282a2c;
+    color: #E3E3E3;
 }
 
 .emptyFiles h2 {
@@ -336,4 +353,114 @@ input::placeholder {
 .pTag{
     font-weight: 400;
     font-size: 12px;
+}
+.modalContent{
+    background-color: #282A2C;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+.modalInputContainer{
+    display: inherit;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+}
+.modalButtonsContainer{
+    display: inherit;
+    gap: 5px;
+}
+.modalButtonsContainer > :nth-child(1) {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+.modalButtonsContainer > :nth-child(2) {
+  background-color: #425EEA;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+.newGroupContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    gap: 5px
+}
+.newGroupImage{
+    width: 35%;
+}
+
+@media (max-width: 480px) {
+    .navbar{
+        padding: 15px 10px;
+        justify-content: flex-end;
+        gap: 10px;
+        height: auto;
+    }
+    .searchbar{
+        width: 200px;
+        height: 40px;
+    }
+    .searchbar input {
+        width: 100%;
+    }
+    .profile{
+        width: fit-content;
+        gap: 10px;
+    }
+    .profileIcons{
+        font-size: 25px !important;
+    }
+    .profile img{
+        width: 30px;
+        height: 30px;
+    }
+    .main-content{
+        width: 100%;
+        flex-direction: column;
+        padding: 0;
+    }
+    .bodyContainer{
+        width: 100%;
+        padding: 20px;
+    }
+    .bodyContainer2{
+        width: 100%;
+        padding: 20px;
+    }
+    .welcomeHeader{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .welcomeText h3{
+        font-size: 25px;
+    }
+    .welcomeText p{
+        font-size: 12px;
+    }
+    .welcomeHeader button{
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .boxes{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .groupContainer{
+     width: 100%;   
+    }
+    .activityContainer{
+        display: none;
+    }
+    .emptyFiles p{
+        width: 70%;
+    }
 }

@@ -85,6 +85,7 @@
 /* Navigation */
 .sidebar-nav {
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 5px;

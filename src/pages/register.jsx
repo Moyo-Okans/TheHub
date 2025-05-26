@@ -5,6 +5,7 @@ import FaceBookIcon from '../assets/facebook.png';
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import api from '../config/axios'; // Adjust the path as necessary
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +13,26 @@ const Register = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+
+const handleRegister = async (e) => {
+  e.preventDefault(); // important!
+  const formData = new FormData(e.target);
+  const data = {
+    fullName: formData.get('fullName'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+  };
+
+  try {
+    const response = await api.post('/users/signup', data);
+    console.log('Registration successful:', response.data);
+    // Redirect user or show success message
+  } catch (error) {
+    console.error('Registration failed:', error?.response?.data || error.message);
+    // Show error to user
+  }
+};
+
 
   return (
     <div className='registerBox'>
@@ -36,30 +57,35 @@ const Register = () => {
           <p>or</p>
           <div></div>
         </div>
-        <input type="text" placeholder='Full Name'/>
-        <input type="email" placeholder='Email Address' />
+<form onSubmit={handleRegister}>
+  <input type="text" name="fullName" placeholder="Full Name" required />
+  <input type="email" name="email" placeholder="Email Address" required />
+  <div className="password" style={{ width: '50%', position: 'relative' }}>
+    <input
+      type={showPassword ? 'text' : 'password'}
+      name="password"
+      placeholder="Password"
+      style={{ width: '100%', paddingRight: '40px' }}
+      required
+    />
+    <span
+      onClick={togglePasswordVisibility}
+      style={{
+        position: 'absolute',
+        right: '10px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+        color: '#555',
+      }}
+    >
+      {showPassword ? <VisibilityOff /> : <Visibility />}
+    </span>
+  </div>
+  <button className='signUpBtn' type="submit">Sign Up</button>
+</form>
 
-        <div className="password" style={{ width: '50%', position: 'relative' }}>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            placeholder='Password'
-            style={{ width: '100%', paddingRight: '40px' }}
-          />
-          <span
-            onClick={togglePasswordVisibility}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              color: '#555',
-            }}
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </span>
-        </div>
-        <button className='signUpBtn'>Sign In</button>
+
         <p className='signIn'>
           Have an account? <Link to="/login">Sign In</Link>
         </p>
