@@ -123,6 +123,9 @@ h3{
 }
 .first{
     color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .footerLogo{
     height: 40px;
@@ -143,4 +146,51 @@ h3{
     padding: 30px 20px;
     margin-top: 30px;
     width: 100%;
+}
+
+@media (max-width: 480px) {
+  .registerBox{
+    margin: 10px;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .registerBox .form{
+    width: 70%;
+  }
+  .form input{
+    width: 100%;
+  }
+  .password{
+    width: 100% !important;
+  }
+  .signIn{
+    width: 100%;
+  }
+  .signUpBtn{
+    width: 100%;
+  }
+  .footer{
+    padding: 10px 20px;
+    margin: 0;
+  }
+  .footerLogo{
+    height: 20px;
+  }
+  .first{
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-text h3{
+    font-size: 12px;
+  }
+  .copy{
+    font-size: 12px;
+  }
+  .first p{
+    font-size: 12px;
+  }
+  .first1{
+    display: none;
+  }
 }

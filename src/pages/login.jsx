@@ -6,7 +6,6 @@ import FaceBookIcon from '../assets/facebook.png';
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import api from '../config/axios'; 
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +15,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    
+
   }
 
   return (
@@ -64,9 +63,9 @@ const Login = () => {
           </span>
         </div>
         <p className='signIn'>
-        <Link to="/register">Forgot Password?</Link>
+          <Link to="/register">Forgot Password?</Link>
         </p>
-        <button onClick={handleLogin} className='signUpBtn'><Link style={{color: '#fff'}} to="/dashboard">Sign In</Link></button>
+        <button onClick={handleLogin} className='signUpBtn'><Link style={{ color: '#fff' }} to="/dashboard">Sign In</Link></button>
 
         <p className='signIn'>
           Don't have an account? <Link to="/register">Register</Link>
@@ -79,9 +78,9 @@ const Login = () => {
             <img src={logo} alt="" className="footerLogo" />
             <h3>The Hub</h3>
           </div>
-          &copy; {new Date().getFullYear()} TheHub.
+          <p className='copy'>&copy; {new Date().getFullYear()}</p>
         </div>
-        <div className="first">
+        <div className="first first1">
           <p>Community guidelines. Terms of service</p>
         </div>
         <div className="first">

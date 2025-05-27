@@ -14,29 +14,29 @@ const Register = () => {
     setShowPassword((prev) => !prev);
   };
 
-const handleRegister = async (e) => {
-  e.preventDefault(); // important!
-  const formData = new FormData(e.target);
-  const data = {
-    fullName: formData.get('fullName'),
-    email: formData.get('email'),
-    password: formData.get('password'),
-  };
+  const handleRegister = async (e) => {
+    e.preventDefault(); // important!
+    const formData = new FormData(e.target);
+    const data = {
+      fullName: formData.get('fullName'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
 
-  try {
-    const response = await api.post('/users/signup', data);
-    console.log('Registration successful:', response.data);
-    // Redirect user or show success message
-  } catch (error) {
-    console.error('Registration failed:', error?.response?.data || error.message);
-    // Show error to user
-  }
-};
+    try {
+      const response = await api.post('/users/signup', data);
+      console.log('Registration successful:', response.data);
+      // Redirect user or show success message
+    } catch (error) {
+      console.error('Registration failed:', error?.response?.data || error.message);
+      // Show error to user
+    }
+  };
 
 
   return (
     <div className='registerBox'>
-      
+
       <div className="form">
         <img src={logo} alt="" className="logo" />
         <h3 className='signUp'>Create Account</h3>
@@ -57,33 +57,32 @@ const handleRegister = async (e) => {
           <p>or</p>
           <div></div>
         </div>
-<form onSubmit={handleRegister}>
-  <input type="text" name="fullName" placeholder="Full Name" required />
-  <input type="email" name="email" placeholder="Email Address" required />
-  <div className="password" style={{ width: '50%', position: 'relative' }}>
-    <input
-      type={showPassword ? 'text' : 'password'}
-      name="password"
-      placeholder="Password"
-      style={{ width: '100%', paddingRight: '40px' }}
-      required
-    />
-    <span
-      onClick={togglePasswordVisibility}
-      style={{
-        position: 'absolute',
-        right: '10px',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        cursor: 'pointer',
-        color: '#555',
-      }}
-    >
-      {showPassword ? <VisibilityOff /> : <Visibility />}
-    </span>
-  </div>
-  <button className='signUpBtn' type="submit">Sign Up</button>
-</form>
+        <input type="text" name="fullName" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <div className="password" style={{ width: '50%', position: 'relative' }}>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            style={{ width: '100%', paddingRight: '40px' }}
+            required
+          />
+          <span
+            onClick={togglePasswordVisibility}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              color: '#555',
+            }}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </span>
+        </div>
+        <button onClick={handleRegister} className='signUpBtn' type="submit">Sign Up</button>
+
 
 
         <p className='signIn'>
@@ -97,9 +96,9 @@ const handleRegister = async (e) => {
             <img src={logo} alt="" className="footerLogo" />
             <h3>The Hub</h3>
           </div>
-          &copy; {new Date().getFullYear()} TheHub.
+          <p className='copy'>&copy; {new Date().getFullYear()}</p>
         </div>
-        <div className="first">
+        <div className="first first1">
           <p>Community guidelines. Terms of service</p>
         </div>
         <div className="first">
