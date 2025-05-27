@@ -41,6 +41,12 @@
     flex-direction: column;
     gap: 10px;
 }
+.communityContentHead2{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .recommended{
     display: flex;
     width: 100%;
@@ -59,4 +65,75 @@
 
 .paddingTop{ 
     padding-top: 20px;
+}
+@media (max-width: 480px){
+    .community-header{
+        width: 100%;
+        padding: 20px;
+    }
+    .community-header h1{
+        width: 100%;
+        font-size: 30px;
+    }
+    .communityContentHead h3{
+        font-size: 20px;
+    }
+    .community-content{
+        width: 100%;
+    }
+    .communityContentHead{
+        padding-top: 30px;
+    }
+    .communityContentHead2{
+        padding-top: 10px;
+    }
+    .communityContentHead2 h3{
+        font-size: 20px;
+    }
+}
+.fileTable{
+    overflow-x: auto;
+  
+
+}
+.fileTable table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.communityContentHead3{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 30px;
+}
+
+.groupFolder1{
+    width: 100%;
+    height: auto;
+    border: solid 1px rgb(46, 46, 46);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    
+}
+.groupFolderHeader1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    text-align: center;
+}
+.groupFolder1 p{
+    display: grid;
+    gap: 15px;
+}
+.groupRow1{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
 }

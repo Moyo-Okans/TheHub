@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import Footer from "../components/footer";
 
 
 function Community() {
@@ -209,8 +210,123 @@ function Community() {
                   <p className="date">March 12,2025</p>
                 </div>
               </div>
+             <div className="communityContentHead3">
+            <h3>Popular Courses</h3>
+            <div className="popular">
+              <p>Find study groups and materials for your study goals</p>
+              <Link>See More</Link>
+            </div>
+          </div>
+          <div className="groupRow1">
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Agricultural Science</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Business Administration</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Computer Science</p>
+               
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Dentistry Science</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Economics</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Forestry Technology</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Geography and Planning</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+            <div className="groupFolder1">
+              <div className="groupFolderHeader1">
+                <p>Health Education</p>
+              </div>
+              <FolderIcon
+                style={{
+                  fontSize: 125,
+                  margin: 0,
+                  padding: 0,
+                  color: "gray",
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
