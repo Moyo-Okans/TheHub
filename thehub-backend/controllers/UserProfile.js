@@ -1,17 +1,13 @@
 import express from 'express';
-import { signup, login } from '../controllers/userController.js';
-import protect from '../middleware/authMiddleware.js';
+import protect from '../middleware/authMiddleware';
+import User from '../models/User';
 
 const router = express.Router();
-// Signup route
-router.post('/signup', signup);
-// Login route
-router.post('/login', login);
 
 //Get user profile
 router.get('/profile', protect, async (req,res) => {
     
-    if(!req.user){
+    if(!req.User){
         return res.status(404).json({message:'User not found'});
     }
     res.json({
@@ -20,4 +16,5 @@ router.get('/profile', protect, async (req,res) => {
         email:req.user.email,
     });
 });
+
 export default router;

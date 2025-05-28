@@ -10,10 +10,10 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -29,6 +29,9 @@ const Login = () => {
 
     try {
       const response = await api.post('/users/login', data); // Use the correct endpoint
+      localStorage.setItem("token", response.data.token)
+      console.log(localStorage.getItem('token'));
+
       console.log('Login successful:', response.data);
       // Redirect to dashboard or another page after successful login
       navigate('/dashboard');

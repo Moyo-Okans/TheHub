@@ -7,12 +7,38 @@ import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Link } from "react-router-dom";
 import { Dialog, TextField } from "@mui/material";
-
+import api from "../api";
 function NewUser() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [fullName, setFullName] = useState("");
   const dropdownRef = useRef(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [title, setTitle] = useState("");
+
+  //Fetch user profile
+  useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Token:", token); // Debug line
+      if (!token) return;
+
+      const { data } = await api.get("/users/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("User Profile:", data);
+     setFullName(data.fullname); 
+
+    } catch (error) {
+      console.error("Failed to load Profile:", error.message);
+    }
+  };
+
+  fetchProfile();
+}, []);
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
@@ -84,7 +110,7 @@ function NewUser() {
       </Dialog>
       <div className="welcomeHeader">
         <div className="welcomeText">
-          <h3>Welcome, Moyosore</h3>
+          <h3>Welcome, {fullName || "User"}</h3>
           <p>Open your files or folders here!</p>
         </div>
         <div className="dropdown" ref={dropdownRef}>

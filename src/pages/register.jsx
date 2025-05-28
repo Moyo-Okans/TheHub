@@ -29,6 +29,8 @@ const Register = () => {
 
     try {
       const response = await api.post('/users/signup', data);
+      localStorage.setItem("token",response.data.token)
+      console.log(localStorage.getItem('token'));
       console.log('Registration successful:', response.data);
        navigate('/dashboard');
       // Redirect user or show success message
