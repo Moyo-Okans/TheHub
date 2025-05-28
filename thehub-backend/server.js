@@ -1,16 +1,17 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from "express";
 import cors from 'cors';
 import userRoutes from "./routes/userRoutes.js";
 import groupRoutes from "./routes/groupRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import connectDB from "./config/db.js";
-import connectCloudinary from "./utils/cloudinary.js"; 
-import "dotenv/config";
-import morgan from 'morgan'; 
+import connectCloudinary from "./config/cloudinary.js";
+import morgan from 'morgan';
 
 // App Config
 const app = express();
-const port = process.env.PORT || 5000; 
+const port = process.env.PORT || 5000;
 connectDB();
 connectCloudinary();
 
