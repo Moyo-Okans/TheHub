@@ -156,7 +156,8 @@ export const getAllCollaborators = async (req, res) => {
     const groups = await Group.find({
       $or: [
         { createdBy: currentUserId },
-        { 'collaborators.userId': currentUserId }
+        { 'collaborators.user': currentUserId }
+
       ]
     }).populate('collaborators.userId', 'name email');
 
