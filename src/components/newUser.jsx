@@ -58,9 +58,43 @@ function NewUser() {
     };
   }, []);
 
-  const handleFileChange = () => {
-    console.log();
+const handleFileChange = async (event) => {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You must be logged in to upload files.");
+    return;
   }
+
+  const file = files[0];
+  const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("title", fileNameWithoutExt); // Use cleaned file name as title
+  formData.append("tags", ''); // Optional: can replace '' with actual tags later
+
+  try {
+    const response = await api.post('/files/upload', formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Upload success:", response.data);
+    // TODO: optionally refresh file list or UI
+  } catch (error) {
+    console.error("File upload failed:", error.response?.data || error.message);
+    alert("File upload failed");
+  }
+};
+
+
+
+
   const handleCreate = () => {
     console.log(title);
     setOpenPopup(false);
@@ -130,7 +164,7 @@ function NewUser() {
                 <label htmlFor="input-file">
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="*/*"
                     id="input-file"
                     multiple
                     hidden
@@ -138,7 +172,7 @@ function NewUser() {
                     onChange={handleFileChange}
                   />
                   <div className="uploadButton">
-                    <h4>Uploade File</h4>
+                    <h4>Upload File</h4>
                   </div>
                 </label>
               </li>
@@ -187,8 +221,9 @@ function NewUser() {
               <label htmlFor="input-file">
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="*/*"
                   id="input-file"
+                  name="file"
                   multiple
                   hidden
                   style={{ display: "none" }}

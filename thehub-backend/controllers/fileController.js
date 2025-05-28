@@ -1,48 +1,12 @@
 import File from '../models/File.js';
+import Group from '../models/Group.js';
 import { logActivity } from '../utils/activityLogger.js';
 import { notifyGroupMembers } from '../utils/notifyGroup.js';
 
-// export const uploadFile = async (req, res) => {
-//   try {
-//     const { title, tags } = req.body;
-//     const groupId = req.params.groupId;
-//     const userId = req.user.id;
 
-//     const fileType = req.file.mimetype
 
-//     const newFile = await File.create({
-//       title,
-//       fileType,
-//       fileUrl: req.file.path,
-//       groupId,
-//       uploadedBy: userId,
-//       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
-//     });
-
-//         // Log activity
-//     await logActivity({
-//       fileId: File._id,
-//       userId: req.user.id,
-//       action: 'uploaded',
-//     });
-
-//     // Notify group members
-//     await notifyGroupMembers({
-//       groupId,
-//       senderId: req.user.id,
-//       message: `${req.user.name || 'Someone'} uploaded a file: "${title}"`,
-//     });
-
-//     res.status(201).json(newFile);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to upload file.' });
-//     console.error(error);
-//   }
-// };
-
-export const uploadFile = async (req, res) => {
+export const uploadGroupFile = async (req, res) => {
   try {
-    console.log('REQ.FILE:', req.file);  // Check if multer received the file
     if (!req.file) {
       return res.status(400).json({ error: 'No file received. Make sure the field name is "file".' });
     }
@@ -51,48 +15,93 @@ export const uploadFile = async (req, res) => {
     const groupId = req.params.groupId;
     const userId = req.user.id;
 
+    const groupExists = await Group.findById(groupId);
+    if (!groupExists) {
+      return res.status(404).json({ error: 'Group not found.' });
+    }
+
     const fileType = req.file.mimetype;
 
     const newFile = await File.create({
       title,
       fileType,
-      fileUrl: req.file.path, // or req.file.url if using cloudinary
+      fileUrl: req.file.path,
       groupId,
       uploadedBy: userId,
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
     });
 
-    // Log activity
     await logActivity({
-      fileId: newFile._id, // FIXED! was File._id which was incorrect
-      userId: req.user.id,
+      fileId: newFile._id,
+      userId,
       action: 'uploaded',
     });
 
-    // Notify group members
     await notifyGroupMembers({
       groupId,
-      senderId: req.user.id,
+      senderId: userId,
       message: `${req.user.name || 'Someone'} uploaded a file: "${title}"`,
     });
 
     res.status(201).json(newFile);
   } catch (error) {
-    console.error('UPLOAD ERROR:', error);
+    console.error('UPLOAD GROUP FILE ERROR:', error);
+    res.status(500).json({ error: 'Failed to upload file to group.' });
+  }
+};
+
+export const uploadIndependentFile = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file received. Make sure the field name is "file".' });
+    }
+
+    const { title, tags } = req.body;
+    const userId = req.user.id;
+
+    const fileType = req.file.mimetype;
+
+    const newFile = await File.create({
+      title,
+      fileType,
+      fileUrl: req.file.path,
+      uploadedBy: userId,
+      tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+    });
+
+    await logActivity({
+      fileId: newFile._id,
+      userId,
+      action: 'uploaded',
+    });
+
+    res.status(201).json(newFile);
+  } catch (error) {
+    console.error('UPLOAD INDEPENDENT FILE ERROR:', error);
     res.status(500).json({ error: 'Failed to upload file.' });
   }
 };
+
 
 
 export const listGroupFiles = async (req, res) => {
   try {
     const groupId = req.params.groupId;
     const files = await File.find({ groupId }).sort({ createdAt: -1 });
-
     res.json(files);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch files.' });
-    console.error(error);
+    console.error('LIST GROUP FILES ERROR:', error);
+    res.status(500).json({ error: 'Failed to fetch group files.' });
+  }
+};
+
+export const listIndependentFiles = async (req, res) => {
+  try {
+    const files = await File.find({ groupId: { $exists: false } }).sort({ createdAt: -1 });
+    res.json(files);
+  } catch (error) {
+    console.error('LIST INDEPENDENT FILES ERROR:', error);
+    res.status(500).json({ error: 'Failed to fetch independent files.' });
   }
 };
 

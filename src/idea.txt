@@ -1,0 +1,30 @@
+const handleFileChange = async (event) => {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You must be logged in to upload files.");
+    return;
+  }
+
+  for (let i = 0; i < files.length; i++) {
+    const formData = new FormData();
+    formData.append("file", files[i]);
+
+    try {
+      const response = await api.post('/files/upload', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(`Upload success for file ${i + 1}:`, response.data);
+    } catch (error) {
+      console.error(`Upload failed for file ${i + 1}:`, error.response?.data || error.message);
+    }
+  }
+
+  // Optionally refresh file list after all uploads
+};
