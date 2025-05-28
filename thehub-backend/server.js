@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import groupRoutes from "./routes/groupRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import connectDB from "./config/db.js";
-import connectCloudinary from "./utils/cloudinary.js"; 
+import connectCloudinary from "./config/cloudinary.js";
 import morgan from 'morgan';
 
 // App Config
