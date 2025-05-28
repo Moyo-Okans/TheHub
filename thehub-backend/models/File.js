@@ -17,7 +17,7 @@ const fileSchema = new mongoose.Schema({
   groupId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Group",
-    required: true,
+    required: false,
   },
   uploadedBy: {
     type: mongoose.Schema.Types.ObjectId,

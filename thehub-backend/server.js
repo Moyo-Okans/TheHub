@@ -32,9 +32,13 @@ app.get('/', (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+  console.error("GLOBAL ERROR HANDLER:", err);
+  res.status(500).json({
+    error: err.message || 'Internal Server Error',
+    stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
+  });
 });
+
 
 // Start the server
 app.listen(port, () => console.log(`Server running on port ${port}`));
