@@ -5,15 +5,13 @@ import GoogleIcon from '../assets/google.png';
 import FaceBookIcon from '../assets/facebook.png';
 import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import api from '../api';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -21,10 +19,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission
-    console.log(email, password)
+    const formData = new FormData(e.target);
     const data = {
-      email: email,
-      password: password,
+      email: formData.get('email'),
+      password: formData.get('password'),
     };
 
     try {
@@ -44,6 +42,7 @@ const Login = () => {
         <img src={logo} alt="" className="logo" />
         <h3 className='signUp'>Sign In</h3>
         {error && <p className="error">{error}</p>} {/* Display error message */}
+
         <div className="signupOptions">
           <button>
             <img src={GoogleIcon} alt="" />
@@ -61,34 +60,35 @@ const Login = () => {
           <div></div>
         </div>
 
-        <input type="email" placeholder='Email Address' required value={email} onChange={(e) => setEmail(e.target.value)} />
-
-        <div className="password" style={{ width: '50%', position: 'relative' }}>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            placeholder='Password'
-            required
-            value={password} onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', paddingRight: '40px' }}
-          />
-          <span
-            onClick={togglePasswordVisibility}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              color: '#555',
-            }}
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </span>
-        </div>
-        <p className='signIn'>
-          <Link to="/register">Forgot Password?</Link>
-        </p>
-        <button onClick={handleLogin} className='signUpBtn'>Sign In</button>
+        <form onSubmit={handleLogin}>
+          <input type="email" name="email" placeholder='Email Address' required />
+          <div className="password" style={{ width: '50%', position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder='Password'
+              style={{ width: '100%', paddingRight: '40px' }}
+              required
+            />
+            <span
+              onClick={togglePasswordVisibility}
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+                color: '#555',
+              }}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </span>
+          </div>
+          <p className='signIn'>
+            <Link to="/register">Forgot Password?</Link>
+          </p>
+          <button type="submit" className='signUpBtn'>Sign In</button>
+        </form>
 
         <p className='signIn'>
           Don't have an account? <Link to="/register">Register</Link>
@@ -101,9 +101,9 @@ const Login = () => {
             <img src={logo} alt="" className="footerLogo" />
             <h3>The Hub</h3>
           </div>
-          <p className='copy'>&copy; {new Date().getFullYear()}</p>
+          &copy; {new Date().getFullYear()} TheHub.
         </div>
-        <div className="first first1">
+        <div className="first">
           <p>Community guidelines. Terms of service</p>
         </div>
         <div className="first">

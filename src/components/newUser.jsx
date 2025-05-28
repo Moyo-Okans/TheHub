@@ -84,7 +84,7 @@ function NewUser() {
       </Dialog>
       <div className="welcomeHeader">
         <div className="welcomeText">
-          <h3>Welcome, Moyosore Okanlawon</h3>
+          <h3>Welcome, Moyosore</h3>
           <p>Open your files or folders here!</p>
         </div>
         <div className="dropdown" ref={dropdownRef}>

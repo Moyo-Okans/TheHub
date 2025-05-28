@@ -5,6 +5,9 @@
     margin: 0;
     font-family: 'Inter', 'Roboto', 'Roboto Condensed', sans-serif;
 }
+.error{
+  color: red;
+}
 .registerBox{
     display: flex;
     flex-direction: column;
