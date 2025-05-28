@@ -32,7 +32,7 @@ function AppRoutes() {
       <Route path="/support" element={<Support />} />
       <Route path="/trash" element={<Trash />} />
       <Route path="/community" element={<Community />} />
-      <Route path="/:id" element={<GroupDetails />} />
+      <Route path="/group/:id" element={<GroupDetails />} />
       <Route path="/newUser" element={<NewUser/>}/>
       <Route path="*" element={<NotFound />} />
       <Route path="/register" element={<Register/>} />

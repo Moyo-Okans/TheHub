@@ -4,6 +4,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FolderIcon from "@mui/icons-material/Folder";
 import { MoreVert } from "@mui/icons-material";
 import { ScheduleRounded } from "@mui/icons-material";
+import { Link } from 'react-router-dom';
 import { StarBorderOutlined } from "@mui/icons-material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import api from "../api";
@@ -102,7 +103,7 @@ function SignedIn() {
       <div className="actionBox">
         <h3>Groups</h3>
         <div className="groupRow">
-          <div className="groupFolder">
+          <button onClick={() => window.open(`http://localhost:5000/group/${id}`, '_blank')} className="groupFolder">
             <div className="groupFolderHeader">
               <p>CSC Final Exam Group</p>
               <MoreVert />
@@ -115,50 +116,8 @@ function SignedIn() {
                 color: "gray",
               }}
             />
+          </button>
           </div>
-          <div className="groupFolder">
-            <div className="groupFolderHeader">
-              <p>CSC Final Exam Group</p>
-              <MoreVert />
-            </div>
-            <FolderIcon
-              style={{
-                fontSize: 125,
-                margin: 0,
-                padding: 0,
-                color: "gray",
-              }}
-            />
-          </div>
-          <div className="groupFolder">
-            <div className="groupFolderHeader">
-              <p>CSC Final Exam Group</p>
-              <MoreVert />
-            </div>
-            <FolderIcon
-              style={{
-                fontSize: 125,
-                margin: 0,
-                padding: 0,
-                color: "gray",
-              }}
-            />
-          </div>
-          <div className="groupFolder">
-            <div className="groupFolderHeader">
-              <p>CSC Final Exam Group</p>
-              <MoreVert />
-            </div>
-            <FolderIcon
-              style={{
-                fontSize: 125,
-                margin: 0,
-                padding: 0,
-                color: "gray",
-              }}
-            />
-          </div>
-        </div>
       </div>
       <div className="actionBox">
         <h3>Files</h3>
