@@ -2,26 +2,69 @@ import File from '../models/File.js';
 import { logActivity } from '../utils/activityLogger.js';
 import { notifyGroupMembers } from '../utils/notifyGroup.js';
 
+// export const uploadFile = async (req, res) => {
+//   try {
+//     const { title, tags } = req.body;
+//     const groupId = req.params.groupId;
+//     const userId = req.user.id;
+
+//     const fileType = req.file.mimetype
+
+//     const newFile = await File.create({
+//       title,
+//       fileType,
+//       fileUrl: req.file.path,
+//       groupId,
+//       uploadedBy: userId,
+//       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+//     });
+
+//         // Log activity
+//     await logActivity({
+//       fileId: File._id,
+//       userId: req.user.id,
+//       action: 'uploaded',
+//     });
+
+//     // Notify group members
+//     await notifyGroupMembers({
+//       groupId,
+//       senderId: req.user.id,
+//       message: `${req.user.name || 'Someone'} uploaded a file: "${title}"`,
+//     });
+
+//     res.status(201).json(newFile);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to upload file.' });
+//     console.error(error);
+//   }
+// };
+
 export const uploadFile = async (req, res) => {
   try {
+    console.log('REQ.FILE:', req.file);  // Check if multer received the file
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file received. Make sure the field name is "file".' });
+    }
+
     const { title, tags } = req.body;
     const groupId = req.params.groupId;
     const userId = req.user.id;
 
-    const fileType = req.file.mimetype
+    const fileType = req.file.mimetype;
 
     const newFile = await File.create({
       title,
       fileType,
-      fileUrl: req.file.path,
+      fileUrl: req.file.path, // or req.file.url if using cloudinary
       groupId,
       uploadedBy: userId,
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
     });
 
-        // Log activity
+    // Log activity
     await logActivity({
-      fileId: File._id,
+      fileId: newFile._id, // FIXED! was File._id which was incorrect
       userId: req.user.id,
       action: 'uploaded',
     });
@@ -35,10 +78,11 @@ export const uploadFile = async (req, res) => {
 
     res.status(201).json(newFile);
   } catch (error) {
+    console.error('UPLOAD ERROR:', error);
     res.status(500).json({ error: 'Failed to upload file.' });
-    console.error(error);
   }
 };
+
 
 export const listGroupFiles = async (req, res) => {
   try {
@@ -98,8 +142,8 @@ export const deleteFile = async (req, res) => {
       userId: req.user.id,
       action: 'deleted',
     });
-
-    // Notify group members
+     // 
+    //Notify group members
     await notifyGroupMembers({
       groupId: file.groupId,
       senderId: req.user.id,

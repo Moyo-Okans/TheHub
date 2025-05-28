@@ -112,7 +112,7 @@ export default function Sidebar() {
             {/* Dashboard */}
             <div>
               <Link
-                to="/"
+                to="/dashboard"
                 className={`sidebar-item ${activeItem === "/" ? "active" : ""}`}
                 onClick={() => handleNavItemClick("/")}
                 title="Dashboard"

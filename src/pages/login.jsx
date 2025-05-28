@@ -4,14 +4,41 @@ import '../style/register.css';
 import GoogleIcon from '../assets/google.png';
 import FaceBookIcon from '../assets/facebook.png';
 import logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../api';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    console.log(email, password)
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await api.post('/users/login', data); // Use the correct endpoint
+      localStorage.setItem("token", response.data.token)
+      console.log(localStorage.getItem('token'));
+
+      console.log('Login successful:', response.data);
+      // Redirect to dashboard or another page after successful login
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error?.response?.data || error.message);
+      setError('Login failed. Please check your credentials.'); // Set error message
+    }
   };
 
   return (
@@ -19,7 +46,7 @@ const Login = () => {
       <div className="form">
         <img src={logo} alt="" className="logo" />
         <h3 className='signUp'>Sign In</h3>
-
+        {error && <p className="error">{error}</p>} {/* Display error message */}
         <div className="signupOptions">
           <button>
             <img src={GoogleIcon} alt="" />
@@ -37,13 +64,15 @@ const Login = () => {
           <div></div>
         </div>
 
-        <input type="email" placeholder='Email Address' />
+        <input type="email" placeholder='Email Address' required value={email} onChange={(e) => setEmail(e.target.value)} />
 
-        <div className="password" style={{ position: 'relative' }}>
+        <div className="password" style={{ width: '50%', position: 'relative' }}>
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
-            style={{ width: '280px', paddingRight: '40px' }}
+            required
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            style={{ width: '100%', paddingRight: '40px' }}
           />
           <span
             onClick={togglePasswordVisibility}
@@ -59,10 +88,13 @@ const Login = () => {
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </span>
         </div>
-
-        <button className='signUpBtn'>Sign In</button>
         <p className='signIn'>
-          Forgot your password? <Link to="/register">Click here</Link>
+          <Link to="/register">Forgot Password?</Link>
+        </p>
+        <button onClick={handleLogin} className='signUpBtn'>Sign In</button>
+
+        <p className='signIn'>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
 
@@ -72,9 +104,9 @@ const Login = () => {
             <img src={logo} alt="" className="footerLogo" />
             <h3>The Hub</h3>
           </div>
-          &copy; {new Date().getFullYear()} TheHub.
+          <p className='copy'>&copy; {new Date().getFullYear()}</p>
         </div>
-        <div className="first">
+        <div className="first first1">
           <p>Community guidelines. Terms of service</p>
         </div>
         <div className="first">

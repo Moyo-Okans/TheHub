@@ -20,12 +20,13 @@ export const signup = async (req, res) => {
         await user.save();
         // Generate JWT token
         const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-        res.status(201).json({ message: 'User registered successfully', token });
+        res.status(201).json({ message: 'User registered successfully', fullname:user.fullname, token });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 // User login
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -41,8 +42,14 @@ export const login = async (req, res) => {
         }
         // Generate JWT token
         const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-        res.json({ message: 'Login successful', token });
+        res.json({
+            message: 'Login successful', token, user: {
+                id: user._id,
+                fullname: user.fullname
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+    // get User Profile
 };
