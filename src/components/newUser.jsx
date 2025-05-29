@@ -17,7 +17,8 @@ function NewUser() {
   const [fullName, setFullName] = useState("");
   const dropdownRef = useRef(null);
   const [openPopup, setOpenPopup] = useState(false);
-  
+  const [groups, setGroups] = useState([]);
+
   // State variables for creating a group
   const [groupName, setGroupName] = useState(""); // Corrected variable name
   const [courseCode, setCourseCode] = useState("");
@@ -60,6 +61,28 @@ function NewUser() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        console.log(token);
+        if (!token) {
+          console.error("No token");
+          return;
+        }
+        const response = await api.get('/groups/my-groups', {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        setGroups(response.data);
+      } catch (err) {
+        console.error("Error fetching groups:", err);
+      }
+    };
+
+    fetchGroups();
   }, []);
 
   // Handle file upload
@@ -222,120 +245,129 @@ function NewUser() {
       </div>
 
       {/* Actions section */}
-      <div>
-        {/* Create a group or upload a file */}
-        <div className="actionBox">
-          <h3>Actions</h3>
-          <div className="boxes">
-            {/* Create Group */}
-            <div className="groupContainer">
-              <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
-              <h3>Create a group</h3>
-              <p>Create your first Group to start collaborations with your study group members</p>
-              <div className="fullWidth">
-                <button onClick={() => setOpenPopup(true)}>
-                  <AddRoundedIcon style={{ paddingRight: 5 }} />
-                  Create
+      {groups.length === 0 ? (
+        <div className="default">
+          {/* Default screen (no groups yet) */}
+          <div className="actionBox">
+            <h3>Actions</h3>
+            <div className="boxes">
+              {/* Create Group Box */}
+              <div className="groupContainer">
+                <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <h3>Create a group</h3>
+                <p>Create your first Group to start collaborations with your study group members</p>
+                <div className="fullWidth">
+                  <button onClick={() => setOpenPopup(true)}>
+                    <AddRoundedIcon style={{ paddingRight: 5 }} />
+                    Create
+                  </button>
+                </div>
+              </div>
+
+              {/* Upload File Box */}
+              <div className="groupContainer">
+                <InsertDriveFileIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <h3>Upload a file</h3>
+                <p>Select and Upload your first note/material PDF, DOCX, DOC etc.</p>
+                <div className="fullWidth">
+                  <label htmlFor="input-file">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="input-file"
+                      multiple
+                      hidden
+                      style={{ display: "none" }}
+                      onChange={handleFileChange}
+                    />
+                    <div className="uploadbtn">
+                      <AddRoundedIcon style={{ paddingRight: 5 }} />
+                      <p>Upload</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Community Box */}
+              <div className="groupContainer">
+                <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <h3>Go to community</h3>
+                <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
+                <div className="fullWidth">
+                  <Link className="uploadbtn" to='/community'>
+                    <SubdirectoryArrowRightIcon style={{ paddingRight: 5 }} />
+                    Visit
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="emptyFiles">
+            <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+            <h2>No files found</h2>
+            <p>Your files and groups will be shown here, you can create a group or upload a file now above</p>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {/* Group View */}
+          <div className="actionBox">
+            <h3>Groups</h3>
+            <div className="groupRow">
+              {groups.map((group) => (
+                <button
+                  key={group._id}
+                  style={{ backgroundColor: 'transparent', color: '#fff' }}
+                  onClick={() => window.open(`http://localhost:5000/group/${group._id}`, '_blank')}
+                  className="groupFolder"
+                >
+                  <div className="groupFolderHeader">
+                    <p>{group.title}</p>
+                    <MoreVert />
+                  </div>
+                  <FolderIcon style={{ fontSize: 125, margin: 0, padding: 0, color: "gray" }} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Files Section */}
+          <div className="actionBox">
+            <h3>Files</h3>
+            <div className="files">
+              <div className="tags">
+                <button>
+                  <ScheduleRounded style={{ fontSize: 20, color: "white", marginRight: 7 }} />
+                  Recent
+                </button>
+                <button>
+                  <StarBorderOutlined style={{ fontSize: 23, color: "white", marginRight: 7 }} />
+                  Starred
                 </button>
               </div>
             </div>
-
-            {/* Upload File */}
-            <div className="groupContainer">
-              <InsertDriveFileIcon style={{ fontSize: 60, color: "#282a2c" }} />
-              <h3>Upload a file</h3>
-              <p>Select and Upload your first note/material PDF, DOCX, DOC etc.</p>
-              <div className="fullWidth">
-                <label htmlFor="input-file">
-                  <input
-                    type="file"
-                    accept="*/*"
-                    id="input-file"
-                    multiple
-                    hidden
-                    onChange={handleFileChange}
-                  />
-                  <div className="uploadbtn">
-                    <AddRoundedIcon style={{ paddingRight: 5 }} />
-                    <p>Upload</p>
-                  </div>
-                </label>
+            <div className="fileTable">
+              <div className="fileHeader">
+                <p>Name</p>
+                <p>Location</p>
+                <p>Owner</p>
+                <p>Date</p>
               </div>
-            </div>
-
-            {/* Go to community */}
-            <div className="groupContainer">
-              <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
-              <h3>Go to community</h3>
-              <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
-              <div className="fullWidth">
-                <Link className="uploadbtn" to="/community">
-                  <SubdirectoryArrowRightIcon style={{ paddingRight: 5 }} />
-                  Visit
-                </Link>
+              <div className="fileLines">
+                <div className="fileName">
+                  <InsertDriveFileIcon style={{ color: "#425EEA", fontSize: 22 }} />
+                  <p>CSC 104</p>
+                </div>
+                <p className="location">CSC Final Exam Preparations</p>
+                <p className="owner">Me</p>
+                <p className="date">March 12, 2025</p>
               </div>
             </div>
           </div>
         </div>
+      )}
 
-        {/* Files display placeholder */}
-        <div className="emptyFiles">
-          <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
-          <h2>No files found</h2>
-          <p>Your files and groups will be shown here, you can create a group or upload a file now above</p>
-        </div>
-      </div>
-
-      {/* Groups list placeholder */}
-      <div>
-        <div className="actionBox">
-          <h3>Groups</h3>
-          <div className="groupRow">
-            <Link to="/group" style={{ backgroundColor: 'transparent', color: '#fff' }} className="groupFolder">
-              <div className="groupFolderHeader">
-                <p>CSC Final Exam Group</p>
-                <MoreVert />
-              </div>
-              <FolderIcon style={{ fontSize: 125, margin: 0, padding: 0, color: "gray" }} />
-            </Link>
-          </div>
-        </div>
-
-        {/* Files section */}
-        <div className="actionBox">
-          <h3>Files</h3>
-          <div className="files">
-            <div className="tags">
-              <button>
-                <ScheduleRounded style={{ fontSize: 20, color: "white", marginRight: 7 }} />
-                Recent
-              </button>
-              <button>
-                <StarBorderOutlined style={{ fontSize: 23, color: "white", marginRight: 7 }} />
-                Starred
-              </button>
-            </div>
-          </div>
-          {/* Example file row */}
-          <div className="fileTable">
-            <div className="fileHeader">
-              <p>Name</p>
-              <p>Location</p>
-              <p>Owner</p>
-              <p>Date</p>
-            </div>
-            <div className="fileLines">
-              <div className="fileName">
-                <InsertDriveFileIcon style={{ color: "#425EEA", fontSize: 22 }} />
-                <p>CSC 104</p>
-              </div>
-              <p className="location">CSC Final Exam Preparations</p>
-              <p className="owner">Me</p>
-              <p className="date">March 12,2025</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 }
