@@ -120,7 +120,7 @@ function NewUser() {
   };
 
   // Handle create group
-  const handleCreate = async () => {
+ const handleCreate = async () => {
     if (!groupName.trim()) {
       alert("Please enter a group name");
       return;

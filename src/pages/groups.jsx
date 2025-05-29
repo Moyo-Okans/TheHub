@@ -1,39 +1,71 @@
 import React, { useState } from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import '../style/groups.css'
 import emptyState from '../assets/empty_state.png'
-import GroupNew from "../components/groupNew";
 import GroupSigned from "../components/groupSigned";
 import { Dialog, TextField } from "@mui/material";
+// Make sure to import your API instance
+import api from '../api';
 
 function Groups() {
   const [openPopup, setOpenPopup] = useState(false);
-  const [title, setTitle] = useState("");
+  const [groupName, setGroupName] = useState(''); // Added state for groupName
+  const [courseCode, setCourseCode] = useState(''); // Added state for courseCode
 
-  const handleCreate = () => {
-    console.log(title);
-    setOpenPopup(false);
-    setTitle('');
-  }
+  // Handle create group function
+  const handleCreate = async () => {
+    if (!groupName.trim()) {
+      alert("Please enter a group name");
+      return;
+    }
+    if (!courseCode.trim()) {
+      alert("Please enter a course code");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You must be logged in to create a group");
+      return;
+    }
+
+    try {
+      const response = await api.post(
+        "/groups",
+        {
+          title: groupName,
+          courseCode: courseCode,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Group created:", response.data);
+      setOpenPopup(false);
+      setGroupName("");
+      setCourseCode("");
+    } catch (error) {
+      console.error("Failed to create group:", error.response?.data || error.message);
+      alert("Failed to create group");
+    }
+  };
 
   return (
     <>
       {/* Upload File Popup */}
-      <Dialog
-        open={openPopup}
-        onClose={() => setOpenPopup(false)}
-      >
+      <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="modalContent">
           <h2>Create Group</h2>
           <div className="modalInputContainer">
             <TextField
-              label="Unnamed Group"
+              label="Group Name"
               fullWidth
               margin="normal"
-              value={title}
+              value={groupName}
               sx={{
                 input: { color: 'white', backgroundColor: 'transparent', width: '300px' },
                 label: { color: 'white' },
@@ -43,30 +75,40 @@ function Groups() {
                   '&.Mui-focused fieldset': { borderColor: 'white' },
                 },
               }}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setGroupName(e.target.value)}
             />
+            <TextField
+              label="Course Code"
+              fullWidth
+              margin="normal"
+              value={courseCode}
+              sx={{
+                input: { color: 'white', backgroundColor: 'transparent', width: '300px' },
+                label: { color: 'white' },
+                '.MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'white' },
+                  '&:hover fieldset': { borderColor: 'white' },
+                  '&.Mui-focused fieldset': { borderColor: 'white' },
+                },
+              }}
+              onChange={(e) => setCourseCode(e.target.value)}
+            />
+
             <div className="modalButtonsContainer">
-              <button
-                onClick={() => setOpenPopup(false)}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreate}
-              >
-                Create
-              </button>
+              <button onClick={() => setOpenPopup(false)}>Cancel</button>
+              <button onClick={handleCreate}>Create</button>
             </div>
           </div>
         </div>
       </Dialog>
+
       <div className="dashboard">
         <Sidebar />
         <div className="dashboard-content">
           <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
-              <div className="groupHeader">
+              <div className="groupHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>Groups</h1>
                 <div className="dropdown">
                   <button onClick={() => setOpenPopup(true)} className="create-button">
@@ -75,9 +117,8 @@ function Groups() {
                   </button>
                 </div>
               </div>
-              {/* CONDITIONAL RENDERING (IF statement to show either the new group screen or created group screen) */}
+              {/* Show groups */}
               <GroupSigned />
-            {/* OR <GroupSigned /> */}
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
@@ -93,7 +134,6 @@ function Groups() {
                 fontSize: 15
               }}>Select an item to see its activities</p>
             </div>
-
           </div>
         </div>
       </div>
