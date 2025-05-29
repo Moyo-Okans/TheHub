@@ -37,7 +37,7 @@ function Files() {
           <h2>Create Group</h2>
           <div className="modalInputContainer">
             <TextField
-              label="Unnamed Group"
+              label="Unnamed File"
               fullWidth
               margin="normal"
               value={title}
@@ -84,7 +84,7 @@ function Files() {
               </div>
               
               {/* CONDITIONAL RENDERING (IF statement to show either the new group screen or created group screen) */}
-              <FileNew/>
+              <FileSigned/>
               {/* OR <GroupSigned /> */}
 
             </div>

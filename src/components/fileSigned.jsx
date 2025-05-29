@@ -40,7 +40,7 @@ function FileSigned() {
                     <p>Owner</p>
                     <p>Date</p>
                 </div>
-                {[1, 2, 3, 4].map((i) => (
+                {[1].map((i) => (
                     <div className="fileLines" key={i}>
                         <div className="fileName">
                             <InsertDriveFileIcon
