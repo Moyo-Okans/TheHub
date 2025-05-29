@@ -18,6 +18,9 @@ function NewUser() {
   const dropdownRef = useRef(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [uploadingGroupId, setUploadingGroupId] = useState(null); // Track which group is uploading
 
   // State variables for creating a group
   const [groupName, setGroupName] = useState(""); // Corrected variable name
@@ -64,25 +67,35 @@ function NewUser() {
   }, []);
 
   useEffect(() => {
-    const fetchGroups = async () => {
+    const fetchUserGroups = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('No authentication token found.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const token = localStorage.getItem("token");
-        console.log(token);
-        if (!token) {
-          console.error("No token");
-          return;
-        }
-        const response = await api.get('/groups/my-groups', {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
+        const response = await api.get('groups/my-groups', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setGroups(response.data);
       } catch (err) {
-        console.error("Error fetching groups:", err);
+        console.error('Error fetching groups:', err);
+        if (err.response) {
+          setError(`Error: ${err.response.status} ${err.response.statusText}`);
+        } else {
+          setError(err.message);
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchGroups();
+    fetchUserGroups();
   }, []);
 
   // Handle file upload
@@ -116,6 +129,31 @@ function NewUser() {
     } catch (error) {
       console.error("File upload failed:", error.response?.data || error.message);
       alert("File upload failed");
+    }
+  };
+
+  const handleGroupClick = async (group) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('You need to be logged in to perform this action.');
+      return;
+    }
+
+    setUploadingGroupId(group._id); // Indicate this group is uploading
+
+    try {
+      await api.post('groups/upload', { groupId: group._id }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert('Group uploaded successfully!');
+    } catch (err) {
+      console.error('Error uploading group:', err);
+      alert('Failed to upload the group.');
+    } finally {
+      setUploadingGroupId(null); // Reset uploading state
     }
   };
 
@@ -158,6 +196,15 @@ function NewUser() {
       alert("Failed to create group");
     }
   };
+
+  if (loading) {
+    return <div>Loading groups...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading groups: {error}</div>;
+  }
+
 
   return (
     <>
@@ -314,20 +361,39 @@ function NewUser() {
           {/* Group View */}
           <div className="actionBox">
             <h3>Groups</h3>
-            <div className="groupRow">
+            <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
               {groups.map((group) => (
-                <button
-                  key={group._id}
-                  style={{ backgroundColor: 'transparent', color: '#fff' }}
-                  onClick={() => window.open(`http://localhost:5000/group/${group._id}`, '_blank')}
+                <div
                   className="groupFolder"
+                  key={group._id}
+                  style={{
+                    border: '1px solid #ccc',
+                    borderRadius: '8px',
+                    padding: '10px',
+                    margin: '10px',
+                    width: '150px',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    opacity: uploadingGroupId === group._id ? 0.5 : 1,
+                    pointerEvents: uploadingGroupId === group._id ? 'none' : 'auto',
+                  }}
+                  onClick={() => handleGroupClick(group)}
                 >
-                  <div className="groupFolderHeader">
-                    <p>{group.title}</p>
+                  <div
+                    className="groupFolderHeader"
+                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                  >
+                    <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
                     <MoreVert />
                   </div>
-                  <FolderIcon style={{ fontSize: 125, margin: 0, padding: 0, color: "gray" }} />
-                </button>
+                  <FolderIcon
+                    style={{
+                      fontSize: 120,
+                      marginTop: 10,
+                      color: 'gray',
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </div>
