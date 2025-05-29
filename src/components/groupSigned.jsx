@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // For navigation
 import { StarBorderOutlined } from "@mui/icons-material";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
-import api from '../api'; // Ensure your api instance is correctly configured
+import api from '../api'; // Make sure your API instance is correctly configured
 
 const GroupSigned = () => {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [uploadingGroupId, setUploadingGroupId] = useState(null); // Track which group is uploading
+  const navigate = useNavigate(); // Initialize navigation hook
 
+  // Fetch user groups
   const fetchUserGroups = async () => {
     const token = localStorage.getItem('token');
 
@@ -39,31 +41,7 @@ const GroupSigned = () => {
     }
   };
 
-  const handleGroupClick = async (group) => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      alert('You need to be logged in to perform this action.');
-      return;
-    }
-
-    setUploadingGroupId(group._id); // Indicate this group is uploading
-
-    try {
-      await api.post('groups/upload', { groupId: group._id }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert('Group uploaded successfully!');
-    } catch (err) {
-      console.error('Error uploading group:', err);
-      alert('Failed to upload the group.');
-    } finally {
-      setUploadingGroupId(null); // Reset uploading state
-    }
-  };
-
+  // Fetch groups on component mount
   useEffect(() => {
     fetchUserGroups();
   }, []);
@@ -106,7 +84,6 @@ const GroupSigned = () => {
       <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
         {groups.map((group) => (
           <div
-            className="groupFolder"
             key={group._id}
             style={{
               border: '1px solid #ccc',
@@ -116,10 +93,12 @@ const GroupSigned = () => {
               width: '150px',
               textAlign: 'center',
               cursor: 'pointer',
-              opacity: uploadingGroupId === group._id ? 0.5 : 1,
-              pointerEvents: uploadingGroupId === group._id ? 'none' : 'auto',
             }}
-            onClick={() => handleGroupClick(group)}
+            onClick={() => {
+              // Navigate to the group details page
+              console.log('Navigating to:', `/group/${group._id}`);
+              navigate(`/group/${group._id}`);
+            }}
           >
             <div
               className="groupFolderHeader"
