@@ -76,7 +76,7 @@ function Groups() {
                 </div>
               </div>
               {/* CONDITIONAL RENDERING (IF statement to show either the new group screen or created group screen) */}
-              <GroupNew />
+              <GroupSigned />
             {/* OR <GroupSigned /> */}
             </div>
             <div className="activityContainer">
