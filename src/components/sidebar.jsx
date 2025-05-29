@@ -5,8 +5,8 @@ import logo from "../assets/logo.png";
 
 // Material Icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -115,7 +115,7 @@ export default function Sidebar() {
                 onClick={() => handleNavItemClick("/groups")}
                 title="Groups"
               >
-                <GroupsOutlinedIcon className="sidebar-icon" />
+                <FolderOutlinedIcon className="sidebar-icon" />
                 {(!minimized || (isMobile && mobileOpen)) && <span>Groups</span>}
               </Link>
             </div>
@@ -129,7 +129,7 @@ export default function Sidebar() {
                 onClick={() => handleNavItemClick("/files")}
                 title="Files"
               >
-                <InsertDriveFileIcon className="sidebar-icon" />
+                <InsertDriveFileOutlinedIcon className="sidebar-icon" />
                 {(!minimized || (isMobile && mobileOpen)) && <span>Files</span>}
               </Link>
             </div>
