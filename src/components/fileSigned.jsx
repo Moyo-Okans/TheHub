@@ -1,33 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     ScheduleRounded,
     StarBorderOutlined,
 } from "@mui/icons-material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import api from '../api';
 
 function FileSigned() {
+    const [files, setFiles] = useState([]);
+
+    useEffect(() => {
+        // Fetch user's files from API
+        const fetchFiles = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+
+                const response = await api.get('/files/files', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                // Assuming response.data is an array of files
+                setFiles(response.data);
+            } catch (error) {
+                console.error('Failed to fetch files:', error);
+            }
+        };
+
+        fetchFiles();
+    }, []);
+
     return (
         <div>
             <div className="files">
                 <div className="tags">
                     <button>
-                        <ScheduleRounded
-                            style={{
-                                fontSize: 20,
-                                color: "white",
-                                marginRight: 7,
-                            }}
-                        />
+                        <ScheduleRounded />
                         Recent
                     </button>
                     <button>
-                        <StarBorderOutlined
-                            style={{
-                                fontSize: 23,
-                                color: "white",
-                                marginRight: 7,
-                            }}
-                        />
+                        <StarBorderOutlined />
                         Starred
                     </button>
                 </div>
@@ -40,25 +53,22 @@ function FileSigned() {
                     <p>Owner</p>
                     <p>Date</p>
                 </div>
-                {[1].map((i) => (
-                    <div className="fileLines" key={i}>
-                        <div className="fileName">
-                            <InsertDriveFileIcon
-                                style={{
-                                    color: "#425EEA",
-                                    fontSize: 22,
-                                }}
-                            />
-                            <p>CSC 104</p>
+                {files.map((file) => (
+                    <div className="fileLines" key={file.id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
+                        <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            <InsertDriveFileIcon />
+                            <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
                         </div>
-                        <p className="location">CSC Final Exam Preparations</p>
-                        <p className="owner">Me</p>
-                        <p className="date">March 12,2025</p>
+                        <p className="location" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
+                        <p className="owner" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
+                        <p className="date" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
+                        </p>
                     </div>
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
-export default FileSigned
+export default FileSigned;
