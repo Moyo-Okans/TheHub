@@ -8,6 +8,12 @@ export const createGroup = async (req, res) => {
     const { courseCode, title } = req.body;
     const userId = req.user.id;
 
+    // Check if a group with the same title already exists
+    const existingGroup = await Group.findOne({ title });
+    if (existingGroup) {
+      return res.status(409).json({ error: 'Group name already exists.' });
+    }
+
     const newGroup = await Group.create({
       courseCode,
       title,
@@ -17,8 +23,8 @@ export const createGroup = async (req, res) => {
 
     res.status(201).json(newGroup);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create group.' });
     console.error(err);
+    res.status(500).json({ error: 'Failed to create group.' });
   }
 };
 

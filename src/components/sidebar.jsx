@@ -5,14 +5,11 @@ import logo from "../assets/logo.png";
 
 // Material Icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import FirstPageOutlinedIcon from "@mui/icons-material/FirstPageOutlined";
 import LastPageOutlinedIcon from "@mui/icons-material/LastPageOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -20,7 +17,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import "../style/sidebar.css";
 
 export default function Sidebar() {
-  const [isHubOpen, setIsHubOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("/dashboard");
   // Get minimized state from localStorage or default to false
   const [minimized, setMinimized] = useState(() => {
@@ -36,12 +32,6 @@ export default function Sidebar() {
     setActiveItem(location.pathname);
 
     // Open the "My Hub" dropdown if a child route is active
-    if (
-      location.pathname.includes("/groups") ||
-      location.pathname.includes("/files")
-    ) {
-      setIsHubOpen(true);
-    }
   }, [location]);
 
   // Save minimized state to localStorage whenever it changes
@@ -69,16 +59,9 @@ export default function Sidebar() {
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
-  const toggleHub = () => {
-    setIsHubOpen(!isHubOpen);
-  };
-
   const toggleMinimize = () => {
     setMinimized(!minimized);
     // Close the dropdown when minimizing
-    if (!minimized) {
-      setIsHubOpen(false);
-    }
   };
 
   const toggleMobileMenu = () => {
@@ -113,7 +96,7 @@ export default function Sidebar() {
             <div>
               <Link
                 to="/dashboard"
-                className={`sidebar-item ${activeItem === "/" ? "active" : ""}`}
+                className={`sidebar-item ${activeItem === "/dashboard" ? "active" : ""}`}
                 onClick={() => handleNavItemClick("/")}
                 title="Dashboard"
               >
@@ -122,71 +105,32 @@ export default function Sidebar() {
               </Link>
             </div>
 
-            {/* My Hub with dropdown */}
-            <div>
-              <button
-                onClick={toggleHub}
-                className={`sidebar-item sidebar-dropdown-toggle ${
-                  activeItem.includes("/groups") || activeItem.includes("/files")
-                    ? "active"
-                    : ""
-                }`}
-                title="My Hub"
-              >
-                <div className="sidebar-item-content">
-                  <LocalLibraryOutlinedIcon className="sidebar-icon" />
-                  {(!minimized || (isMobile && mobileOpen)) && <span>My Hub</span>}
-                </div>
-                {(!minimized || (isMobile && mobileOpen)) && (
-                  isHubOpen ? (
-                    <KeyboardArrowUpIcon sx={{ fontSize: "15px" }} />
-                  ) : (
-                    <KeyboardArrowDownIcon sx={{ fontSize: "15px" }} />
-                  )
-                )}
-              </button>
-
-              {/* Dropdown content */}
-              {isHubOpen && (!minimized || (isMobile && mobileOpen)) && (
-                <div className="sidebar-dropdown">
-                  <div>
-                    <Link
-                      to="/groups"
-                      className={`sidebar-dropdown-item ${
-                        activeItem === "/groups" ? "active" : ""
-                      }`}
-                      onClick={() => handleNavItemClick("/groups")}
-                    >
-                      <span>Groups</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link
-                      to="/files"
-                      className={`sidebar-dropdown-item ${
-                        activeItem === "/files" ? "active" : ""
-                      }`}
-                      onClick={() => handleNavItemClick("/files")}
-                    >
-                      <span>Files</span>
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Collaborators */}
+            {/* Groups */}
             <div>
               <Link
-                to="/collaborators"
+                to="/groups"
                 className={`sidebar-item ${
-                  activeItem === "/collaborators" ? "active" : ""
+                  activeItem === "/groups" ? "active" : ""
                 }`}
-                onClick={() => handleNavItemClick("/collaborators")}
-                title="Collaborators"
+                onClick={() => handleNavItemClick("/groups")}
+                title="Groups"
               >
                 <GroupsOutlinedIcon className="sidebar-icon" />
-                {(!minimized || (isMobile && mobileOpen)) && <span>Collaborators</span>}
+                {(!minimized || (isMobile && mobileOpen)) && <span>Groups</span>}
+              </Link>
+            </div>
+            {/* Files */}
+            <div>
+              <Link
+                to="/files"
+                className={`sidebar-item ${
+                  activeItem === "/files" ? "active" : ""
+                }`}
+                onClick={() => handleNavItemClick("/files")}
+                title="Files"
+              >
+                <InsertDriveFileIcon className="sidebar-icon" />
+                {(!minimized || (isMobile && mobileOpen)) && <span>Files</span>}
               </Link>
             </div>
 
@@ -232,21 +176,6 @@ export default function Sidebar() {
                 >
                   <SettingsOutlinedIcon className="sidebar-icon" />
                   {(!minimized || (isMobile && mobileOpen)) && <span>Settings</span>}
-                </Link>
-              </div>
-
-              {/* Trash */}
-              <div>
-                <Link
-                  to="/trash"
-                  className={`sidebar-item ${
-                    activeItem === "/trash" ? "active" : ""
-                  }`}
-                  onClick={() => handleNavItemClick("/trash")}
-                  title="Trash"
-                >
-                  <DeleteOutlineOutlinedIcon className="sidebar-icon" />
-                  {(!minimized || (isMobile && mobileOpen)) && <span>Trash</span>}
                 </Link>
               </div>
             </div>

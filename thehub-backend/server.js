@@ -16,7 +16,13 @@ connectDB();
 connectCloudinary();
 
 // Middlewares
-app.use(cors());
+//cors configuration
+
+const corsOptions ={
+  origin: 'http://localhost:5173',
+  Credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan('dev')); 
 
