@@ -11,7 +11,7 @@ const GroupSigned = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Dropdown index state
-  const navigate = useNavigate(); // Initialize navigation hook
+  const navigate = useNavigate();
 
   // Fetch user groups
   const fetchUserGroups = async () => {
