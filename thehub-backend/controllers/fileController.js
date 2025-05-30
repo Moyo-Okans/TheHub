@@ -237,3 +237,48 @@ export const permanentlyDeleteFile = async (req, res) => {
   }
 };
 
+// upload user file by the user Id 
+export const uploadUserFile = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file received.' });
+    }
+
+    const { title, tags } = req.body;
+    const userId = req.user.id;
+
+ 
+    const newFile = await File.create({
+      title,
+      fileType: req.file.mimetype,
+      fileUrl: req.file.path,
+      uploadedBy: userId,
+      tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+    });
+
+    
+    await logActivity({
+      fileId: newFile._id,
+      userId,
+      action: 'uploaded',
+    });
+
+    res.status(201).json({ message: 'File uploaded successfully', file: newFile });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// get user file by user id
+export const getUserFiles = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const files = await File.find({ uploadedBy: userId });
+
+    res.json({ files });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
