@@ -46,7 +46,7 @@ function FileSigned() {
                 </div>
             </div>
 
-            <div className="fileTable">
+          <div className="fileTable" style={{ width: '80%', maxWidth: '800px', margin: '0 auto' }}>
                 <div className="fileHeader">
                     <p>Name</p>
                     <p>Location</p>
