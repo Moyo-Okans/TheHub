@@ -50,11 +50,11 @@ function FileSigned() {
             </div>
 
             <div className="fileTable">
-                <div className="fileHeader">
-                    <p>Name</p>
-                    <p>Location</p>
-                    <p>Owner</p>
-                    <p>Date</p>
+                <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
+                    <p style={{ flex: 2 }}>Name</p>
+                    <p style={{ flex: 2 }}>Location</p>
+                    <p style={{ flex: 2 }}>Owner</p>
+                    <p style={{ flex: 2 }}>Date</p>
                 </div>
              {files.length > 0 ? (
     // Render files if array is not empty
