@@ -50,9 +50,9 @@ function FileSigned() {
             </div>
 
             <div className="fileTable">
-                <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
+                <div className="fileHeader" style={{  display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
                     <p style={{ flex: 2 }}>Name</p>
-                    <p style={{ flex: 2 }}>Location</p>
+                    <p style={{ flex: 3 }}>Location</p>
                     <p style={{ flex: 2 }}>Owner</p>
                     <p style={{ flex: 2 }}>Date</p>
                 </div>

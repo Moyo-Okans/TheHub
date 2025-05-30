@@ -1,12 +1,16 @@
+// export default Files;
+
+
 import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import "../style/files.css";
 import emptyState from "../assets/empty_state.png";
-import { AddRounded } from "@mui/icons-material";
+import {AddRounded,} from "@mui/icons-material";
 import FileNew from "../components/fileNew";
 import FileSigned from "../components/fileSigned";
-import { Dialog, TextField } from "@mui/material";
+import {  Dialog,  TextField,
+} from "@mui/material";
 
 function Files() {
   const [openPopup, setOpenPopup] = useState(false);
@@ -16,12 +20,15 @@ function Files() {
     console.log(title);
     setOpenPopup(false);
     setTitle('');
-  };
+  }
 
   return (
     <>
       {/* Upload File Popup */}
-      <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
+      <Dialog
+        open={openPopup}
+        onClose={() => setOpenPopup(false)}
+      >
         <div className="modalContent">
           <h2>Create Group</h2>
           <div className="modalInputContainer">
@@ -42,19 +49,23 @@ function Files() {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="modalButtonsContainer">
-              <button onClick={() => setOpenPopup(false)}>Cancel</button>
-              <button onClick={handleCreate}>Create</button>
+              <button
+                onClick={() => setOpenPopup(false)}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCreate}
+              >
+                Create
+              </button>
             </div>
           </div>
         </div>
       </Dialog>
-
-      {/* Main layout with flexbox */}
-      <div className="dashboardContainer">
-        <div className="sidebar">
-          <Sidebar />
-        </div>
-        <div className="dashboardContent">
+      <div className="dashboard">
+        <Sidebar />
+        <div className="dashboard-content">
           <Navbar />
           <div className="main-content">
             <div className="bodyContainer">
@@ -67,12 +78,13 @@ function Files() {
                   </button>
                 </div>
               </div>
+              
+              {/* CONDITIONAL RENDERING (IF statement to show either the new group screen or created group screen) */}
+              <FileSigned/>
+              {/* OR <GroupSigned /> */}
 
-              {/* Wrap FileSigned in a container with max width */}
-              <div className="fileSignedContainer">
-                <FileSigned />
-              </div>
             </div>
+
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
               <div style={{ height: 1, backgroundColor: "gray", marginTop: 20 }} />
@@ -84,7 +96,7 @@ function Files() {
           </div>
         </div>
       </div>
-    </>
+    </> 
   );
 }
 
