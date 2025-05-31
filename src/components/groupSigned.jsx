@@ -4,7 +4,8 @@ import { StarBorderOutlined } from "@mui/icons-material";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
-import api from '../api'; // Make sure your API instance is correctly configured
+import api from '../api'; 
+import GroupNew from './groupNew';
 
 const GroupSigned = () => {
   const [groups, setGroups] = useState([]);
@@ -90,124 +91,129 @@ const GroupSigned = () => {
         </button>
       </div>
 
-      {/* Groups Display */}
-      <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {groups.map((group, index) => (
-          <div
-            key={group._id}
-            style={{
-              position: 'relative',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              padding: '10px',
-              margin: '10px',
-              width: '150px',
-              textAlign: 'center',
-              cursor: 'pointer',
-            }}
-          >
+      {/* Check if groups array is empty */}
+      {groups.length === 0 ? (
+      <GroupNew/>
+      ) : (
+        /* Groups Display */
+        <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {groups.map((group, index) => (
             <div
-              className="groupFolderHeader"
+              key={group._id}
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-              onClick={() => {
-                // Navigate to the group details page
-                console.log('Navigating to:', `/group/${group._id}`);
-                navigate(`/group/${group._id}`);
+                position: 'relative',
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                padding: '10px',
+                margin: '10px',
+                width: '150px',
+                textAlign: 'center',
+                cursor: 'pointer',
               }}
             >
-              <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
-              <MoreVertIcon
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent nav
-                  handleToggleDropdown(index);
-                }}
-                style={{ cursor: 'pointer' }}
-              />
-            </div>
-
-            {/* Dropdown */}
-            {openDropdownIndex === index && (
               <div
-                className="dropdownMenu"
+                className="groupFolderHeader"
                 style={{
-                  position: 'absolute',
-                  top: 40,
-                  right: 10,
-                  backgroundColor: '#1e1e1e',
-                  border: '1px solid #444',
-                  borderRadius: '6px',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-                  zIndex: 1000,
                   display: 'flex',
-                  flexDirection: 'column',
-                  padding: '4px 0',
-                  minWidth: '110px',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+                onClick={() => {
+                  // Navigate to the group details page
+                  console.log('Navigating to:', `/group/${group._id}`);
+                  navigate(`/group/${group._id}`);
                 }}
               >
-                <button
-                  onClick={() => handleAction('share', group._id)}
-                  style={{
-                    padding: '8px 12px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    width: '100%',
-                    fontSize: '14px',
+                <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
+                <MoreVertIcon
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent nav
+                    handleToggleDropdown(index);
                   }}
-                >
-                  Share
-                </button>
-                <button
-                  onClick={() => handleAction('star', group._id)}
-                  style={{
-                    padding: '8px 12px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    width: '100%',
-                    fontSize: '14px',
-                  }}
-                >
-                  Star
-                </button>
-                <button
-                  onClick={() => handleAction('delete', group._id)}
-                  style={{
-                    padding: '8px 12px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    width: '100%',
-                    fontSize: '14px',
-                  }}
-                >
-                  Delete
-                </button>
+                  style={{ cursor: 'pointer' }}
+                />
               </div>
-            )}
 
-            <FolderIcon
-              style={{
-                fontSize: 120,
-                marginTop: 10,
-                color: 'gray',
-              }}
-            />
-          </div>
-        ))}
-      </div>
+              {/* Dropdown */}
+              {openDropdownIndex === index && (
+                <div
+                  className="dropdownMenu"
+                  style={{
+                    position: 'absolute',
+                    top: 40,
+                    right: 10,
+                    backgroundColor: '#1e1e1e',
+                    border: '1px solid #444',
+                    borderRadius: '6px',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '4px 0',
+                    minWidth: '110px',
+                  }}
+                >
+                  <button
+                    onClick={() => handleAction('share', group._id)}
+                    style={{
+                      padding: '8px 12px',
+                      background: 'none',
+                      border: 'none',
+                      color: 'white',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      width: '100%',
+                      fontSize: '14px',
+                    }}
+                  >
+                    Share
+                  </button>
+                  <button
+                    onClick={() => handleAction('star', group._id)}
+                    style={{
+                      padding: '8px 12px',
+                      background: 'none',
+                      border: 'none',
+                      color: 'white',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      width: '100%',
+                      fontSize: '14px',
+                    }}
+                  >
+                    Star
+                  </button>
+                  <button
+                    onClick={() => handleAction('delete', group._id)}
+                    style={{
+                      padding: '8px 12px',
+                      background: 'none',
+                      border: 'none',
+                      color: 'white',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      width: '100%',
+                      fontSize: '14px',
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+
+              <FolderIcon
+                style={{
+                  fontSize: 120,
+                  marginTop: 10,
+                  color: 'gray',
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default GroupSigned;
+export default GroupSigned; 
