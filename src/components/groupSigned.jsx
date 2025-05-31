@@ -40,7 +40,6 @@ const GroupSigned = () => {
     fetchUserGroups();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -57,9 +56,27 @@ const GroupSigned = () => {
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
   };
 
-  const handleAction = (action, groupId) => {
-    console.log(`Action: ${action} on group ID: ${groupId}`);
+  const handleAction = async (action, groupId) => {
     setOpenDropdownIndex(null);
+
+    if (action === 'delete') {
+      try {
+        const token = localStorage.getItem("token");
+        await api.delete(`/groups/${groupId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Remove deleted group from UI
+        setGroups((prev) => prev.filter((g) => g._id !== groupId));
+      } catch (err) {
+        console.error("Delete failed:", err.response?.data || err.message);
+        alert("Failed to delete the group. Please try again.");
+      }
+    } else {
+      console.log(`Action: ${action} on group ID: ${groupId}`);
+    }
   };
 
   if (loading) return <div>Loading groups...</div>;

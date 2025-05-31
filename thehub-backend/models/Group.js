@@ -20,6 +20,10 @@ const groupSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
   collaborators: [
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

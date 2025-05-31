@@ -5,7 +5,7 @@ import notifyMember from '../utils/notifyMember.js';
 export const createGroup = async (req, res) => {
   try {
     const { courseCode, title } = req.body;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const newGroup = await Group.create({
       courseCode,
@@ -27,7 +27,7 @@ export const joinGroup = async (req, res) => {
     const group = await Group.findById(req.params.groupId);
     if (!group) return res.status(404).json({ error: 'Group not found' });
 
-    const userId = req.user.id;
+    const userId = req.user._id;
     if (!group.members.includes(userId)) {
       group.members.push(userId);
       await group.save();
@@ -44,7 +44,12 @@ export const joinGroup = async (req, res) => {
 export const getMyGroups = async (req, res) => {
   try {
     const userId = req.user._id;
-    const groups = await Group.find({ members: userId });
+
+    const groups = await Group.find({
+      members: userId,
+      isDeleted: { $ne: true }, // Exclude soft-deleted groups
+    });
+
     res.json(groups);
   } catch (err) {
     console.error(err);
@@ -166,21 +171,22 @@ export const getAllCollaborators = async (req, res) => {
         { createdBy: currentUserId },
         { 'collaborators.user': currentUserId }
       ]
-    }).populate('collaborators.userId', 'name email');
+    }).populate('collaborators.user', 'name email');
 
     const collaboratorMap = new Map();
 
     for (const group of groups) {
       for (const collab of group.collaborators) {
-        const collabId = collab.userId._id.toString();
+        const collabUser = collab.user;
+        const collabId = collabUser._id.toString();
         if (collabId === currentUserId.toString()) continue;
 
         if (!collaboratorMap.has(collabId)) {
           collaboratorMap.set(collabId, {
             user: {
-              _id: collab.userId._id,
-              name: collab.userId.name,
-              email: collab.userId.email,
+              _id: collabUser._id,
+              name: collabUser.name,
+              email: collabUser.email,
             },
             groups: [],
           });
@@ -200,5 +206,49 @@ export const getAllCollaborators = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to fetch collaborators' });
+  }
+};
+
+// SOFT DELETE GROUP
+export const softDeleteGroup = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' });
+    }
+
+    if (!group.createdBy.equals(req.user._id)) {
+      return res.status(403).json({ message: 'Unauthorized to delete this group' });
+    }
+
+    group.isDeleted = true;
+    await group.save();
+
+    res.json({ message: 'Group moved to trash' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error during deletion' });
+  }
+};
+
+// GET TRASHED GROUPS
+export const getTrashedGroups = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authorized, no user' });
+    }
+
+    const userId = req.user._id;
+
+    const trashedGroups = await Group.find({
+      createdBy: userId,
+      isDeleted: true
+    });
+
+    res.json(trashedGroups);
+  } catch (err) {
+    console.error('Error fetching trashed groups:', err);
+    res.status(500).json({ message: 'Error fetching trashed groups' });
   }
 };
