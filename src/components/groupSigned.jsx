@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import { StarBorderOutlined } from "@mui/icons-material";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -11,10 +11,9 @@ const GroupSigned = () => {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Dropdown index state
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch user groups
   const fetchUserGroups = async () => {
     const token = localStorage.getItem('token');
 
@@ -33,17 +32,12 @@ const GroupSigned = () => {
       setGroups(response.data);
     } catch (err) {
       console.error('Error fetching groups:', err);
-      if (err.response) {
-        setError(`Error: ${err.response.status} ${err.response.statusText}`);
-      } else {
-        setError(err.message);
-      }
+      setError(err.response ? `Error: ${err.response.status} ${err.response.statusText}` : err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch groups on component mount
   useEffect(() => {
     fetchUserGroups();
   }, []);
@@ -54,52 +48,36 @@ const GroupSigned = () => {
 
   const handleAction = (action, groupId) => {
     console.log(`Action: ${action} on group ID: ${groupId}`);
-    setOpenDropdownIndex(null); // Close dropdown after action
+    setOpenDropdownIndex(null);
   };
 
-  if (loading) {
-    return <div>Loading groups...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading groups: {error}</div>;
-  }
+  if (loading) return <div>Loading groups...</div>;
+  if (error) return <div>Error loading groups: {error}</div>;
 
   return (
     <div className="groups">
-      {/* Tags Buttons */}
       <div className="tags" style={{ display: 'flex', marginBottom: '20px' }}>
         <button style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-          <ScheduleRoundedIcon
-            style={{
-              fontSize: 20,
-              color: 'white',
-              marginRight: 7,
-            }}
-          />
+          <ScheduleRoundedIcon style={{ fontSize: 20, color: 'white', marginRight: 7 }} />
           Recent
         </button>
         <button style={{ display: 'flex', alignItems: 'center' }}>
-          <StarBorderOutlined
-            style={{
-              fontSize: 23,
-              color: 'white',
-              marginRight: 7,
-            }}
-          />
+          <StarBorderOutlined style={{ fontSize: 23, color: 'white', marginRight: 7 }} />
           Starred
         </button>
       </div>
 
-      {/* Check if groups array is empty */}
       {groups.length === 0 ? (
-      <GroupNew/>
+        <GroupNew />
       ) : (
-        /* Groups Display */
         <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
           {groups.map((group, index) => (
             <div
               key={group._id}
+              onClick={() => {
+                console.log('Navigating to:', `/group/${group._id}`);
+                navigate(`/group/${group._id}`);
+              }}
               style={{
                 position: 'relative',
                 border: '1px solid #ccc',
@@ -118,16 +96,11 @@ const GroupSigned = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}
-                onClick={() => {
-                  // Navigate to the group details page
-                  console.log('Navigating to:', `/group/${group._id}`);
-                  navigate(`/group/${group._id}`);
-                }}
               >
                 <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
                 <MoreVertIcon
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent nav
+                    e.stopPropagation(); // Prevent navigation
                     handleToggleDropdown(index);
                   }}
                   style={{ cursor: 'pointer' }}
@@ -138,6 +111,7 @@ const GroupSigned = () => {
               {openDropdownIndex === index && (
                 <div
                   className="dropdownMenu"
+                  onClick={(e) => e.stopPropagation()} // Prevent navigation from clicks inside dropdown
                   style={{
                     position: 'absolute',
                     top: 40,
@@ -201,13 +175,7 @@ const GroupSigned = () => {
                 </div>
               )}
 
-              <FolderIcon
-                style={{
-                  fontSize: 120,
-                  marginTop: 10,
-                  color: 'gray',
-                }}
-              />
+              <FolderIcon style={{ fontSize: 120, marginTop: 10, color: 'gray' }} />
             </div>
           ))}
         </div>
@@ -216,4 +184,4 @@ const GroupSigned = () => {
   );
 };
 
-export default GroupSigned; 
+export default GroupSigned;
