@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StarBorderOutlined } from "@mui/icons-material";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
@@ -12,34 +12,45 @@ const GroupSigned = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const fetchUserGroups = async () => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      setError('No authentication token found.');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const response = await api.get('groups/my-groups', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setGroups(response.data);
-    } catch (err) {
-      console.error('Error fetching groups:', err);
-      setError(err.response ? `Error: ${err.response.status} ${err.response.statusText}` : err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchUserGroups = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No authentication token found.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await api.get('groups/my-groups', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setGroups(response.data);
+      } catch (err) {
+        console.error('Error fetching groups:', err);
+        setError(err.response ? `Error: ${err.response.status} ${err.response.statusText}` : err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUserGroups();
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdownIndex(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleToggleDropdown = (index) => {
@@ -55,7 +66,8 @@ const GroupSigned = () => {
   if (error) return <div>Error loading groups: {error}</div>;
 
   return (
-    <div className="groups">
+    <div className="groups" style={{ padding: '20px' }}>
+      {/* Top Buttons */}
       <div className="tags" style={{ display: 'flex', marginBottom: '20px' }}>
         <button style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
           <ScheduleRoundedIcon style={{ fontSize: 20, color: 'white', marginRight: 7 }} />
@@ -67,17 +79,19 @@ const GroupSigned = () => {
         </button>
       </div>
 
+      {/* Empty State */}
       {groups.length === 0 ? (
-        <GroupNew />
+        <div style={{ textAlign: 'center', marginTop: 50 }}>
+          <h2>No groups yet</h2>
+          <p>Create a group to get started</p>
+          <GroupNew />
+        </div>
       ) : (
         <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
           {groups.map((group, index) => (
             <div
               key={group._id}
-              onClick={() => {
-                console.log('Navigating to:', `/group/${group._id}`);
-                navigate(`/group/${group._id}`);
-              }}
+              onClick={() => navigate(`/group/${group._id}`)}
               style={{
                 position: 'relative',
                 border: '1px solid #ccc',
@@ -87,20 +101,20 @@ const GroupSigned = () => {
                 width: '150px',
                 textAlign: 'center',
                 cursor: 'pointer',
+                backgroundColor: '#2a2a2a',
+                color: 'white',
               }}
             >
+              {/* Header */}
               <div
                 className="groupFolderHeader"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
+                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
               >
                 <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
                 <MoreVertIcon
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent navigation
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
                     handleToggleDropdown(index);
                   }}
                   style={{ cursor: 'pointer' }}
@@ -110,8 +124,9 @@ const GroupSigned = () => {
               {/* Dropdown */}
               {openDropdownIndex === index && (
                 <div
+                  ref={dropdownRef}
                   className="dropdownMenu"
-                  onClick={(e) => e.stopPropagation()} // Prevent navigation from clicks inside dropdown
+                  onClick={(e) => e.stopPropagation()}
                   style={{
                     position: 'absolute',
                     top: 40,
@@ -127,55 +142,29 @@ const GroupSigned = () => {
                     minWidth: '110px',
                   }}
                 >
-                  <button
-                    onClick={() => handleAction('share', group._id)}
-                    style={{
-                      padding: '8px 12px',
-                      background: 'none',
-                      border: 'none',
-                      color: 'white',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      width: '100%',
-                      fontSize: '14px',
-                    }}
-                  >
-                    Share
-                  </button>
-                  <button
-                    onClick={() => handleAction('star', group._id)}
-                    style={{
-                      padding: '8px 12px',
-                      background: 'none',
-                      border: 'none',
-                      color: 'white',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      width: '100%',
-                      fontSize: '14px',
-                    }}
-                  >
-                    Star
-                  </button>
-                  <button
-                    onClick={() => handleAction('delete', group._id)}
-                    style={{
-                      padding: '8px 12px',
-                      background: 'none',
-                      border: 'none',
-                      color: 'white',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      width: '100%',
-                      fontSize: '14px',
-                    }}
-                  >
-                    Delete
-                  </button>
+                  {['share', 'star', 'delete'].map((action) => (
+                    <button
+                      key={action}
+                      onClick={() => handleAction(action, group._id)}
+                      style={{
+                        padding: '8px 12px',
+                        background: 'none',
+                        border: 'none',
+                        color: 'white',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        width: '100%',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {action.charAt(0).toUpperCase() + action.slice(1)}
+                    </button>
+                  ))}
                 </div>
               )}
 
-              <FolderIcon style={{ fontSize: 120, marginTop: 10, color: 'gray' }} />
+              {/* Folder Icon */}
+              <FolderIcon style={{ fontSize: 100, marginTop: 10, color: 'gray' }} />
             </div>
           ))}
         </div>
