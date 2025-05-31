@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'; // Import useParams to get route params
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import api from "../api";
@@ -14,10 +14,40 @@ import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRig
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 function GroupDetails() {
-  const { id: groupId } = useParams(); // Get groupId from URL params
+  const { id: groupId } = useParams(); 
   const [openPopup, setOpenPopup] = useState(false);
   const [title, setTitle] = useState("");
+  const [groupName, setGroupName] = useState("");
 
+useEffect(() => {
+  const fetchGroupDetails = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("No auth token found");
+      return;
+    }
+
+    try {
+      const response = await api.get(`/groups/${groupId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const groupData = response.data;
+      setGroupName(groupData.title || groupData.name || "Untitled Group");
+    } catch (error) {
+      console.error(
+        "Failed to fetch group details:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  if (groupId) {
+    fetchGroupDetails();
+  }
+}, [groupId]);
   const handleCreate = () => {
     console.log(title);
     setOpenPopup(false);
@@ -115,7 +145,7 @@ function GroupDetails() {
                 <div style={{gap: 10, alignItems: 'center'}} className="groupHeader">
                   <h1>Groups</h1>
                   <KeyboardArrowRightOutlinedIcon sx={{color: '#fff'}} />
-                  <h1>CSC 350 Exam Preparation</h1>
+                  <h1>{groupName || 'Loading...'}</h1>
                   <button><ShareOutlinedIcon /></button>
                 </div>
                 <div className="dropdown">

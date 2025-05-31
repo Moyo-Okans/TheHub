@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGroup, joinGroup, getGroupMembers, getMyGroups, inviteCollaboratorToGroup, removeCollaboratorFromGroup, getAllCollaborators} from '../controllers/groupController.js';
+import { createGroup, joinGroup, getGroupMembers, getMyGroups, inviteCollaboratorToGroup, removeCollaboratorFromGroup, getAllCollaborators,getGroupById} from '../controllers/groupController.js';
 import protect from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -11,6 +11,6 @@ router.get('/:id/members', protect, getGroupMembers);
 router.post('/:groupId/invite', protect, inviteCollaboratorToGroup);
 router.delete('/:groupId/collaborators/:userId', protect, removeCollaboratorFromGroup);
 router.get('/collaborators', protect, getAllCollaborators);
-
+router.get('/:groupId', protect, getGroupById);
 
 export default router;

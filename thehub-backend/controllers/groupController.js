@@ -1,8 +1,7 @@
 import Group from '../models/Group.js';
 import notifyMember from '../utils/notifyMember.js';
 
-
-
+// CREATE GROUP
 export const createGroup = async (req, res) => {
   try {
     const { courseCode, title } = req.body;
@@ -17,11 +16,12 @@ export const createGroup = async (req, res) => {
 
     res.status(201).json(newGroup);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create group.' });
     console.error(err);
+    res.status(500).json({ error: 'Failed to create group.' });
   }
 };
 
+// JOIN GROUP
 export const joinGroup = async (req, res) => {
   try {
     const group = await Group.findById(req.params.groupId);
@@ -35,20 +35,16 @@ export const joinGroup = async (req, res) => {
 
     res.json({ message: 'Joined group successfully', group });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to join group.' });
     console.error(err);
+    res.status(500).json({ error: 'Failed to join group.' });
   }
 };
 
-
+// GET MY GROUPS
 export const getMyGroups = async (req, res) => {
   try {
     const userId = req.user._id;
-
-    const groups = await Group.find({
-      members: userId,
-    });
-
+    const groups = await Group.find({ members: userId });
     res.json(groups);
   } catch (err) {
     console.error(err);
@@ -56,15 +52,12 @@ export const getMyGroups = async (req, res) => {
   }
 };
 
-
+// GET GROUP MEMBERS
 export const getGroupMembers = async (req, res) => {
   try {
     const groupId = req.params.id;
-
-    const group = await Group.findById(groupId).populate('members', 'username email'); // customize fields
-
+    const group = await Group.findById(groupId).populate('members', 'username email');
     if (!group) return res.status(404).json({ message: 'Group not found' });
-
     res.json(group.members);
   } catch (err) {
     console.error(err);
@@ -72,21 +65,43 @@ export const getGroupMembers = async (req, res) => {
   }
 };
 
+// GET GROUP BY ID
+export const getGroupById = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.groupId).populate('members', 'username email');
 
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' });
+    }
+
+    res.status(200).json({
+      id: group._id,
+      title: group.title,
+      courseCode: group.courseCode,
+      createdBy: group.createdBy,
+      members: group.members,
+      collaborators: group.collaborators || [],
+      createdAt: group.createdAt,
+    });
+  } catch (error) {
+    console.error('getGroupById error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// INVITE COLLABORATOR
 export const inviteCollaboratorToGroup = async (req, res) => {
   const { groupId } = req.params;
-  const { userId, role } = req.body; // ID of user to invite + their role
+  const { userId, role } = req.body;
 
   try {
     const group = await Group.findById(groupId);
     if (!group) return res.status(404).json({ message: 'Group not found' });
 
-    // Only group creator or admin should be able to invite
     if (!group.createdBy.equals(req.user._id)) {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    // Check if already a collaborator
     const alreadyAdded = group.collaborators.some(
       (collab) => collab.user.toString() === userId
     );
@@ -95,16 +110,14 @@ export const inviteCollaboratorToGroup = async (req, res) => {
       return res.status(400).json({ message: 'User is already a collaborator' });
     }
 
-    // Add collaborator
     group.collaborators.push({ user: userId, role: role || 'viewer' });
     await group.save();
 
-    // Send notification to the invited user
     await notifyMember({
       userId,
       message: `You've been invited to collaborate on "${group.title}".`,
       type: 'invite',
-      relatedGroup: group._id
+      relatedGroup: group._id,
     });
 
     res.status(200).json({ message: 'Collaborator invited successfully' });
@@ -114,7 +127,7 @@ export const inviteCollaboratorToGroup = async (req, res) => {
   }
 };
 
-// controllers/groupController.js
+// REMOVE COLLABORATOR
 export const removeCollaboratorFromGroup = async (req, res) => {
   const { groupId, userId } = req.params;
 
@@ -122,14 +135,11 @@ export const removeCollaboratorFromGroup = async (req, res) => {
     const group = await Group.findById(groupId);
     if (!group) return res.status(404).json({ message: 'Group not found' });
 
-    // Check permission
     if (!group.createdBy.equals(req.user._id)) {
       return res.status(403).json({ message: 'Only the group creator can remove collaborators' });
     }
 
     const beforeLength = group.collaborators.length;
-
-    // Filter out the collaborator
     group.collaborators = group.collaborators.filter(
       (collab) => collab.user.toString() !== userId
     );
@@ -139,7 +149,6 @@ export const removeCollaboratorFromGroup = async (req, res) => {
     }
 
     await group.save();
-
     res.status(200).json({ message: 'Collaborator removed successfully' });
   } catch (error) {
     console.error('Remove collaborator error:', error);
@@ -147,17 +156,15 @@ export const removeCollaboratorFromGroup = async (req, res) => {
   }
 };
 
-
+// GET ALL COLLABORATORS
 export const getAllCollaborators = async (req, res) => {
   const currentUserId = req.user._id;
 
   try {
-    // Find groups where the current user is a member or collaborator
     const groups = await Group.find({
       $or: [
         { createdBy: currentUserId },
         { 'collaborators.user': currentUserId }
-
       ]
     }).populate('collaborators.userId', 'name email');
 
@@ -166,7 +173,7 @@ export const getAllCollaborators = async (req, res) => {
     for (const group of groups) {
       for (const collab of group.collaborators) {
         const collabId = collab.userId._id.toString();
-        if (collabId === currentUserId.toString()) continue; // exclude current user
+        if (collabId === currentUserId.toString()) continue;
 
         if (!collaboratorMap.has(collabId)) {
           collaboratorMap.set(collabId, {
