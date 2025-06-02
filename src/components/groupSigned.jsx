@@ -4,8 +4,9 @@ import { StarBorderOutlined } from "@mui/icons-material";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
-import api from '../api'; 
+import api from '../api';
 import GroupNew from './groupNew';
+import emptyGroup from '../assets/empty.png'
 
 const GroupSigned = () => {
   const [groups, setGroups] = useState([]);
@@ -79,7 +80,11 @@ const GroupSigned = () => {
     }
   };
 
-  if (loading) return <div>Loading groups...</div>;
+  if (loading) return <div>    <div className='newGroupContainer'>
+    <img className='newGroupImage' src={emptyGroup} />
+    <h1>No Files Found</h1>
+    <p>Click the Upload button now to add a new file to your hub</p>
+  </div></div>;
   if (error) return <div>Error loading groups: {error}</div>;
 
   return (
@@ -111,14 +116,14 @@ const GroupSigned = () => {
               onClick={() => navigate(`/group/${group._id}`)}
               style={{
                 position: 'relative',
-                border: '1px solid #ccc',
+                border: '1px solid rgb(53, 53, 53)',
                 borderRadius: '8px',
-                padding: '10px',
-                margin: '10px',
-                width: '150px',
+                padding: '10px 5px 10px 15px',
+                marginTop: '10px',
+                width: '200px',
                 textAlign: 'center',
                 cursor: 'pointer',
-                backgroundColor: '#2a2a2a',
+                backgroundColor: 'transparent',
                 color: 'white',
               }}
             >
@@ -127,7 +132,7 @@ const GroupSigned = () => {
                 className="groupFolderHeader"
                 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
               >
-                <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
+                <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled Group'}</p>
                 <MoreVertIcon
                   onClick={(e) => {
                     e.stopPropagation();

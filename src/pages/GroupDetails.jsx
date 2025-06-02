@@ -2,52 +2,62 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'; // Import useParams to get route params
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import api from "../api";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
-import '../style/groups.css'
+import '../style/groups.css';
+import { Link } from "react-router-dom";
 import emptyState from '../assets/empty_state.png'
-import GroupNew from "../components/groupNew";
 import FileNew from "../components/fileNew";
 import { Dialog, TextField } from "@mui/material";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 function GroupDetails() {
-  const { id: groupId } = useParams(); 
+  const { id: groupId } = useParams();
   const [openPopup, setOpenPopup] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [groupName, setGroupName] = useState("");
 
-useEffect(() => {
-  const fetchGroupDetails = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.warn("No auth token found");
-      return;
-    }
-
-    try {
-      const response = await api.get(`/groups/${groupId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const groupData = response.data;
-      setGroupName(groupData.title || groupData.name || "Untitled Group");
-    } catch (error) {
-      console.error(
-        "Failed to fetch group details:",
-        error.response?.data || error.message
-      );
-    }
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  if (groupId) {
-    fetchGroupDetails();
-  }
-}, [groupId]);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    const fetchGroupDetails = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("No auth token found");
+        return;
+      }
+
+      try {
+        const response = await api.get(`/groups/${groupId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const groupData = response.data;
+        setGroupName(groupData.title || groupData.name || "Untitled Group");
+      } catch (error) {
+        console.error(
+          "Failed to fetch group details:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    if (groupId) {
+      fetchGroupDetails();
+    }
+  }, [groupId]);
   const handleCreate = () => {
     console.log(title);
     setOpenPopup(false);
@@ -69,8 +79,8 @@ useEffect(() => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("title", fileNameWithoutExt); 
-    formData.append("tags", ''); 
+    formData.append("title", fileNameWithoutExt);
+    formData.append("tags", '');
 
     try {
       if (!groupId) {
@@ -79,11 +89,11 @@ useEffect(() => {
       }
 
       const response = await api.post(`/groups/${groupId}/upload`, formData, {
-  headers: {
-    "Content-Type": "multipart/form-data",
-    Authorization: `Bearer ${token}`,
-  },
-});
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
 
       console.log("Upload success:", response.data);
@@ -142,11 +152,55 @@ useEffect(() => {
           <div className="main-content">
             <div className="bodyContainer">
               <div className="groupHeader">
-                <div style={{gap: 10, alignItems: 'center'}} className="groupHeader">
-                  <h1>Groups</h1>
-                  <KeyboardArrowRightOutlinedIcon sx={{color: '#fff'}} />
-                  <h1>{groupName || 'Loading...'}</h1>
-                  <button><ShareOutlinedIcon /></button>
+                <div style={{ gap: 10, alignItems: 'center' }} className="groupHeader">
+                  <Link to='/groups' style={{ color: '#282a2c', textDecoration: 'none' }}>
+                    <h1>Groups</h1>
+                  </Link>
+                  <KeyboardArrowRightOutlinedIcon sx={{ color: '#fff' }} />
+                  <h1 style={{ textTransform: 'capitalize' }}>{groupName || 'Loading...'}</h1>
+                  <button onClick={openModal}><ShareOutlinedIcon /></button>
+                  {isModalOpen && (
+                    <div className="modalBackdrop">
+                      <div className="modalContent">
+                        <div className="modalContentTop">
+                          <h2 className="modalContentH2">
+                            Share Your Group Link
+                          </h2>
+                          <CloseIcon
+                            onClick={closeModal}
+                            alt="close"
+                          />
+                        </div>
+                        <div className="modalContentMiddle">
+                          <p className="modalContentP">Event Group URL</p>
+                          <div className="urlContainer">
+                            <p className="url">
+                              localhost:5173/group/
+                              <span className="urlSpan">{groupId}</span>
+                            </p>
+                            <button
+                              className="CopyButtons"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  `http://localhost:5173/group/${groupId}`
+                                )
+                                alert("Link Copied")
+                              }
+
+                              }
+                            >
+                              <ContentCopyIcon alt="copy" />
+                              Copy
+                            </button>
+                          </div>
+                          <p className="shareP">
+                            Share this URL with your friends/classmates so
+                            they can view materials in this private group.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="dropdown">
                   <label htmlFor="input-file">

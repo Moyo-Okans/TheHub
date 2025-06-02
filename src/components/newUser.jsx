@@ -3,14 +3,19 @@ import { MoreVert } from "@mui/icons-material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { StarBorderOutlined } from "@mui/icons-material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import '../style/groups.css';
 import { ScheduleRounded } from "@mui/icons-material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FolderIcon from "@mui/icons-material/Folder";
 import PublicIcon from "@mui/icons-material/Public";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog, TextField } from "@mui/material";
 import api from "../api";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import CloseIcon from '@mui/icons-material/Close';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 function NewUser() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,12 +25,26 @@ function NewUser() {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [uploadingGroupId, setUploadingGroupId] = useState(null); // Track which group is uploading
+  const navigate = useNavigate();
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // State variables for creating a group
   const [groupName, setGroupName] = useState(""); // Corrected variable name
   const [courseCode, setCourseCode] = useState("");
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleToggleDropdown = (index) => {
+    setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+  };
   // Fetch user profile on mount
   useEffect(() => {
     const fetchProfile = async () => {
@@ -66,36 +85,58 @@ function NewUser() {
     };
   }, []);
 
+  // Fetch user's files from API
+  const fetchFiles = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const response = await api.get('/files/my-files', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('API RESPONSE:', response.data);
+
+      // Assuming response.data is an array of files
+      setFiles(response.data.files);
+    } catch (error) {
+      console.error('Failed to fetch files:', error);
+    }
+  };
+
+  const fetchUserGroups = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setError('No authentication token found.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await api.get('groups/my-groups', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setGroups(response.data);
+    } catch (err) {
+      console.error('Error fetching groups:', err);
+      if (err.response) {
+        setError(`Error: ${err.response.status} ${err.response.statusText}`);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect only calls fetchUserGroups on mount
   useEffect(() => {
-    const fetchUserGroups = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setError('No authentication token found.');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await api.get('groups/my-groups', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setGroups(response.data);
-      } catch (err) {
-        console.error('Error fetching groups:', err);
-        if (err.response) {
-          setError(`Error: ${err.response.status} ${err.response.statusText}`);
-        } else {
-          setError(err.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUserGroups();
+    fetchFiles();
   }, []);
 
   // Handle file upload
@@ -132,30 +173,6 @@ function NewUser() {
     }
   };
 
-  const handleGroupClick = async (group) => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      alert('You need to be logged in to perform this action.');
-      return;
-    }
-
-    setUploadingGroupId(group._id); // Indicate this group is uploading
-
-    try {
-      await api.post('groups/upload', { groupId: group._id }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert('Group uploaded successfully!');
-    } catch (err) {
-      console.error('Error uploading group:', err);
-      alert('Failed to upload the group.');
-    } finally {
-      setUploadingGroupId(null); // Reset uploading state
-    }
-  };
 
   // Handle create group
   const handleCreate = async () => {
@@ -191,14 +208,50 @@ function NewUser() {
       setOpenPopup(false);
       setGroupName("");
       setCourseCode("");
+      fetchUserGroups();
     } catch (error) {
       console.error("Failed to create group:", error.response?.data || error.message);
       alert("Failed to create group");
     }
   };
 
+  const handleAction = async (action, groupId) => {
+    setOpenDropdownIndex(null);
+
+    if (action === 'share') {
+      openModal();
+    } else {
+      console.log(`Action: ${action} on group ID: ${groupId}`);
+    };
+
+    if (action === 'delete') {
+      setGroups((prev) => prev.filter((g) => g._id !== groupId));
+      try {
+        const token = localStorage.getItem("token");
+        await api.delete(`/groups/${groupId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Remove deleted group from UI
+        console.log('Deleted Successfully');
+
+      } catch (err) {
+        console.error("Delete failed:", err.response?.data || err.message);
+        alert("Failed to delete the group. Please try again.");
+      }
+    } else {
+      console.log(`Action: ${action} on group ID: ${groupId}`);
+    };
+  };
+
   if (loading) {
-    return <div>Loading groups...</div>;
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
@@ -208,6 +261,7 @@ function NewUser() {
 
   return (
     <>
+
       {/* Create Group Popup */}
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="modalContent">
@@ -362,34 +416,125 @@ function NewUser() {
           <div className="actionBox">
             <h3>Groups</h3>
             <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {groups.map((group) => (
+              {groups.map((group, index) => (
                 <div
-                  className="groupFolder"
                   key={group._id}
+                  onClick={() => navigate(`/group/${group._id}`)}
                   style={{
-                    border: '1px solid #ccc',
+                    position: 'relative',
+                    border: '1px solid rgb(53, 53, 53)',
                     borderRadius: '8px',
-                    padding: '10px',
-                    margin: '10px',
-                    width: '150px',
+                    padding: '10px 5px 10px 15px',
+                    marginTop: '10px',
+                    width: '200px',
                     textAlign: 'center',
                     cursor: 'pointer',
-                    opacity: uploadingGroupId === group._id ? 0.5 : 1,
-                    pointerEvents: uploadingGroupId === group._id ? 'none' : 'auto',
+                    backgroundColor: 'transparent',
+                    color: 'white',
                   }}
-                  onClick={() => handleGroupClick(group)}
                 >
                   <div
                     className="groupFolderHeader"
-                    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                   >
-                    <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
-                    <MoreVert />
+                    <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled Group'}</p>
+                    <MoreVert
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.nativeEvent.stopImmediatePropagation();
+                        handleToggleDropdown(index);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    />
                   </div>
+                  {isModalOpen && (
+                    <div className="modalBackdrop">
+                      <div className="modalContent">
+                        <div className="modalContentTop">
+                          <h2 className="modalContentH2">
+                            Share Your Group Link
+                          </h2>
+                          <CloseIcon
+                            onClick={closeModal}
+                            alt="close"
+                          />
+                        </div>
+                        <div className="modalContentMiddle">
+                          <p className="modalContentP">Event Group URL</p>
+                          <div className="urlContainer">
+                            <p className="url">
+                              localhost:5173/group/
+                              <span className="urlSpan">{group._id}</span>
+                            </p>
+                            <button
+                              className="CopyButtons"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  `http://localhost:5173/group/${group._id}`
+                                )
+                                alert("Link Copied")
+                              }
+
+                              }
+                            >
+                              <ContentCopyIcon sx={{
+                                fontSize: '15px'
+                              }} alt="copy" />
+                              Copy
+                            </button>
+                          </div>
+                          <p className="shareP">
+                            Share this URL with your friends/classmates so
+                            they can view materials in this private group.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* Dropdown */}
+                  {openDropdownIndex === index && (
+                    <div
+                      ref={dropdownRef}
+                      className="dropdownMenu"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        position: 'absolute',
+                        top: 40,
+                        right: 10,
+                        backgroundColor: '#1e1e1e',
+                        border: '1px solid #444',
+                        borderRadius: '6px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                        zIndex: 1000,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '4px 0',
+                        minWidth: '110px',
+                      }}
+                    >
+                      {['share', 'star', 'delete'].map((action) => (
+                        <button
+                          key={action}
+                          onClick={() => handleAction(action, group._id)}
+                          style={{
+                            padding: '8px 12px',
+                            background: 'none',
+                            border: 'none',
+                            color: 'white',
+                            textAlign: 'left',
+                            cursor: 'pointer',
+                            width: '100%',
+                            fontSize: '14px',
+                          }}
+                        >
+                          {action.charAt(0).toUpperCase() + action.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <FolderIcon
                     style={{
-                      fontSize: 120,
-                      marginTop: 10,
+                      fontSize: 150,
+                      marginTop: 0,
                       color: 'gray',
                     }}
                   />
@@ -414,21 +559,32 @@ function NewUser() {
               </div>
             </div>
             <div className="fileTable">
-              <div className="fileHeader">
-                <p>Name</p>
-                <p>Location</p>
-                <p>Owner</p>
-                <p>Date</p>
+              <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
+                <p style={{ flex: 2 }}>Name</p>
+                <p style={{ flex: 3 }}>Location</p>
+                <p style={{ flex: 2 }}>Owner</p>
+                <p style={{ flex: 2 }}>Date</p>
               </div>
-              <div className="fileLines">
-                <div className="fileName">
-                  <InsertDriveFileIcon style={{ color: "#425EEA", fontSize: 22 }} />
-                  <p>CSC 104</p>
+              {files.length > 0 ? (
+                // Render files if array is not empty
+                files.map((file) => (
+                  <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
+                    <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <InsertDriveFileIcon />
+                      <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
+                    </div>
+                    <p className="location" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
+                    <p className="owner" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
+                    <p className="date" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <div>
+                  <h2>No Files</h2>
                 </div>
-                <p className="location">CSC Final Exam Preparations</p>
-                <p className="owner">Me</p>
-                <p className="date">March 12, 2025</p>
-              </div>
+              )}
             </div>
           </div>
         </div>

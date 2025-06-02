@@ -3,7 +3,6 @@ import emptyState from "../assets/empty_state.png";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import "../style/groups.css";
-import SignedIn from "../components/signedin";
 import NewUser from "../components/newUser";
 
 function Dashboard() {
