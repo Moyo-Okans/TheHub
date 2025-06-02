@@ -186,7 +186,7 @@ const GroupSigned = () => {
               )}
 
               {/* Folder Icon */}
-              <FolderIcon style={{ fontSize: 100, marginTop: 10, color: 'gray' }} />
+              <FolderIcon style={{ fontSize: 150, marginTop: 10, color: 'gray' }} />
             </div>
           ))}
         </div>
