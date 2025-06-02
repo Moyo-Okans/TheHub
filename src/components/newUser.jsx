@@ -141,6 +141,7 @@ function NewUser() {
 
   // Handle file upload
   const handleFileChange = async (event) => {
+    setLoading(true);
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -171,6 +172,8 @@ function NewUser() {
       console.error("File upload failed:", error.response?.data || error.message);
       alert("File upload failed");
     }
+    setLoading(false);
+    fetchFiles();
   };
 
 
@@ -209,6 +212,7 @@ function NewUser() {
       setGroupName("");
       setCourseCode("");
       fetchUserGroups();
+      fetchFiles();
     } catch (error) {
       console.error("Failed to create group:", error.response?.data || error.message);
       alert("Failed to create group");
@@ -264,9 +268,9 @@ function NewUser() {
 
       {/* Create Group Popup */}
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
-        <div className="modalContent">
+        <div className="modalContentt">
           <h2>Create Group</h2>
-          <div className="modalInputContainer">
+          <div className="modalInputContainerr">
             <TextField
               label="Group Name"
               fullWidth
@@ -300,7 +304,7 @@ function NewUser() {
               onChange={(e) => setCourseCode(e.target.value)}
             />
 
-            <div className="modalButtonsContainer">
+            <div className="modalButtonsContainerr">
               <button onClick={() => setOpenPopup(false)}>Cancel</button>
               <button onClick={handleCreate}>Create</button>
             </div>
@@ -346,7 +350,7 @@ function NewUser() {
       </div>
 
       {/* Actions section */}
-      {groups.length === 0 ? (
+      {groups.length === 0 && files.length === 0 ? (
         <div className="default">
           {/* Default screen (no groups yet) */}
           <div className="actionBox">
@@ -415,7 +419,36 @@ function NewUser() {
           {/* Group View */}
           <div className="actionBox">
             <h3>Groups</h3>
-            <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {groups.length === 0 ? (
+                <div className="boxes">
+                  {/* Create Group Box */}
+                  <div className="groupContainer">
+                    <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                    <h3>Create a group</h3>
+                    <p>Create your first Group to collaborate with your study group members</p>
+                    <div className="fullWidth">
+                      <button onClick={() => setOpenPopup(true)}>
+                        <AddRoundedIcon style={{ paddingRight: 5 }} />
+                        Create
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Community Box */}
+                  <div className="groupContainer">
+                    <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                    <h3>Go to community</h3>
+                    <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
+                    <div className="fullWidth">
+                      <Link className="uploadbtn" to='/community'>
+                        <SubdirectoryArrowRightIcon style={{ paddingRight: 5 }} />
+                        Visit
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+            ) : (
+              <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
               {groups.map((group, index) => (
                 <div
                   key={group._id}
@@ -541,6 +574,8 @@ function NewUser() {
                 </div>
               ))}
             </div>
+            )}
+            
           </div>
 
           {/* Files Section */}
