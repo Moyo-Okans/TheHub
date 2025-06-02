@@ -6,14 +6,10 @@ import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import "../style/files.css";
 import emptyState from "../assets/empty_state.png";
-import {
-  AddRounded,
-} from "@mui/icons-material";
+import {AddRounded,} from "@mui/icons-material";
 import FileNew from "../components/fileNew";
 import FileSigned from "../components/fileSigned";
-import {
-  Dialog,
-  TextField,
+import {  Dialog,  TextField,
 } from "@mui/material";
 
 function Files() {

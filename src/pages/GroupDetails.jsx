@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom'; // Import useParams to get route params
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import api from "../api";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -13,9 +14,40 @@ import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRig
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 function GroupDetails() {
+  const { id: groupId } = useParams(); 
   const [openPopup, setOpenPopup] = useState(false);
   const [title, setTitle] = useState("");
+  const [groupName, setGroupName] = useState("");
 
+useEffect(() => {
+  const fetchGroupDetails = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("No auth token found");
+      return;
+    }
+
+    try {
+      const response = await api.get(`/groups/${groupId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const groupData = response.data;
+      setGroupName(groupData.title || groupData.name || "Untitled Group");
+    } catch (error) {
+      console.error(
+        "Failed to fetch group details:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  if (groupId) {
+    fetchGroupDetails();
+  }
+}, [groupId]);
   const handleCreate = () => {
     console.log(title);
     setOpenPopup(false);
@@ -37,16 +69,22 @@ function GroupDetails() {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("title", fileNameWithoutExt); // Use cleaned file name as title
-    formData.append("tags", ''); // Optional: can replace '' with actual tags later
+    formData.append("title", fileNameWithoutExt); 
+    formData.append("tags", ''); 
 
     try {
-      const response = await api.post('/files/upload', formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (!groupId) {
+        alert("Group ID is missing");
+        return;
+      }
+
+      const response = await api.post(`/groups/${groupId}/upload`, formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 
       console.log("Upload success:", response.data);
       // TODO: optionally refresh file list or UI
@@ -105,10 +143,10 @@ function GroupDetails() {
             <div className="bodyContainer">
               <div className="groupHeader">
                 <div style={{gap: 10, alignItems: 'center'}} className="groupHeader">
-                <h1>Groups</h1>
-                <KeyboardArrowRightOutlinedIcon sx={{color: '#fff'}} />
-                <h1>CSC 350 Exam Preparation</h1>
-                <button><ShareOutlinedIcon /></button>
+                  <h1>Groups</h1>
+                  <KeyboardArrowRightOutlinedIcon sx={{color: '#fff'}} />
+                  <h1>{groupName || 'Loading...'}</h1>
+                  <button><ShareOutlinedIcon /></button>
                 </div>
                 <div className="dropdown">
                   <label htmlFor="input-file">
@@ -149,7 +187,7 @@ function GroupDetails() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default GroupDetails
+export default GroupDetails;

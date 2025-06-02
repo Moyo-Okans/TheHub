@@ -18,9 +18,9 @@ connectCloudinary();
 // Middlewares
 //cors configuration
 
-const corsOptions ={
+const corsOptions = {
   origin: 'http://localhost:5173',
-  Credentials: true,
+  credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -30,6 +30,7 @@ app.use(morgan('dev'));
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/groups", fileRoutes);
 
 // Health Check Route
 app.get('/', (req, res) => {

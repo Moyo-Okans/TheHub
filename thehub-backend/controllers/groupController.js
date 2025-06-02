@@ -1,12 +1,11 @@
 import Group from '../models/Group.js';
 import notifyMember from '../utils/notifyMember.js';
 
-
-
+// CREATE GROUP
 export const createGroup = async (req, res) => {
   try {
     const { courseCode, title } = req.body;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const newGroup = await Group.create({
       courseCode,
@@ -17,17 +16,18 @@ export const createGroup = async (req, res) => {
 
     res.status(201).json(newGroup);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create group.' });
     console.error(err);
+    res.status(500).json({ error: 'Failed to create group.' });
   }
 };
 
+// JOIN GROUP
 export const joinGroup = async (req, res) => {
   try {
     const group = await Group.findById(req.params.groupId);
     if (!group) return res.status(404).json({ error: 'Group not found' });
 
-    const userId = req.user.id;
+    const userId = req.user._id;
     if (!group.members.includes(userId)) {
       group.members.push(userId);
       await group.save();
@@ -35,18 +35,19 @@ export const joinGroup = async (req, res) => {
 
     res.json({ message: 'Joined group successfully', group });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to join group.' });
     console.error(err);
+    res.status(500).json({ error: 'Failed to join group.' });
   }
 };
 
-
+// GET MY GROUPS
 export const getMyGroups = async (req, res) => {
   try {
     const userId = req.user._id;
 
     const groups = await Group.find({
       members: userId,
+      isDeleted: { $ne: true }, // Exclude soft-deleted groups
     });
 
     res.json(groups);
@@ -56,15 +57,12 @@ export const getMyGroups = async (req, res) => {
   }
 };
 
-
+// GET GROUP MEMBERS
 export const getGroupMembers = async (req, res) => {
   try {
     const groupId = req.params.id;
-
-    const group = await Group.findById(groupId).populate('members', 'username email'); // customize fields
-
+    const group = await Group.findById(groupId).populate('members', 'username email');
     if (!group) return res.status(404).json({ message: 'Group not found' });
-
     res.json(group.members);
   } catch (err) {
     console.error(err);
@@ -72,21 +70,43 @@ export const getGroupMembers = async (req, res) => {
   }
 };
 
+// GET GROUP BY ID
+export const getGroupById = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.groupId).populate('members', 'username email');
 
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' });
+    }
+
+    res.status(200).json({
+      id: group._id,
+      title: group.title,
+      courseCode: group.courseCode,
+      createdBy: group.createdBy,
+      members: group.members,
+      collaborators: group.collaborators || [],
+      createdAt: group.createdAt,
+    });
+  } catch (error) {
+    console.error('getGroupById error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// INVITE COLLABORATOR
 export const inviteCollaboratorToGroup = async (req, res) => {
   const { groupId } = req.params;
-  const { userId, role } = req.body; // ID of user to invite + their role
+  const { userId, role } = req.body;
 
   try {
     const group = await Group.findById(groupId);
     if (!group) return res.status(404).json({ message: 'Group not found' });
 
-    // Only group creator or admin should be able to invite
     if (!group.createdBy.equals(req.user._id)) {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    // Check if already a collaborator
     const alreadyAdded = group.collaborators.some(
       (collab) => collab.user.toString() === userId
     );
@@ -95,16 +115,14 @@ export const inviteCollaboratorToGroup = async (req, res) => {
       return res.status(400).json({ message: 'User is already a collaborator' });
     }
 
-    // Add collaborator
     group.collaborators.push({ user: userId, role: role || 'viewer' });
     await group.save();
 
-    // Send notification to the invited user
     await notifyMember({
       userId,
       message: `You've been invited to collaborate on "${group.title}".`,
       type: 'invite',
-      relatedGroup: group._id
+      relatedGroup: group._id,
     });
 
     res.status(200).json({ message: 'Collaborator invited successfully' });
@@ -114,7 +132,7 @@ export const inviteCollaboratorToGroup = async (req, res) => {
   }
 };
 
-// controllers/groupController.js
+// REMOVE COLLABORATOR
 export const removeCollaboratorFromGroup = async (req, res) => {
   const { groupId, userId } = req.params;
 
@@ -122,14 +140,11 @@ export const removeCollaboratorFromGroup = async (req, res) => {
     const group = await Group.findById(groupId);
     if (!group) return res.status(404).json({ message: 'Group not found' });
 
-    // Check permission
     if (!group.createdBy.equals(req.user._id)) {
       return res.status(403).json({ message: 'Only the group creator can remove collaborators' });
     }
 
     const beforeLength = group.collaborators.length;
-
-    // Filter out the collaborator
     group.collaborators = group.collaborators.filter(
       (collab) => collab.user.toString() !== userId
     );
@@ -139,7 +154,6 @@ export const removeCollaboratorFromGroup = async (req, res) => {
     }
 
     await group.save();
-
     res.status(200).json({ message: 'Collaborator removed successfully' });
   } catch (error) {
     console.error('Remove collaborator error:', error);
@@ -147,33 +161,32 @@ export const removeCollaboratorFromGroup = async (req, res) => {
   }
 };
 
-
+// GET ALL COLLABORATORS
 export const getAllCollaborators = async (req, res) => {
   const currentUserId = req.user._id;
 
   try {
-    // Find groups where the current user is a member or collaborator
     const groups = await Group.find({
       $or: [
         { createdBy: currentUserId },
         { 'collaborators.user': currentUserId }
-
       ]
-    }).populate('collaborators.userId', 'name email');
+    }).populate('collaborators.user', 'name email');
 
     const collaboratorMap = new Map();
 
     for (const group of groups) {
       for (const collab of group.collaborators) {
-        const collabId = collab.userId._id.toString();
-        if (collabId === currentUserId.toString()) continue; // exclude current user
+        const collabUser = collab.user;
+        const collabId = collabUser._id.toString();
+        if (collabId === currentUserId.toString()) continue;
 
         if (!collaboratorMap.has(collabId)) {
           collaboratorMap.set(collabId, {
             user: {
-              _id: collab.userId._id,
-              name: collab.userId.name,
-              email: collab.userId.email,
+              _id: collabUser._id,
+              name: collabUser.name,
+              email: collabUser.email,
             },
             groups: [],
           });
@@ -193,5 +206,49 @@ export const getAllCollaborators = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to fetch collaborators' });
+  }
+};
+
+// SOFT DELETE GROUP
+export const softDeleteGroup = async (req, res) => {
+  try {
+    const group = await Group.findById(req.params.id);
+
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' });
+    }
+
+    if (!group.createdBy.equals(req.user._id)) {
+      return res.status(403).json({ message: 'Unauthorized to delete this group' });
+    }
+
+    group.isDeleted = true;
+    await group.save();
+
+    res.json({ message: 'Group moved to trash' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error during deletion' });
+  }
+};
+
+// GET TRASHED GROUPS
+export const getTrashedGroups = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authorized, no user' });
+    }
+
+    const userId = req.user._id;
+
+    const trashedGroups = await Group.find({
+      createdBy: userId,
+      isDeleted: true
+    });
+
+    res.json(trashedGroups);
+  } catch (err) {
+    console.error('Error fetching trashed groups:', err);
+    res.status(500).json({ message: 'Error fetching trashed groups' });
   }
 };

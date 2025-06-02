@@ -1,6 +1,6 @@
 import express from 'express';
 import protect from '../middleware/authMiddleware.js';
-import { listGroupFiles, deleteFile, softDeleteFile, permanentlyDeleteFile, getTrashedFiles, restoreFile, uploadGroupFile, uploadIndependentFile, listIndependentFiles, listUserFiles } from '../controllers/fileController.js';
+import { listGroupFiles, deleteFile, softDeleteFile, permanentlyDeleteFile, getTrashedFiles, restoreFile, uploadGroupFile, uploadIndependentFile, listIndependentFiles,  getUserFiles,uploadUserFile } from '../controllers/fileController.js';
 import upload from '../middleware/upload.js';
 
 
@@ -15,6 +15,7 @@ router.delete('/:id/trash', protect, softDeleteFile);
 router.get('/trash', protect, getTrashedFiles);
 router.put('/:id/restore', protect, restoreFile);
 router.delete('/:id/permanent', protect, permanentlyDeleteFile);
-router.get('/userFiles',protect,listUserFiles)
+router.get('/my-files', protect, getUserFiles);
+router.post('/uploadUserFile', protect, upload.single('file'), uploadUserFile);
 
 export default router;
