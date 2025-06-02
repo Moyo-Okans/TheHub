@@ -3,8 +3,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LogoutIcon from '@mui/icons-material/Logout';
 import PublicIcon from "@mui/icons-material/Public";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import profileImg from "../assets/profileImage.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
 
 
 const Navbar = () => {
@@ -58,8 +58,7 @@ const Navbar = () => {
     />
   </Link>
 
-  <img
-    src={profileImg}
+  <Avatar
     alt="Profile"
     onClick={toggleDropdown}
     style={{

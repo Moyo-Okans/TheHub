@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../style/community.css";
 import NavbarCommunity from "../components/navbarCommuntiy";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Link } from "react-router-dom";
+import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
+import { StarBorderOutlined } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
@@ -11,7 +13,7 @@ import api from '../api';
 
 function Community() {
   const [groups, setUserGroups] = useState([]);
-  const [userFiles, setUserFiles] = useState([]);
+  const [files, setUserFiles] = useState([]);
   const [error, setError] = useState(null); 
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Dropdown index state
   const navigate = useNavigate();
@@ -22,7 +24,6 @@ function Community() {
 
     if (!token) {
        setError('No authentication token found.');
-      setLoading(false);
       return;
     }
 
@@ -63,6 +64,33 @@ function Community() {
     fetchUserGroups();
     fetchUserFiles();
   }, []);
+
+    const handleToggleDropdown = (index) => {
+      setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+    };
+  
+    const handleAction = async (action, groupId) => {
+      setOpenDropdownIndex(null);
+  
+      if (action === 'delete') {
+        try {
+          const token = localStorage.getItem("token");
+          await api.delete(`/groups/${groupId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+  
+          // Remove deleted group from UI
+          setUserGroups((prev) => prev.filter((g) => g._id !== groupId));
+        } catch (err) {
+          console.error("Delete failed:", err.response?.data || err.message);
+          alert("Failed to delete the group. Please try again.");
+        }
+      } else {
+        console.log(`Action: ${action} on group ID: ${groupId}`);
+      }
+    };
 
   return (
     <div>
@@ -120,18 +148,20 @@ function Community() {
       <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
         {groups.map((group, index) => (
           <div
-            key={group._id}
-            style={{
-              position: 'relative',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              padding: '10px',
-              margin: '10px',
-              width: '150px',
-              textAlign: 'center',
-              cursor: 'pointer',
-            }}
-          >
+              key={group._id}
+              onClick={() => navigate(`/group/${group._id}`)}
+              style={{
+                position: 'relative',
+                border: '1px solid rgb(53, 53, 53)',
+                borderRadius: '8px',
+                padding: '10px 5px 10px 15px',
+                width: '200px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                backgroundColor: 'transparent',
+                color: 'white',
+              }}
+            >
             <div
               className="groupFolderHeader"
               style={{
@@ -139,20 +169,16 @@ function Community() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}
-              onClick={() => {
-                // Navigate to the group details page
-                console.log('Navigating to:', `/group/${group._id}`);
-                navigate(`/group/${group._id}`);
-              }}
             >
-              <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
-              <MoreVertIcon
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent nav
-                  handleToggleDropdown(index);
-                }}
-                style={{ cursor: 'pointer' }}
-              />
+              <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled Group'}</p>
+                <MoreVertIcon
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                    handleToggleDropdown(index);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                />
             </div>
 
             {/* Dropdown */}
@@ -243,110 +269,32 @@ function Community() {
             </div>
           </div>
           <div className="fileTable paddingTop">
-                <div className="fileHeader">
-                  <p>Name</p>
-                  <p>Location</p>
-                  <p>Owner</p>
-                  <p>Date</p>
+                <div className="fileHeader" style={{  display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
+                    <p style={{ flex: 2 }}>Name</p>
+                    <p style={{ flex: 3 }}>Location</p>
+                    <p style={{ flex: 2 }}>Owner</p>
+                    <p style={{ flex: 2 }}>Date</p>
                 </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
-                <div className="fileLines">
-                  <div className="fileName">
-                    <InsertDriveFileIcon
-                      style={{
-                        color: "#425EEA",
-                        fontSize: 22,
-                      }}
-                    />
-                    <p>CSC 104</p>
-                  </div>
-                  <p className="location">CSC Final Exam Preparations</p>
-                  <p className="owner">Me</p>
-                  <p className="date">March 12,2025</p>
-                </div>
+                {files.length > 0 ? (
+                    // Render files if array is not empty
+                    files.map((file) => (
+                        <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
+                            <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <InsertDriveFileIcon />
+                                <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
+                            </div>
+                            <p className="location" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
+                            <p className="owner" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
+                            <p className="date" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
+                            </p>
+                        </div>
+                    ))
+                ) : (
+                    <div>
+                      No files yet
+                    </div>
+                )}
               </div>
              <div className="communityContentHead3">
             <h3>Popular Courses</h3>

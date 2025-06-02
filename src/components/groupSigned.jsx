@@ -82,7 +82,7 @@ const GroupSigned = () => {
 
   if (loading) return <div>    <div className='newGroupContainer'>
     <img className='newGroupImage' src={emptyGroup} />
-    <h1>No Files Found</h1>
+    <h1>No Groups Found</h1>
     <p>Click the Upload button now to add a new file to your hub</p>
   </div></div>;
   if (error) return <div>Error loading groups: {error}</div>;
