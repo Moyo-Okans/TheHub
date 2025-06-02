@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style/community.css";
 import NavbarCommunity from "../components/navbarCommuntiy";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -7,9 +7,63 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import Footer from "../components/footer";
-
+import api from '../api';
 
 function Community() {
+  const [groups, setUserGroups] = useState([]);
+  const [userFiles, setUserFiles] = useState([]);
+  const [error, setError] = useState(null); 
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null); // Dropdown index state
+  const navigate = useNavigate();
+
+  // Fetch user's groups
+  const fetchUserGroups = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+       setError('No authentication token found.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await api.get('groups/my-groups', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserGroups(response.data);
+    } catch (err) {
+      console.error('Error fetching groups:', err);
+    }
+  };
+
+  // Fetch user's files
+  const fetchUserFiles = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      // handle missing token if necessary
+      return;
+    }
+
+    try {
+      const response = await api.get('/files/files', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserFiles(response.data);
+    } catch (error) {
+      console.error('Failed to fetch files:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserGroups();
+    fetchUserFiles();
+  }, []);
+
   return (
     <div>
       <NavbarCommunity />
@@ -37,64 +91,148 @@ function Community() {
               <Link>See More</Link>
             </div>
           </div>
-          <div className="groupRow">
-            <div className="groupFolder">
-              <div className="groupFolderHeader">
-                <p>CSC Final Exam Group</p>
-                <MoreVertIcon />
-              </div>
-              <FolderIcon
-                style={{
-                  fontSize: 125,
-                  margin: 0,
-                  padding: 0,
-                  color: "gray",
+           <div className="groups">
+      {/* Tags Buttons */}
+      <div className="tags" style={{ display: 'flex', marginBottom: '20px' }}>
+        <button style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+          <ScheduleRoundedIcon
+            style={{
+              fontSize: 20,
+              color: 'white',
+              marginRight: 7,
+            }}
+          />
+          Recent
+        </button>
+        <button style={{ display: 'flex', alignItems: 'center' }}>
+          <StarBorderOutlined
+            style={{
+              fontSize: 23,
+              color: 'white',
+              marginRight: 7,
+            }}
+          />
+          Starred
+        </button>
+      </div>
+
+      {/* Groups Display */}
+      <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {groups.map((group, index) => (
+          <div
+            key={group._id}
+            style={{
+              position: 'relative',
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              padding: '10px',
+              margin: '10px',
+              width: '150px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              className="groupFolderHeader"
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+              onClick={() => {
+                // Navigate to the group details page
+                console.log('Navigating to:', `/group/${group._id}`);
+                navigate(`/group/${group._id}`);
+              }}
+            >
+              <p style={{ margin: 0 }}>{group.title || 'Untitled Group'}</p>
+              <MoreVertIcon
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent nav
+                  handleToggleDropdown(index);
                 }}
+                style={{ cursor: 'pointer' }}
               />
             </div>
-            <div className="groupFolder">
-              <div className="groupFolderHeader">
-                <p>CSC Final Exam Group</p>
-                <MoreVertIcon />
-              </div>
-              <FolderIcon
+
+            {/* Dropdown */}
+            {openDropdownIndex === index && (
+              <div
+                className="dropdownMenu"
                 style={{
-                  fontSize: 125,
-                  margin: 0,
-                  padding: 0,
-                  color: "gray",
+                  position: 'absolute',
+                  top: 40,
+                  right: 10,
+                  backgroundColor: '#1e1e1e',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                  zIndex: 1000,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '4px 0',
+                  minWidth: '110px',
                 }}
-              />
-            </div>
-            <div className="groupFolder">
-              <div className="groupFolderHeader">
-                <p>CSC Final Exam Group</p>
-                <MoreVertIcon />
+              >
+                <button
+                  onClick={() => handleAction('share', group._id)}
+                  style={{
+                    padding: '8px 12px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    width: '100%',
+                    fontSize: '14px',
+                  }}
+                >
+                  Share
+                </button>
+                <button
+                  onClick={() => handleAction('star', group._id)}
+                  style={{
+                    padding: '8px 12px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    width: '100%',
+                    fontSize: '14px',
+                  }}
+                >
+                  Star
+                </button>
+                <button
+                  onClick={() => handleAction('delete', group._id)}
+                  style={{
+                    padding: '8px 12px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    width: '100%',
+                    fontSize: '14px',
+                  }}
+                >
+                  Delete
+                </button>
               </div>
-              <FolderIcon
-                style={{
-                  fontSize: 125,
-                  margin: 0,
-                  padding: 0,
-                  color: "gray",
-                }}
-              />
-            </div>
-            <div className="groupFolder">
-              <div className="groupFolderHeader">
-                <p>CSC Final Exam Group</p>
-                <MoreVertIcon />
-              </div>
-              <FolderIcon
-                style={{
-                  fontSize: 125,
-                  margin: 0,
-                  padding: 0,
-                  color: "gray",
-                }}
-              />
-            </div>
+            )}
+
+            <FolderIcon
+              style={{
+                fontSize: 120,
+                marginTop: 10,
+                color: 'gray',
+              }}
+            />
           </div>
+        ))}
+      </div>
+    </div>
         </div>
         <div className="community-content">
           <div className="communityContentHead">

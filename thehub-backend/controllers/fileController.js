@@ -237,3 +237,13 @@ export const permanentlyDeleteFile = async (req, res) => {
   }
 };
 
+export const listUserFiles = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const files = await File.find({ uploaderId: userId }).sort({ createdAt: -1 });
+    res.json(files);
+  } catch (error) {
+    console.error('LIST USER FILES ERROR:', error);
+    res.status(500).json({ error: 'Failed to fetch user files.' });
+  }
+};
