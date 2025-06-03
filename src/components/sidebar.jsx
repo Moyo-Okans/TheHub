@@ -10,6 +10,7 @@ import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import FirstPageOutlinedIcon from "@mui/icons-material/FirstPageOutlined";
 import LastPageOutlinedIcon from "@mui/icons-material/LastPageOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -176,6 +177,21 @@ export default function Sidebar() {
                 >
                   <SettingsOutlinedIcon className="sidebar-icon" />
                   {(!minimized || (isMobile && mobileOpen)) && <span>Settings</span>}
+                </Link>
+              </div>
+
+              {/* Settings */}
+              <div>
+                <Link
+                  to="/trash"
+                  className={`sidebar-item ${
+                    activeItem === "/trash" ? "active" : ""
+                  }`}
+                  onClick={() => handleNavItemClick("/trash")}
+                  title="Trash"
+                >
+                  <DeleteOutlineOutlinedIcon className="sidebar-icon" />
+                  {(!minimized || (isMobile && mobileOpen)) && <span>Trash</span>}
                 </Link>
               </div>
             </div>

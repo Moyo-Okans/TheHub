@@ -13,9 +13,6 @@ function Starred() {
             <div className="bodyContainer">
               <h1>Starred</h1>
             </div>
-            <div className="activityContainer">
-              <h2>My Hub Activity</h2>
-            </div>
           </div>
         </div>
       </div>

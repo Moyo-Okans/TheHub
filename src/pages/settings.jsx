@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
-import Footer from "../components/footer";
-
-
 
 function Settings() {
   const [activeButton, setActiveButton] = useState("General Setting");
@@ -43,7 +40,6 @@ function Settings() {
                   <h1>Community Settings</h1>
                 </div>}
               </div>
-              <Footer />
             </div>
           </div>
         </div>
