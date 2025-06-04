@@ -12,6 +12,8 @@ import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRig
 import { Link, useNavigate } from "react-router-dom";
 import { Dialog, TextField } from "@mui/material";
 import api from "../api";
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
@@ -358,7 +360,7 @@ function NewUser() {
             <div className="boxes">
               {/* Create Group Box */}
               <div className="groupContainer">
-                <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <GroupAddOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
                 <h3>Create a group</h3>
                 <p>Create your first Group to start collaborations with your study group members</p>
                 <div className="fullWidth">
@@ -371,7 +373,7 @@ function NewUser() {
 
               {/* Upload File Box */}
               <div className="groupContainer">
-                <InsertDriveFileIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <NoteAddOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
                 <h3>Upload a file</h3>
                 <p>Select and Upload your first note/material PDF, DOCX, DOC etc.</p>
                 <div className="fullWidth">
@@ -395,7 +397,7 @@ function NewUser() {
 
               {/* Community Box */}
               <div className="groupContainer">
-                <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                <PublicIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
                 <h3>Go to community</h3>
                 <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
                 <div className="fullWidth">
@@ -409,7 +411,7 @@ function NewUser() {
           </div>
 
           <div className="emptyFiles">
-            <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+            <InsertDriveFileIcon style={{ fontSize: 60, color: "#282a2c" }} />
             <h2>No files found</h2>
             <p>Your files and groups will be shown here, you can create a group or upload a file now above</p>
           </div>
