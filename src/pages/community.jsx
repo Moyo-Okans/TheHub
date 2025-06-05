@@ -113,9 +113,9 @@ function Community() {
         </div>
         <div className="community-content">
           <div className="communityContentHead">
-            <h3>Recommended Groups</h3>
+            <h3>Recommended Folders</h3>
             <div className="recommended">
-              <p>Find study groups and materials for your study goals</p>
+              <p>Find materials for your study goals</p>
               <Link>See More</Link>
             </div>
           </div>
@@ -144,12 +144,12 @@ function Community() {
         </button>
       </div>
 
-      {/* Groups Display */}
+      {/* folders Display */}
       <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
         {groups.map((group, index) => (
           <div
               key={group._id}
-              onClick={() => navigate(`/group/${group._id}`)}
+              onClick={() => navigate(`/folder/${group._id}`)}
               style={{
                 position: 'relative',
                 border: '1px solid rgb(53, 53, 53)',

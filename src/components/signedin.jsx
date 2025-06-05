@@ -75,8 +75,8 @@ function SignedIn() {
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               <li>
-                <button onClick={() => console.log("Create Group")}>
-                  Create Group
+                <button onClick={() => console.log("Create folder")}>
+                  Create Folder
                 </button>
               </li>
               <li>
@@ -101,11 +101,11 @@ function SignedIn() {
         </div>
       </div>
       <div className="actionBox">
-        <h3>Groups</h3>
+        <h3>Folders</h3>
         <div className="groupRow">
-          <button onClick={() => window.open(`http://localhost:5000/group/${id}`, '_blank')} className="groupFolder">
+          <button onClick={() => window.open(`http://localhost:5000/folder/${id}`, '_blank')} className="groupFolder">
             <div className="groupFolderHeader">
-              <p>CSC Final Exam Group</p>
+              <p>CSC Final Exam Froup</p>
               <MoreVert />
             </div>
             <FolderIcon

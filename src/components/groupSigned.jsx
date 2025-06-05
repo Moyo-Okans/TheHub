@@ -82,10 +82,10 @@ const GroupSigned = () => {
 
   if (loading) return <div>    <div className='newGroupContainer'>
     <img className='newGroupImage' src={emptyGroup} />
-    <h1>No Groups Found</h1>
+    <h1>No folders Found</h1>
     <p>Click the Upload button now to add a new file to your hub</p>
   </div></div>;
-  if (error) return <div>Error loading groups: {error}</div>;
+  if (error) return <div>Error loading folders: {error}</div>;
 
   return (
     <div className="groups" style={{ padding: '20px' }}>
@@ -104,8 +104,6 @@ const GroupSigned = () => {
       {/* Empty State */}
       {groups.length === 0 ? (
         <div style={{ textAlign: 'center', marginTop: 50 }}>
-          <h2>No groups yet</h2>
-          <p>Create a group to get started</p>
           <GroupNew />
         </div>
       ) : (
@@ -113,7 +111,7 @@ const GroupSigned = () => {
           {groups.map((group, index) => (
             <div
               key={group._id}
-              onClick={() => navigate(`/group/${group._id}`)}
+              onClick={() => navigate(`/folder/${group._id}`)}
               style={{
                 position: 'relative',
                 border: '1px solid rgb(53, 53, 53)',

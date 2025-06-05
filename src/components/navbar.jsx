@@ -40,7 +40,7 @@ const Navbar = () => {
           type="search"
           name=""
           id=""
-          placeholder="Search for your files and groups"
+          placeholder="Search for your files and folders"
         />
       </div>
 <div className="profile" ref={dropdownRef} style={{ position: "relative" }}>

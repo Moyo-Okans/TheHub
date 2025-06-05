@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../style/login.css';
 import '../style/register.css';
 import GoogleIcon from '../assets/google.png';
@@ -14,6 +14,13 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    navigate("/dashboard");
+  }
+}, [navigate]);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);

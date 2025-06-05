@@ -30,7 +30,7 @@ function Files() {
         onClose={() => setOpenPopup(false)}
       >
         <div className="modalContent">
-          <h2>Create Group</h2>
+          <h2>Create folder</h2>
           <div className="modalInputContainer">
             <TextField
               label="Unnamed File"

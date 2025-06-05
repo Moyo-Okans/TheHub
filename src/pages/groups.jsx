@@ -17,7 +17,7 @@ function Groups() {
   // Handle create group function
   const handleCreate = async () => {
     if (!groupName.trim()) {
-      alert("Please enter a group name");
+      alert("Please enter a folder name");
       return;
     }
     if (!courseCode.trim()) {
@@ -27,7 +27,7 @@ function Groups() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must be logged in to create a group");
+      alert("You must be logged in to create a folder");
       return;
     }
 
@@ -44,7 +44,7 @@ function Groups() {
           },
         }
       );
-      console.log("Group created:", response.data);
+      console.log("folder created:", response.data);
       setOpenPopup(false);
       setGroupName("");
       setCourseCode("");
@@ -58,11 +58,11 @@ function Groups() {
     <>
       {/* Upload File Popup */}
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
-        <div className="modalContent">
-          <h2>Create Group</h2>
-          <div className="modalInputContainer">
+        <div className="modalContentt">
+          <h2>Create Folder</h2>
+          <div className="modalInputContainerr">
             <TextField
-              label="Group Name"
+              label="Folder Name"
               fullWidth
               margin="normal"
               value={groupName}
@@ -94,7 +94,7 @@ function Groups() {
               onChange={(e) => setCourseCode(e.target.value)}
             />
 
-            <div className="modalButtonsContainer">
+            <div className="modalButtonsContainerr">
               <button onClick={() => setOpenPopup(false)}>Cancel</button>
               <button onClick={handleCreate}>Create</button>
             </div>
@@ -109,7 +109,7 @@ function Groups() {
           <div className="main-content">
             <div className="bodyContainer">
               <div className="groupHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1>Groups</h1>
+                <h1>Folders</h1>
                 <div className="dropdown">
                   <button onClick={() => setOpenPopup(true)} className="create-button">
                     <AddRoundedIcon />

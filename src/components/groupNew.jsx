@@ -5,8 +5,8 @@ function GroupNew() {
   return (
     <div className='newGroupContainer'>
         <img className='newGroupImage' src={emptyGroup} />
-        <h1>No Groups Found</h1>
-        <p>Click the create button now to add a new group to your hub</p>
+        <h1>No Folders Found</h1>
+        <p>Click the create button now to add a new folder to your hub</p>
     </div>
   )
 }

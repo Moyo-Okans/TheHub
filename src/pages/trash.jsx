@@ -37,9 +37,9 @@ function Trash() {
           <div className="bodyContainer2">
             <h1>Trash</h1>
             {loading ? (
-              <p>Loading trashed groups...</p>
+              <p>Loading trashed folders...</p>
             ) : trashedGroups.length === 0 ? (
-              <p>No groups in trash.</p>
+              <p>No folders in trash.</p>
             ) : (
               <div className="trashed-groups"style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
               >

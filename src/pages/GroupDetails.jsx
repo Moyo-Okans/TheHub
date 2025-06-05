@@ -48,7 +48,7 @@ function GroupDetails() {
         setGroupName(groupData.title || groupData.name || "Untitled Group");
       } catch (error) {
         console.error(
-          "Failed to fetch group details:",
+          "Failed to fetch folder details:",
           error.response?.data || error.message
         );
       }
@@ -112,10 +112,10 @@ function GroupDetails() {
         onClose={() => setOpenPopup(false)}
       >
         <div className="modalContent">
-          <h2>Create Group</h2>
+          <h2>Create folder</h2>
           <div className="modalInputContainer">
             <TextField
-              label="Unnamed Group"
+              label="Unnamed folder"
               fullWidth
               margin="normal"
               value={title}
@@ -154,7 +154,7 @@ function GroupDetails() {
               <div className="groupHeader">
                 <div style={{ gap: 10, alignItems: 'center' }} className="groupHeader">
                   <Link to='/groups' style={{ color: '#282a2c', textDecoration: 'none' }}>
-                    <h1>Groups</h1>
+                    <h1>Folders</h1>
                   </Link>
                   <KeyboardArrowRightOutlinedIcon sx={{ color: '#fff' }} />
                   <h1 style={{ textTransform: 'capitalize' }}>{groupName || 'Loading...'}</h1>
@@ -164,7 +164,7 @@ function GroupDetails() {
                       <div className="modalContent">
                         <div className="modalContentTop">
                           <h2 className="modalContentH2">
-                            Share Your Group Link
+                            Share Your Folder Link
                           </h2>
                           <CloseIcon
                             onClick={closeModal}
@@ -172,17 +172,17 @@ function GroupDetails() {
                           />
                         </div>
                         <div className="modalContentMiddle">
-                          <p className="modalContentP">Event Group URL</p>
+                          <p className="modalContentP">Event Folder URL</p>
                           <div className="urlContainer">
                             <p className="url">
-                              localhost:5173/group/
+                              localhost:5173/folder/
                               <span className="urlSpan">{groupId}</span>
                             </p>
                             <button
                               className="CopyButtons"
                               onClick={() => {
                                 navigator.clipboard.writeText(
-                                  `http://localhost:5173/group/${groupId}`
+                                  `http://localhost:5173/folder/${groupId}`
                                 )
                                 alert("Link Copied")
                               }
@@ -195,7 +195,7 @@ function GroupDetails() {
                           </div>
                           <p className="shareP">
                             Share this URL with your friends/classmates so
-                            they can view materials in this private group.
+                            they can view materials in this private folder.
                           </p>
                         </div>
                       </div>

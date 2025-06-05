@@ -12,7 +12,7 @@ import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRig
 import { Link, useNavigate } from "react-router-dom";
 import { Dialog, TextField } from "@mui/material";
 import api from "../api";
-import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
 import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -44,7 +44,7 @@ function NewUser() {
     setIsModalOpen(false);
   };
 
-  const handleToggleDropdown = (index) => {
+  var handleToggleDropdown = (index) => {
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
   };
   // Fetch user profile on mount
@@ -182,7 +182,7 @@ function NewUser() {
   // Handle create group
   const handleCreate = async () => {
     if (!groupName.trim()) {
-      alert("Please enter a group name");
+      alert("Please enter a folder name");
       return;
     }
     if (!courseCode.trim()) {
@@ -192,7 +192,7 @@ function NewUser() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must be logged in to create a group");
+      alert("You must be logged in to create a folder");
       return;
     }
 
@@ -209,15 +209,15 @@ function NewUser() {
           },
         }
       );
-      console.log("Group created:", response.data);
+      console.log("folder created:", response.data);
       setOpenPopup(false);
       setGroupName("");
       setCourseCode("");
       fetchUserGroups();
       fetchFiles();
     } catch (error) {
-      console.error("Failed to create group:", error.response?.data || error.message);
-      alert("Failed to create group");
+      console.error("Failed to create folder:", error.response?.data || error.message);
+      alert("Failed to create folder");
     }
   };
 
@@ -227,7 +227,7 @@ function NewUser() {
     if (action === 'share') {
       openModal();
     } else {
-      console.log(`Action: ${action} on group ID: ${groupId}`);
+      console.log(`Action: ${action} on folder ID: ${groupId}`);
     };
 
     if (action === 'delete') {
@@ -245,10 +245,10 @@ function NewUser() {
 
       } catch (err) {
         console.error("Delete failed:", err.response?.data || err.message);
-        alert("Failed to delete the group. Please try again.");
+        alert("Failed to delete the folder. Please try again.");
       }
     } else {
-      console.log(`Action: ${action} on group ID: ${groupId}`);
+      console.log(`Action: ${action} on folder ID: ${groupId}`);
     };
   };
 
@@ -271,10 +271,10 @@ function NewUser() {
       {/* Create Group Popup */}
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="modalContentt">
-          <h2>Create Group</h2>
+          <h2>Create folder</h2>
           <div className="modalInputContainerr">
             <TextField
-              label="Group Name"
+              label="folder Name"
               fullWidth
               margin="normal"
               value={groupName}
@@ -329,7 +329,7 @@ function NewUser() {
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               <li>
-                <button onClick={() => setOpenPopup(true)}>Create Group</button>
+                <button onClick={() => setOpenPopup(true)}>Create folder</button>
               </li>
               <li>
                 <label htmlFor="input-file">
@@ -360,9 +360,9 @@ function NewUser() {
             <div className="boxes">
               {/* Create Group Box */}
               <div className="groupContainer">
-                <GroupAddOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
-                <h3>Create a group</h3>
-                <p>Create your first Group to start collaborations with your study group members</p>
+                <CreateNewFolderOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.3)" }} />
+                <h3>Create a folder</h3>
+                <p>Create your first folder to start collaborations with your study group members</p>
                 <div className="fullWidth">
                   <button onClick={() => setOpenPopup(true)}>
                     <AddRoundedIcon style={{ paddingRight: 5 }} />
@@ -373,7 +373,7 @@ function NewUser() {
 
               {/* Upload File Box */}
               <div className="groupContainer">
-                <NoteAddOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
+                <NoteAddOutlinedIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.3)" }} />
                 <h3>Upload a file</h3>
                 <p>Select and Upload your first note/material PDF, DOCX, DOC etc.</p>
                 <div className="fullWidth">
@@ -397,7 +397,7 @@ function NewUser() {
 
               {/* Community Box */}
               <div className="groupContainer">
-                <PublicIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.7)" }} />
+                <PublicIcon style={{ fontSize: 60, color: "rgba(66, 94, 234, 0.3)" }} />
                 <h3>Go to community</h3>
                 <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
                 <div className="fullWidth">
@@ -413,21 +413,21 @@ function NewUser() {
           <div className="emptyFiles">
             <InsertDriveFileIcon style={{ fontSize: 60, color: "#282a2c" }} />
             <h2>No files found</h2>
-            <p>Your files and groups will be shown here, you can create a group or upload a file now above</p>
+            <p>Your files and folders will be shown here, you can create a folder or upload a file now above</p>
           </div>
         </div>
       ) : (
         <div>
-          {/* Group View */}
+          {/* folder View */}
           <div className="actionBox">
-            <h3>Groups</h3>
+            <h3>Folders</h3>
             {groups.length === 0 ? (
                 <div className="boxes">
-                  {/* Create Group Box */}
+                  {/* Create folder Box */}
                   <div className="groupContainer">
                     <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
-                    <h3>Create a group</h3>
-                    <p>Create your first Group to collaborate with your study group members</p>
+                    <h3>Create a Folder</h3>
+                    <p>Create your first folder to collaborate with your study group members</p>
                     <div className="fullWidth">
                       <button onClick={() => setOpenPopup(true)}>
                         <AddRoundedIcon style={{ paddingRight: 5 }} />
@@ -454,7 +454,7 @@ function NewUser() {
               {groups.map((group, index) => (
                 <div
                   key={group._id}
-                  onClick={() => navigate(`/group/${group._id}`)}
+                  onClick={() => navigate(`/folder/${group._id}`)}
                   style={{
                     position: 'relative',
                     border: '1px solid rgb(53, 53, 53)',
@@ -471,7 +471,7 @@ function NewUser() {
                   <div
                     className="groupFolderHeader"
                   >
-                    <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled Group'}</p>
+                    <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled folder'}</p>
                     <MoreVert
                       onClick={(e) => {
                         e.stopPropagation();
@@ -486,7 +486,7 @@ function NewUser() {
                       <div className="modalContent">
                         <div className="modalContentTop">
                           <h2 className="modalContentH2">
-                            Share Your Group Link
+                            Share Your folder Link
                           </h2>
                           <CloseIcon
                             onClick={closeModal}
@@ -494,17 +494,17 @@ function NewUser() {
                           />
                         </div>
                         <div className="modalContentMiddle">
-                          <p className="modalContentP">Event Group URL</p>
+                          <p className="modalContentP">Event folder URL</p>
                           <div className="urlContainer">
                             <p className="url">
-                              localhost:5173/group/
+                              localhost:5173/folder/
                               <span className="urlSpan">{group._id}</span>
                             </p>
                             <button
                               className="CopyButtons"
                               onClick={() => {
                                 navigator.clipboard.writeText(
-                                  `http://localhost:5173/group/${group._id}`
+                                  `http://localhost:5173/folder/${group._id}`
                                 )
                                 alert("Link Copied")
                               }
@@ -519,7 +519,7 @@ function NewUser() {
                           </div>
                           <p className="shareP">
                             Share this URL with your friends/classmates so
-                            they can view materials in this private group.
+                            they can view materials in this private folder.
                           </p>
                         </div>
                       </div>

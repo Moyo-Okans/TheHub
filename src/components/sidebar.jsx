@@ -106,18 +106,18 @@ export default function Sidebar() {
               </Link>
             </div>
 
-            {/* Groups */}
+            {/* folders */}
             <div>
               <Link
-                to="/groups"
+                to="/folders"
                 className={`sidebar-item ${
-                  activeItem === "/groups" ? "active" : ""
+                  activeItem === "/folders" ? "active" : ""
                 }`}
-                onClick={() => handleNavItemClick("/groups")}
-                title="Groups"
+                onClick={() => handleNavItemClick("/folders")}
+                title="Folders"
               >
                 <FolderOutlinedIcon className="sidebar-icon" />
-                {(!minimized || (isMobile && mobileOpen)) && <span>Groups</span>}
+                {(!minimized || (isMobile && mobileOpen)) && <span>Folders</span>}
               </Link>
             </div>
             {/* Files */}
@@ -177,21 +177,6 @@ export default function Sidebar() {
                 >
                   <SettingsOutlinedIcon className="sidebar-icon" />
                   {(!minimized || (isMobile && mobileOpen)) && <span>Settings</span>}
-                </Link>
-              </div>
-
-              {/* Settings */}
-              <div>
-                <Link
-                  to="/trash"
-                  className={`sidebar-item ${
-                    activeItem === "/trash" ? "active" : ""
-                  }`}
-                  onClick={() => handleNavItemClick("/trash")}
-                  title="Trash"
-                >
-                  <DeleteOutlineOutlinedIcon className="sidebar-icon" />
-                  {(!minimized || (isMobile && mobileOpen)) && <span>Trash</span>}
                 </Link>
               </div>
             </div>
