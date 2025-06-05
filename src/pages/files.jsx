@@ -29,9 +29,9 @@ function Files() {
         open={openPopup}
         onClose={() => setOpenPopup(false)}
       >
-        <div className="modalContent">
+        <div className="modalContentt">
           <h2>Create folder</h2>
-          <div className="modalInputContainer">
+          <div className="modalInputContainerr">
             <TextField
               label="Unnamed File"
               fullWidth
@@ -48,7 +48,7 @@ function Files() {
               }}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <div className="modalButtonsContainer">
+            <div className="modalButtonsContainerr">
               <button
                 onClick={() => setOpenPopup(false)}
               >
