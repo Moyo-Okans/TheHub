@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../style/community.css";
+import logo from '../assets/logo.png';
 import NavbarCommunity from "../components/navbarCommuntiy";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
@@ -91,6 +92,8 @@ function Community() {
         console.log(`Action: ${action} on group ID: ${groupId}`);
       }
     };
+
+    if (error) return <div>Error loading folders/files: {error}</div>;
 
   return (
     <div>
@@ -412,7 +415,21 @@ function Community() {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="footer">
+              <div className="first">
+                <div className="logo-text">
+                  <img src={logo} alt="" className="footerLogo" />
+                  <h3>The Hub</h3>
+                </div>
+                <p className='copy'>&copy; {new Date().getFullYear()}</p>
+              </div>
+              <div className="first first1">
+                <p>Community guidelines. Terms of service</p>
+              </div>
+              <div className="first">
+                <p>Made with love by Moyosore</p>
+              </div>
+            </div>
     </div>
   );
 }

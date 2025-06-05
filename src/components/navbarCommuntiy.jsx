@@ -8,10 +8,10 @@ import logo from "../assets/logo.png";
 const NavbarCommunity = () => {
   return (
     <div className="navbarCommunity">
-      <div className="navbarCommunitylogo">
+      <Link to='/dashboard' className="navbarCommunitylogo">
         <img src={logo} alt="" />
         <h3>The Hub</h3>
-      </div>
+      </Link>
       <div className="profile">
         <Link to="/dashboard">
           <HomeOutlinedIcon
