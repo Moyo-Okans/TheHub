@@ -19,7 +19,7 @@ connectCloudinary();
 //cors configuration
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'http://localhost:4861',
   credentials: true,
 };
 app.use(cors(corsOptions));
