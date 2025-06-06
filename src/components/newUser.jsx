@@ -422,162 +422,162 @@ function NewUser() {
           <div className="actionBox">
             <h3>Folders</h3>
             {groups.length === 0 ? (
-                <div className="boxes">
-                  {/* Create folder Box */}
-                  <div className="groupContainer">
-                    <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
-                    <h3>Create a Folder</h3>
-                    <p>Create your first folder to collaborate with your study group members</p>
-                    <div className="fullWidth">
-                      <button onClick={() => setOpenPopup(true)}>
-                        <AddRoundedIcon style={{ paddingRight: 5 }} />
-                        Create
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Community Box */}
-                  <div className="groupContainer">
-                    <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
-                    <h3>Go to community</h3>
-                    <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
-                    <div className="fullWidth">
-                      <Link className="uploadbtn" to='/community'>
-                        <SubdirectoryArrowRightIcon style={{ paddingRight: 5 }} />
-                        Visit
-                      </Link>
-                    </div>
+              <div className="boxes">
+                {/* Create folder Box */}
+                <div className="groupContainer">
+                  <FolderIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                  <h3>Create a Folder</h3>
+                  <p>Create your first folder to collaborate with your study group members</p>
+                  <div className="fullWidth">
+                    <button onClick={() => setOpenPopup(true)}>
+                      <AddRoundedIcon style={{ paddingRight: 5 }} />
+                      Create
+                    </button>
                   </div>
                 </div>
+
+                {/* Community Box */}
+                <div className="groupContainer">
+                  <PublicIcon style={{ fontSize: 60, color: "#282a2c" }} />
+                  <h3>Go to community</h3>
+                  <p>Need inspiration or simply looking for materials? Visit TheHub Community</p>
+                  <div className="fullWidth">
+                    <Link className="uploadbtn" to='/community'>
+                      <SubdirectoryArrowRightIcon style={{ paddingRight: 5 }} />
+                      Visit
+                    </Link>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div className="groupRow" style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {groups.map((group, index) => (
-                <div
-                  key={group._id}
-                  onClick={() => navigate(`/folder/${group._id}`)}
-                  style={{
-                    position: 'relative',
-                    border: '1px solid rgb(53, 53, 53)',
-                    borderRadius: '8px',
-                    padding: '10px 5px 10px 15px',
-                    marginTop: '10px',
-                    width: '200px',
-                    textAlign: 'center',
-                    cursor: 'pointer',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                  }}
-                >
+                {groups.map((group, index) => (
                   <div
-                    className="groupFolderHeader"
+                    key={group._id}
+                    onClick={() => navigate(`/folder/${group._id}`)}
+                    style={{
+                      position: 'relative',
+                      border: '1px solid rgb(53, 53, 53)',
+                      borderRadius: '8px',
+                      padding: '10px 5px 10px 15px',
+                      marginTop: '10px',
+                      width: '200px',
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      backgroundColor: 'transparent',
+                      color: 'white',
+                    }}
                   >
-                    <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled folder'}</p>
-                    <MoreVert
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.nativeEvent.stopImmediatePropagation();
-                        handleToggleDropdown(index);
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </div>
-                  {isModalOpen && (
-                    <div className="modalBackdrop">
-                      <div className="modalContent">
-                        <div className="modalContentTop">
-                          <h2 className="modalContentH2">
-                            Share Your folder Link
-                          </h2>
-                          <CloseIcon
-                            onClick={closeModal}
-                            alt="close"
-                          />
-                        </div>
-                        <div className="modalContentMiddle">
-                          <p className="modalContentP">Event folder URL</p>
-                          <div className="urlContainer">
-                            <p className="url">
-                              localhost:5173/folder/
-                              <span className="urlSpan">{group._id}</span>
-                            </p>
-                            <button
-                              className="CopyButtons"
-                              onClick={() => {
-                                navigator.clipboard.writeText(
-                                  `http://localhost:5173/folder/${group._id}`
-                                )
-                                alert("Link Copied")
-                              }
-
-                              }
-                            >
-                              <ContentCopyIcon sx={{
-                                fontSize: '15px'
-                              }} alt="copy" />
-                              Copy
-                            </button>
+                    <div
+                      className="groupFolderHeader"
+                    >
+                      <p style={{ margin: 0, textTransform: 'capitalize' }}>{group.title || 'Untitled folder'}</p>
+                      <MoreVert
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation();
+                          handleToggleDropdown(index);
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </div>
+                    {isModalOpen && (
+                      <div className="modalBackdrop">
+                        <div className="modalContent">
+                          <div className="modalContentTop">
+                            <h2 className="modalContentH2">
+                              Share Your folder Link
+                            </h2>
+                            <CloseIcon
+                              onClick={closeModal}
+                              alt="close"
+                            />
                           </div>
-                          <p className="shareP">
-                            Share this URL with your friends/classmates so
-                            they can view materials in this private folder.
-                          </p>
+                          <div className="modalContentMiddle">
+                            <p className="modalContentP">Event folder URL</p>
+                            <div className="urlContainer">
+                              <p className="url">
+                                localhost:5173/folder/
+                                <span className="urlSpan">{group._id}</span>
+                              </p>
+                              <button
+                                className="CopyButtons"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    `http://localhost:5173/folder/${group._id}`
+                                  )
+                                  alert("Link Copied")
+                                }
+
+                                }
+                              >
+                                <ContentCopyIcon sx={{
+                                  fontSize: '15px'
+                                }} alt="copy" />
+                                Copy
+                              </button>
+                            </div>
+                            <p className="shareP">
+                              Share this URL with your friends/classmates so
+                              they can view materials in this private folder.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                  {/* Dropdown */}
-                  {openDropdownIndex === index && (
-                    <div
-                      ref={dropdownRef}
-                      className="dropdownMenu"
-                      onClick={(e) => e.stopPropagation()}
+                    )}
+                    {/* Dropdown */}
+                    {openDropdownIndex === index && (
+                      <div
+                        ref={dropdownRef}
+                        className="dropdownMenu"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          position: 'absolute',
+                          top: 40,
+                          right: 10,
+                          backgroundColor: '#1e1e1e',
+                          border: '1px solid #444',
+                          borderRadius: '6px',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                          zIndex: 1000,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          padding: '4px 0',
+                          minWidth: '110px',
+                        }}
+                      >
+                        {['share', 'star', 'delete'].map((action) => (
+                          <button
+                            key={action}
+                            onClick={() => handleAction(action, group._id)}
+                            style={{
+                              padding: '8px 12px',
+                              background: 'none',
+                              border: 'none',
+                              color: 'white',
+                              textAlign: 'left',
+                              cursor: 'pointer',
+                              width: '100%',
+                              fontSize: '14px',
+                            }}
+                          >
+                            {action.charAt(0).toUpperCase() + action.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    <FolderIcon
                       style={{
-                        position: 'absolute',
-                        top: 40,
-                        right: 10,
-                        backgroundColor: '#1e1e1e',
-                        border: '1px solid #444',
-                        borderRadius: '6px',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-                        zIndex: 1000,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        padding: '4px 0',
-                        minWidth: '110px',
+                        fontSize: 150,
+                        marginTop: 0,
+                        color: 'gray',
                       }}
-                    >
-                      {['share', 'star', 'delete'].map((action) => (
-                        <button
-                          key={action}
-                          onClick={() => handleAction(action, group._id)}
-                          style={{
-                            padding: '8px 12px',
-                            background: 'none',
-                            border: 'none',
-                            color: 'white',
-                            textAlign: 'left',
-                            cursor: 'pointer',
-                            width: '100%',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {action.charAt(0).toUpperCase() + action.slice(1)}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  <FolderIcon
-                    style={{
-                      fontSize: 150,
-                      marginTop: 0,
-                      color: 'gray',
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+                    />
+                  </div>
+                ))}
+              </div>
             )}
-            
+
           </div>
 
           {/* Files Section */}
@@ -596,23 +596,23 @@ function NewUser() {
               </div>
             </div>
             <div className="fileTable">
-              <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
-                <p style={{ flex: 2 }}>Name</p>
-                <p style={{ flex: 3 }}>Location</p>
-                <p style={{ flex: 2 }}>Owner</p>
-                <p style={{ flex: 2 }}>Date</p>
+              <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '1px solid #fff' }}>
+                <p style={{ flex: 5 }}>Name</p>
+                <p style={{ flex: 2 }}>Location</p>
+                <p style={{ flex: 1 }}>Owner</p>
+                <p style={{ flex: 3 }}>Date</p>
               </div>
               {files.length > 0 ? (
                 // Render files if array is not empty
                 files.map((file) => (
-                  <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
-                    <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.2)', alignItems: 'center' }}>
+                    <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       <InsertDriveFileIcon />
                       <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
                     </div>
-                    <p className="location" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
-                    <p className="owner" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
-                    <p className="date" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <p className="location" style={{ flex: 2.3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
+                    <p className="owner" style={{ flex: 1, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
+                    <p className="date" style={{ flex: 2.8, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
                     </p>
                   </div>

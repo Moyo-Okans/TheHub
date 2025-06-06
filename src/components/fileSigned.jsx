@@ -50,24 +50,25 @@ function FileSigned() {
             </div>
 
             <div className="fileTable">
+                <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '1px solid #fff' }}>
+                                <p style={{ flex: 5 }}>Name</p>
+                                <p style={{ flex: 2 }}>Location</p>
+                                <p style={{ flex: 1 }}>Owner</p>
+                                <p style={{ flex: 3 }}>Date</p>
+                            </div>
                 {files.length > 0 ? (
                     // Render files if array is not empty
                     files.map((file) => (
                         <div>
-                            <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '2px solid #000' }}>
-                                <p style={{ flex: 2 }}>Name</p>
-                                <p style={{ flex: 3 }}>Location</p>
-                                <p style={{ flex: 2 }}>Owner</p>
-                                <p style={{ flex: 2 }}>Date</p>
-                            </div>
-                            <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid #ddd', alignItems: 'center' }}>
-                                <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            
+                            <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.2)', alignItems: 'center' }}>
+                                <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 5, whiteSpace: 'wrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     <InsertDriveFileIcon />
                                     <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
                                 </div>
-                                <p className="location" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
-                                <p className="owner" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
-                                <p className="date" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <p className="location" style={{ flex: 2, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
+                                <p className="owner" style={{ flex: 1, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
+                                <p className="date" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
                                 </p>
                             </div>
