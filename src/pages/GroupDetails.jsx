@@ -153,7 +153,7 @@ function GroupDetails() {
             <div className="bodyContainer">
               <div className="groupHeader">
                 <div style={{ gap: 10, alignItems: 'center' }} className="groupHeader">
-                  <Link to='/groups' style={{ color: '#282a2c', textDecoration: 'none' }}>
+                  <Link to='/groups' style={{ color: 'rgba(83, 90, 190, 0.5)', textDecoration: 'none' }}>
                     <h1>Folders</h1>
                   </Link>
                   <KeyboardArrowRightOutlinedIcon sx={{ color: '#fff' }} />

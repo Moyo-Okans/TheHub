@@ -222,7 +222,7 @@ input::placeholder {
 }
 
 .groupContainer {
-    width: 30%;
+    width: 33%;
     height: auto;
     border: solid 1px rgb(46, 46, 46);
     border-radius: 10px;
@@ -627,8 +627,9 @@ input::placeholder {
   color: #666; 
 }
 
-
-
-
-
-
+.fileActionsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}

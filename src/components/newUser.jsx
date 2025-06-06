@@ -18,6 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 function NewUser() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -251,6 +253,28 @@ function NewUser() {
       console.log(`Action: ${action} on folder ID: ${groupId}`);
     };
   };
+
+  const handleFileDelete = async (fileId) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You must be logged in to delete files.");
+    return;
+  }
+  if (!window.confirm("Are you sure you want to delete this file?")) return;
+
+  try {
+    await api.delete(`/files/${fileId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // Refresh the file list after deletion
+    fetchFiles();
+  } catch (error) {
+    console.error("Failed to delete file:", error.response?.data || error.message);
+    alert("Failed to delete file");
+  }
+};
 
   if (loading) {
     return (
@@ -598,9 +622,9 @@ function NewUser() {
             <div className="fileTable">
               <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '1px solid #fff' }}>
                 <p style={{ flex: 5 }}>Name</p>
-                <p style={{ flex: 2 }}>Location</p>
                 <p style={{ flex: 1 }}>Owner</p>
                 <p style={{ flex: 3 }}>Date</p>
+                <p>Actions</p>
               </div>
               {files.length > 0 ? (
                 // Render files if array is not empty
@@ -610,11 +634,14 @@ function NewUser() {
                       <InsertDriveFileIcon />
                       <p style={{ margin: 0, marginLeft: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.title}</p>
                     </div>
-                    <p className="location" style={{ flex: 2.3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.location || 'N/A'}</p>
                     <p className="owner" style={{ flex: 1, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{file.owner || 'Me'}</p>
-                    <p className="date" style={{ flex: 2.8, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <p className="date" style={{ flex: 3, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
                     </p>
+                    <div className="fileActionsContainer">
+                      <FileDownloadOutlinedIcon sx={{color: "#425EEA"}} />
+                      <DeleteOutlinedIcon sx={{color: "rgba(169, 15, 15, 0.8)"}} onClick={() => handleFileDelete(file._id)} />
+                    </div>
                   </div>
                 ))
               ) : (

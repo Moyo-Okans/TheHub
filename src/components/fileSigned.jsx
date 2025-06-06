@@ -60,7 +60,6 @@ function FileSigned() {
                     // Render files if array is not empty
                     files.map((file) => (
                         <div>
-                            
                             <div className="fileLines" key={file._id} style={{ display: 'flex', padding: '0.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.2)', alignItems: 'center' }}>
                                 <div className="fileName" style={{ display: 'flex', alignItems: 'center', flex: 5, whiteSpace: 'wrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                     <InsertDriveFileIcon />
