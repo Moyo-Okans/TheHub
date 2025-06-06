@@ -1,6 +1,7 @@
 import File from '../models/File.js';
 import Group from '../models/Group.js';
 import { logActivity } from '../utils/activityLogger.js';
+import axios from 'axios';
 import { notifyGroupMembers } from '../utils/notifyGroup.js';
 
 
@@ -82,8 +83,6 @@ export const uploadIndependentFile = async (req, res) => {
   }
 };
 
-
-
 export const listGroupFiles = async (req, res) => {
   try {
     const groupId = req.params.groupId;
@@ -124,8 +123,6 @@ export const viewFile = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
-
 
 export const deleteFile = async (req, res) => {
   try {
@@ -280,5 +277,29 @@ export const getUserFiles = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// NEW DOWNLOAD FUNCTION BY EXCELLENCE, ITS NOT WORKIN WELL
+export const downloadFile = async (req, res) => {
+  try {
+    const file = await File.findById(req.params.id);
+    if (!file) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+
+    const fileName = file.title || 'downloaded_file';
+    const response = await axios.get(file.fileUrl, { responseType: 'stream' });
+
+    // Forward the content type from Cloudinary
+    res.setHeader('Content-Type', response.headers['content-type'] || file.fileType || 'application/octet-stream');
+    // Set the filename with the correct extension
+    const ext = file.fileType && file.fileType.split('/')[1] ? `.${file.fileType.split('/')[1]}` : '';
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}${ext}"`);
+
+    response.data.pipe(res);
+  } catch (error) {
+    console.error('Download error:', error);
+    res.status(500).json({ message: 'Server error during file download' });
   }
 };

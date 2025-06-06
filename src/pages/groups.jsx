@@ -67,6 +67,7 @@ function Groups() {
               margin="normal"
               value={groupName}
               sx={{
+                marginTop: '20px', marginBottom: 0,
                 input: { color: 'white', backgroundColor: 'transparent', width: '300px' },
                 label: { color: 'white' },
                 '.MuiOutlinedInput-root': {

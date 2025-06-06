@@ -390,10 +390,11 @@ input::placeholder {
 .modalInputContainerr{
     display: inherit;
     flex-direction: column;
-    gap: 16px;
+    gap: 0px;
     align-items: flex-end;
 }
 .modalButtonsContainerr{
+    margin-top: 15px;
     display: inherit;
     gap: 5px;
 }

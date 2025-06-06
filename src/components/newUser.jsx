@@ -276,6 +276,45 @@ function NewUser() {
   }
 };
 
+const handleFileDownload = async (fileId, fileName) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You must be logged in to download files.");
+    return;
+  }
+
+  try {
+    const response = await api.get(`/files/${fileId}/download`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: "blob",
+    });
+
+    // Try to get filename from Content-Disposition header
+    let downloadFileName = fileName || "file";
+    const disposition = response.headers['content-disposition'];
+    if (disposition && disposition.indexOf('filename=') !== -1) {
+      const match = disposition.match(/filename="?([^"]+)"?/);
+      if (match && match[1]) {
+        downloadFileName = match[1];
+      }
+    }
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", downloadFileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Failed to download file:", error.response?.data || error.message);
+    alert("Failed to download file");
+  }
+};
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex' }}>
@@ -295,14 +334,15 @@ function NewUser() {
       {/* Create Group Popup */}
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="modalContentt">
-          <h2>Create folder</h2>
+          <h2>Create Folder</h2>
           <div className="modalInputContainerr">
             <TextField
-              label="folder Name"
+              label="Folder Name"
               fullWidth
               margin="normal"
               value={groupName}
               sx={{
+                marginTop: '20px', marginBottom: 0,
                 input: { color: 'white', backgroundColor: 'transparent', width: '300px' },
                 label: { color: 'white' },
                 '.MuiOutlinedInput-root': {
@@ -621,7 +661,7 @@ function NewUser() {
             </div>
             <div className="fileTable">
               <div className="fileHeader" style={{ display: 'flex', fontWeight: 'bold', padding: '0.5rem', borderBottom: '1px solid #fff' }}>
-                <p style={{ flex: 5 }}>Name</p>
+                <p style={{ flex: 6 }}>Name</p>
                 <p style={{ flex: 1 }}>Owner</p>
                 <p style={{ flex: 3 }}>Date</p>
                 <p>Actions</p>
@@ -639,7 +679,7 @@ function NewUser() {
                       {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
                     </p>
                     <div className="fileActionsContainer">
-                      <FileDownloadOutlinedIcon sx={{color: "#425EEA"}} />
+                      <FileDownloadOutlinedIcon sx={{color: "#425EEA"}} onClick={() => handleFileDownload(file._id, file.name)} />
                       <DeleteOutlinedIcon sx={{color: "rgba(169, 15, 15, 0.8)"}} onClick={() => handleFileDelete(file._id)} />
                     </div>
                   </div>
