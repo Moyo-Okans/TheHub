@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'; // Import useParams to get route params
+import { useParams } from 'react-router-dom';
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import api from "../api";
 import Navbar from "../components/navbar";
@@ -13,6 +13,7 @@ import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRig
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'; // Import icon for file display
 
 function GroupDetails() {
   const { id: groupId } = useParams();
@@ -20,6 +21,7 @@ function GroupDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [groupName, setGroupName] = useState("");
+  const [files, setFiles] = useState([]); // State for files
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -29,6 +31,7 @@ function GroupDetails() {
     setIsModalOpen(false);
   };
 
+  // Fetch group details
   useEffect(() => {
     const fetchGroupDetails = async () => {
       const token = localStorage.getItem("token");
@@ -58,15 +61,41 @@ function GroupDetails() {
       fetchGroupDetails();
     }
   }, [groupId]);
+
+  // Fetch files related to the group
+  useEffect(() => {
+    const fetchFiles = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("No auth token");
+        return;
+      }
+      try {
+        const response = await api.get(`/groups/${groupId}/files`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setFiles(response.data); // Assuming response.data is an array of files
+      } catch (err) {
+        console.error("Failed to fetch files:", err);
+      }
+    };
+
+    if (groupId) {
+      fetchFiles();
+    }
+  }, [groupId]);
+
   const handleCreate = () => {
     console.log(title);
     setOpenPopup(false);
     setTitle('');
-  }
+  };
 
   const handleFileChange = async (event) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
+    const filesSelected = event.target.files;
+    if (!filesSelected || filesSelected.length === 0) return;
 
     const token = localStorage.getItem("token");
     if (!token) {
@@ -74,7 +103,7 @@ function GroupDetails() {
       return;
     }
 
-    const file = files[0];
+    const file = filesSelected[0];
     const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
 
     const formData = new FormData();
@@ -94,10 +123,15 @@ function GroupDetails() {
           Authorization: `Bearer ${token}`,
         },
       });
-
-
       console.log("Upload success:", response.data);
-      // TODO: optionally refresh file list or UI
+      // Refresh the file list after upload
+      // Fetch updated files
+      const updatedFilesResponse = await api.get(`/groups/${groupId}/files`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setFiles(updatedFilesResponse.data);
     } catch (error) {
       console.error("File upload failed:", error.response?.data || error.message);
       alert("File upload failed");
@@ -106,11 +140,8 @@ function GroupDetails() {
 
   return (
     <>
-      {/* Upload File Popup */}
-      <Dialog
-        open={openPopup}
-        onClose={() => setOpenPopup(false)}
-      >
+      {/* Upload Folder Popup */}
+      <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
         <div className="modalContent">
           <h2>Create folder</h2>
           <div className="modalInputContainer">
@@ -131,20 +162,13 @@ function GroupDetails() {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="modalButtonsContainer">
-              <button
-                onClick={() => setOpenPopup(false)}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreate}
-              >
-                Create
-              </button>
+              <button onClick={() => setOpenPopup(false)}>Cancel</button>
+              <button onClick={handleCreate}>Create</button>
             </div>
           </div>
         </div>
       </Dialog>
+
       <div className="dashboard">
         <Sidebar />
         <div className="dashboard-content">
@@ -166,10 +190,7 @@ function GroupDetails() {
                           <h2 className="modalContentH2">
                             Share Your Folder Link
                           </h2>
-                          <CloseIcon
-                            onClick={closeModal}
-                            alt="close"
-                          />
+                          <CloseIcon onClick={closeModal} />
                         </div>
                         <div className="modalContentMiddle">
                           <p className="modalContentP">Event Folder URL</p>
@@ -181,21 +202,16 @@ function GroupDetails() {
                             <button
                               className="CopyButtons"
                               onClick={() => {
-                                navigator.clipboard.writeText(
-                                  `http://localhost:5173/folder/${groupId}`
-                                )
-                                alert("Link Copied")
-                              }
-
-                              }
+                                navigator.clipboard.writeText(`http://localhost:4861/folder/${groupId}`);
+                                alert("Link Copied");
+                              }}
                             >
                               <ContentCopyIcon alt="copy" />
                               Copy
                             </button>
                           </div>
                           <p className="shareP">
-                            Share this URL with your friends/classmates so
-                            they can view materials in this private folder.
+                            Share this URL with your friends/classmates so they can view materials in this private folder.
                           </p>
                         </div>
                       </div>
@@ -211,23 +227,112 @@ function GroupDetails() {
                       name="file"
                       multiple
                       hidden
-                      style={{ display: "none" }}
                       onChange={handleFileChange}
                     />
                     <div className="create-button">
-                      <AddRoundedIcon
-                        style={{
-                          paddingRight: 5,
-                        }}
-                      />
+                      <AddRoundedIcon style={{ paddingRight: 5 }} />
                       <p>Upload</p>
                     </div>
                   </label>
                 </div>
               </div>
-              {/* CONDITIONAL RENDERING (IF statement to show either the new group screen or created group screen) */}
-              <FileNew />
-              {/* OR <GroupSigned /> */}
+
+              {/* Conditional rendering based on files */}
+              {files.length > 0 ? (
+                <div className="fileTable">
+                  <div
+                    className="fileHeader"
+                    style={{
+                      display: 'flex',
+                      fontWeight: 'bold',
+                      padding: '0.5rem',
+                      borderBottom: '1px solid #fff',
+                    }}
+                  >
+                    <p style={{ flex: 5 }}>Name</p>
+                    <p style={{ flex: 2 }}>Location</p>
+                    <p style={{ flex: 1 }}>Owner</p>
+                    <p style={{ flex: 3 }}>Date</p>
+                  </div>
+                  {files.map((file) => (
+                    <div
+                      key={file._id}
+                      className="fileLines"
+                      style={{
+                        display: 'flex',
+                        padding: '0.5rem',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <div
+                        className="fileName"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          flex: 5,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        <InsertDriveFileIcon />
+                        <p
+                          style={{
+                            margin: 0,
+                            marginLeft: '8px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {file.title}
+                        </p>
+                      </div>
+                      <p
+                        className="location"
+                        style={{
+                          flex: 2,
+                          margin: 0,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {file.location || 'N/A'}
+                      </p>
+                      <p
+                        className="owner"
+                        style={{
+                          flex: 1,
+                          margin: 0,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {file.owner || 'Me'}
+                      </p>
+                      <p
+                        className="date"
+                        style={{
+                          flex: 3,
+                          margin: 0,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {new Date(file.createdAt).toLocaleDateString() || 'N/A'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                // Show FileNew component if no files
+                <FileNew />
+              )}
+
             </div>
             <div className="activityContainer">
               <h2>My Hub Activity</h2>
