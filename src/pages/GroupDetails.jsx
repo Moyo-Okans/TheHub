@@ -202,7 +202,7 @@ function GroupDetails() {
                             <button
                               className="CopyButtons"
                               onClick={() => {
-                                navigator.clipboard.writeText(`http://localhost:5173/folder/${groupId}`);
+                                navigator.clipboard.writeText(`http://localhost:4861/folder/${groupId}`);
                                 alert("Link Copied");
                               }}
                             >
