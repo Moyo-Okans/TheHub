@@ -9,7 +9,6 @@ import { Link, useNavigate } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import Footer from "../components/footer";
 import api from '../api';
 
 function Community() {
